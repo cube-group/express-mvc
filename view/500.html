@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Service Cube Error</title>
+    <style>
+        #msg {
+            color: #FF0000;
+        }
+    </style>
+    <script src="./view/js/jQuery.min.1.11.2.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#msg').html(cubeAngularJSObject.msg);
+            $('#trace').html(cubeAngularJSObject.trace);
+        });
+    </script>
+</head>
+<body>
+<div>
+    <p>
+        <!-- doc html -->
+    <h1>Cube PHP. 500</h1>
+    View Engine: AngularJSEngine
+    </p>
+    <p id="msg">
+    </p>
+    <p id="trace">
+    </p>
+</div>
+</body>
+</html>

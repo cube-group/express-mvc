@@ -1,0 +1,27 @@
+[2016-11-10 18:26:22] http://localhost:63342/php-mvc/www.php?_ijt=f4hnalng0ar4r54vjcueuh1eg9	
+[2016-11-10 18:26:22] Response json (29ms)	
+[2016-11-11 09:55:59] http://localhost:63342/php-mvc/www.php?_ijt=16gua0palbktdb8dm7krrgb2ap	
+[2016-11-11 09:55:59] Response json (12ms)	
+[2016-11-11 09:56:22] http://localhost:63342/php-mvc/www.php?_ijt=16gua0palbktdb8dm7krrgb2ap&router=/redirect	
+[2016-11-11 09:56:22] Response redirect /http (14ms)	
+[2016-11-11 09:56:35] http://localhost:63342/php-mvc/www.php?_ijt=16gua0palbktdb8dm7krrgb2ap	
+[2016-11-11 09:56:35] Response json (5ms)	
+[2016-11-11 09:56:43] http://localhost:63342/php-mvc/www.php?_ijt=16gua0palbktdb8dm7krrgb2ap&router=/redirect	
+[2016-11-11 09:56:43] Response redirect http (5ms)	
+[2016-11-11 09:56:51] http://localhost:63342/php-mvc/www.php?_ijt=16gua0palbktdb8dm7krrgb2ap	
+[2016-11-11 09:56:51] Response json (5ms)	
+[2016-11-11 09:57:38] http://localhost:63342/php-mvc/www.php?_ijt=16gua0palbktdb8dm7krrgb2ap&router=redirect	
+[2016-11-11 09:57:38] Response redirect http (15ms)	
+[2016-11-11 09:59:19] http://localhost:63342/php-mvc/www.php?_ijt=16gua0palbktdb8dm7krrgb2ap	
+[2016-11-11 09:59:19] Response json (16ms)	
+[2016-11-11 09:59:25] http://localhost:63342/php-mvc/www.php?_ijt=16gua0palbktdb8dm7krrgb2ap&router=redirect	
+[2016-11-11 09:59:25] Response redirect ./www.php?router=http (5ms)	
+[2016-11-11 09:59:26] http://localhost:63342/php-mvc/www.php?router=http	
+[2016-11-11 09:59:27] Response send (280ms)	
+[2016-11-11 09:59:27] Response json (280ms)	
+[2016-11-11 09:59:39] http://localhost:63342/php-mvc/www.php?router=http	
+[2016-11-11 09:59:42] Response send (3154ms)	
+[2016-11-11 09:59:42] Response json (3154ms)	
+[2016-11-11 10:00:05] http://localhost:63342/php-mvc/www.php?router=http	
+[2016-11-11 10:00:05] Response send (139ms)	
+[2016-11-11 10:00:05] Response json (139ms)	
