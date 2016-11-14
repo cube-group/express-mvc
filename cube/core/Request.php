@@ -28,6 +28,10 @@ final class Request
      * @var string request host
      */
     public $host = '';
+    /**
+     * standard uri.
+     * @var string
+     */
     public $uri = '';
     /**
      * @var string http refer
@@ -93,9 +97,6 @@ final class Request
         $this->referer = @$_SERVER['HTTP_REFERER'];
         $this->headers = $this->headers();
         $this->baseUrl = $this->protocol . '://' . $this->host . $this->uri;
-
-        //queryString.
-        $this->query = $_GET;
     }
 
     private function initPathInfo()
@@ -107,8 +108,8 @@ final class Request
             $path = str_replace($facade, '', $_SERVER['PHP_SELF']);
         } else {
             if (isset($_GET[$router]) && !empty($_GET[$router])) {
-                $path = substr($this->query[$router], 0, 1) == '/' ? $_GET[$router] : ('/' . $_GET[$router]);
-                unset($this->query[$router]);
+                $path = substr($_GET[$router], 0, 1) == '/' ? $_GET[$router] : ('/' . $_GET[$router]);
+                unset($_GET[$router]);
             }
         }
 
@@ -147,6 +148,15 @@ final class Request
             "HTTP_CONNECTION" => @$_SERVER["HTTP_CONNECTION"],
             "HTTP_HOST" => @$_SERVER["HTTP_HOST"],
         );
+    }
+
+    /**
+     * set query instance.
+     * @param $value
+     */
+    public function query($value)
+    {
+        $this->query = $value;
     }
 
     /**

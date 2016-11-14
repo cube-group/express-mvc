@@ -8,9 +8,9 @@
 
 namespace modules\image;
 
-//扩展检测.
-if (SystemUtil::check_unknown_extension('mongo')) {
-    throw new CubeException('Mongo Ext Error.', CubeException::$EXT_ERROR);
+//extension check.
+if (SystemUtil::check_unknown_extension('gd')) {
+    throw new \Exception('GD Ext Error.');
 }
 
 /**
@@ -20,7 +20,7 @@ if (SystemUtil::check_unknown_extension('mongo')) {
  */
 final class Image
 {
-    /**
-     * 建议使用GD EXT 的扩展函数来做
-     */
+    private function __construct()
+    {
+    }
 }

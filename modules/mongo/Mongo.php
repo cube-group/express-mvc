@@ -17,7 +17,7 @@ if (SystemUtil::check_unknown_extension('mongo')) {
 
 /**
  * Class MongoStore.
- * Mongodb快速连接类.
+ * 
  * @package modules\mongo
  */
 final class Mongo

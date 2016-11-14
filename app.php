@@ -11,7 +11,7 @@ use cube\core\Request;
 $router = Application::router();
 
 $router->on(function (Request $req, Response $res, $next) {
-    if(empty($req->query->username)){
+    if(!$req->query->username){
         $res->send('auth error');
         return;
     }

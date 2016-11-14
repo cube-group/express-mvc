@@ -25,10 +25,24 @@ class Body
     public static function create()
     {
         return function ($req, $res, $next) {
+            $req->query(new QueryInstance());
             $req->body(new BodyInstance());
 
             $next();
         };
+    }
+}
+
+
+/**
+ * Class QueryInstance
+ * @package modules\body
+ */
+class QueryInstance extends DynamicClass
+{
+    public function __construct()
+    {
+        $this->body = $_GET;
     }
 }
 
