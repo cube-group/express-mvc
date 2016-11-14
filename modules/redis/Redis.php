@@ -8,13 +8,12 @@
 
 namespace modules\redis;
 
-use cube\error\CubeException;
 use cube\log\Log;
 use cube\utils\SystemUtil;
 
-//扩展检测.
+//extension check.
 if (SystemUtil::check_unknown_extension('redis')) {
-    throw new CubeException('Redis Ext Error.', CubeException::$EXT_ERROR);
+    throw new \Exception('Redis Ext Error.');
 }
 
 /**

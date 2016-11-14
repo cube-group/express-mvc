@@ -55,8 +55,6 @@ final class SystemUtil
     private static function extensions()
     {
         return array(
-            'pdo',
-            'pdo_mysql',
             'curl'
         );
     }

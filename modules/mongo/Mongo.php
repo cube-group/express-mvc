@@ -7,13 +7,12 @@
  */
 namespace modules\mongo;
 
-use cube\error\CubeException;
 use cube\utils\SystemUtil;
 use cube\log\Log;
 
-//扩展检测.
+//extension check.
 if (SystemUtil::check_unknown_extension('mongo')) {
-    throw new CubeException('Mongo Ext Error.', CubeException::$EXT_ERROR);
+    throw new \Exception('Redis Ext Error.');
 }
 
 /**

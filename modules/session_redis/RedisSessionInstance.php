@@ -9,7 +9,6 @@
 namespace modules\session_redis;
 
 use cube\core\DynamicClass;
-use cube\core\ISession;
 use cube\log\Log;
 use modules\redis\Redis;
 
@@ -18,7 +17,7 @@ use modules\redis\Redis;
  * 远程session存储.
  * @package modules\session
  */
-class RedisSessionInstance extends DynamicClass implements ISession
+class RedisSessionInstance extends DynamicClass
 {
     private static $options;
 
