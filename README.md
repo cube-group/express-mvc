@@ -34,7 +34,7 @@ $router->on('/index',function($req,$res,$next){
     $next(); //next middleWare.
     $a = ''; //gc
 });
-
+```
 ### ./www.php (the facade file of the Application)
 Once the route configuration is included in the project configuration file,
 it will automatically give priority to the path analysis of the virtual router,
