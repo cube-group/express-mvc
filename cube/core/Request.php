@@ -100,7 +100,7 @@ final class Request
 
     private function initPathInfo()
     {
-        $router = Config::get('core', 'router');
+        $router = Config::get('core', 'router_querystring');
         $facade = Config::get('core', 'facade');
         $path = '';
         if (empty($router)) {

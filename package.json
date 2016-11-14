@@ -20,7 +20,7 @@
   "core": {
     "facade": "/www.php",
     "app": "app.php",
-    "router": "router",
+    "router_querystring": "router",
     "session_name": "CUBE_SESSID",
     "session_timeout": 86400,
     "jsonp": "callback"
