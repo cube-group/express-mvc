@@ -8,11 +8,7 @@
 
 namespace modules\body;
 
-use com\cube\core\BaseDynamic;
-use com\cube\core\IBody;
-use com\cube\core\Response;
-use com\cube\core\Request;
-use com\cube\middleware\MiddleWare;
+use cube\core\DynamicClass;
 
 /**
  * Class Body.
@@ -20,11 +16,19 @@ use com\cube\middleware\MiddleWare;
  * mimeType: text/html、text/xml、application/octet-stream等
  * @package modules\body
  */
-class Body extends MiddleWare
+class Body
 {
-    public function run(Request $req, Response $res)
+    /**
+     * Create the middleWare Instance.
+     * @return \Closure
+     */
+    public static function create()
     {
-        $req->body(new BodyInstance());
+        return function ($req, $res, $next) {
+            $req->body(new BodyInstance());
+
+            $next();
+        };
     }
 }
 
@@ -33,11 +37,16 @@ class Body extends MiddleWare
  * Class BodyInstance.
  * @package modules\body
  */
-class BodyInstance extends BaseDynamic implements IBody
+class BodyInstance extends DynamicClass
 {
     public function __construct()
     {
         $this->body = $_POST;
+    }
+
+    public function __set($name, $value)
+    {
+        throw new \Exception('body not allowed to set!');
     }
 
     /**

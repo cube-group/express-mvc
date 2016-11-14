@@ -8,20 +8,20 @@
 
 namespace modules\cookie;
 
-use com\cube\core\BaseDynamic;
-use com\cube\core\Response;
-use com\cube\core\Request;
-use com\cube\middleware\MiddleWare;
+use cube\core\DynamicClass;
 
 /**
  * class Cookie.
  * @package com\cube\core
  */
-class Cookie extends MiddleWare
+class Cookie
 {
-    public function run(Request $req, Response $res)
+    public static function create()
     {
-        $req->cookie(new CookieInstance());
+        return function ($req, $res, $next) {
+            $req->cookie(new CookieInstance());
+            $next();
+        };
     }
 }
 
@@ -30,7 +30,7 @@ class Cookie extends MiddleWare
  * class Cookie.
  * @package com\cube\core
  */
-class CookieInstance extends BaseDynamic
+class CookieInstance extends DynamicClass
 {
     public function __construct()
     {
@@ -39,29 +39,23 @@ class CookieInstance extends BaseDynamic
 
     public function __set($name, $value)
     {
-        setcookie($name, $value, null, '/');
+        if (empty($value)) {
+            setcookie($name, '', time() - 3600, '/');
+        } else {
+            setcookie($name, $value, null, '/');
+        }
     }
 
     /**
-     * 设置cookie.
+     * set cookie & timeout.
      * @param $key
      * @param $value
      * @param $time
      * @return mixed
      */
-    public function set($key, $value, $time = null)
+    public function set($name, $value, $time = null)
     {
-        setcookie($key, $value, $time, '/');
-    }
-
-    /**
-     * 删除某一个cookie.
-     * @param $key
-     * @return mixed
-     */
-    public function delete($key)
-    {
-        setcookie($key, '', time() - 3600, '/');
+        setcookie($name, $value, $time, '/');
     }
 
     /**
@@ -70,8 +64,8 @@ class CookieInstance extends BaseDynamic
      */
     public function clear()
     {
-        foreach ($this->body as $key => $value) {
-            $this->delete($key);
+        foreach ($this->body as $name => $value) {
+            $this->$name = null;
         }
     }
 }

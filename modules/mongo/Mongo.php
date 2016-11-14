@@ -7,9 +7,9 @@
  */
 namespace modules\mongo;
 
-use com\cube\error\CubeException;
-use com\cube\utils\SystemUtil;
-use com\cube\log\Log;
+use cube\error\CubeException;
+use cube\utils\SystemUtil;
+use cube\log\Log;
 
 //扩展检测.
 if (SystemUtil::check_unknown_extension('mongo')) {

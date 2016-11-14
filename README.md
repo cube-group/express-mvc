@@ -1,28 +1,39 @@
-# The framework named cube for the php.
-* A simple and efficient development framework based on middleware, configuration and extension
+# php-mvc-express(like node.js express framework)
+* I recently insisted on the idea of the core to the node.js-express framework.
 * Author by linyang created on 2016-08.
-* Version Beta 1.0.1
 
-### ./com - framework dir(never change it)
-* /com/cube - cube dir
-* /com/cube/core - core classes
-* /com/cube/db - orm
-* /com/cube/error - Exception / Error
-* /com/cube/fs - filesystem operate
-* /com/cube/http - http/https request
-* /com/cube/international - international
-* /com/cube/log - log
-* /com/cube/middleware - Connect MiddleWare & RouterMiddleWare
-* /com/cube/utils - tools
-* /com/cube/view - ViewEngine (EchoEngine & AngularEngine)
+### ./cube
+* /cube/core - core classes
+* /cube/fs - file system classes
+* /cube/http - http/https request class
+* /cube/log - system log
+* /cube/utils - tools
+* /cube/view - ViewEngine (EchoEngine & AngularEngine)
 
 
 ### ./package.json - config file
 *  dir - dir config
-*  framework - core config
-*  engine - engine loaded
+*  core - core config
 *  modules - modules loaded
-*  model - proxy loaded(not instantiation)
+
+### middleWare append
+* initial mode middleWare.
+```javascript
+$router = Application::router();
+$router->on(function($req,$res,$next){
+    $a = 'helloWorld!'; //your code.
+    $next(); //next middleWare.
+    $a = ''; //gc
+});
+```
+* router mode middleWare.
+```javascript
+$router = Application::router();
+$router->on('/index',function($req,$res,$next){
+    $a = 'helloWorld!'; //your code.
+    $next(); //next middleWare.
+    $a = ''; //gc
+});
 
 ### ./www.php (the facade file of the Application)
 Once the route configuration is included in the project configuration file,
@@ -34,9 +45,9 @@ otherwise the network address is used directly to resolve the path.
 
 //application filter the pathinfo.
 $router= Application::Router();
-$router.on('/http',function($req,$res,$connect){
+$router.on('/http',function($req,$res,$next){
     $res->send('get');
-    $connect->next();
+    $next();
 }
 ```
 * Standard router pathinfo, change the nginx.conf

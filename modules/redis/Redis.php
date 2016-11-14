@@ -8,9 +8,9 @@
 
 namespace modules\redis;
 
-use com\cube\error\CubeException;
-use com\cube\log\Log;
-use com\cube\utils\SystemUtil;
+use cube\error\CubeException;
+use cube\log\Log;
+use cube\utils\SystemUtil;
 
 //扩展检测.
 if (SystemUtil::check_unknown_extension('redis')) {

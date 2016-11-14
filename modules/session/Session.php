@@ -8,30 +8,29 @@
 
 namespace modules\session;
 
-use com\cube\core\BaseDynamic;
-use com\cube\core\Config;
-use com\cube\core\ISession;
-use com\cube\core\Response;
-use com\cube\core\Request;
-use com\cube\middleware\MiddleWare;
+use cube\core\DynamicClass;
+use cube\core\Config;
 
 /**
  * Class Session.
  * Session中间件,也实现了ISession接口。
  * @package modules\session
  */
-class Session extends MiddleWare
+class Session
 {
-    public function run(Request $req, Response $res)
+    public static function create()
     {
-        //default action.
-        session_set_cookie_params(Config::get('core', 'session_timeout'));
-        session_name(Config::get('core', 'session_name'));
-        session_start();
+        return function ($req, $res, $next) {
+            //default action.
+            session_set_cookie_params(Config::get('core', 'session_timeout'));
+            session_name(Config::get('core', 'session_name'));
+            session_start();
+            session_regenerate_id(true);
 
-        session_regenerate_id(true);
+            $req->session(new LocalSession());
 
-        $req->session(new LocalSession());
+            $next();
+        };
     }
 }
 
@@ -40,16 +39,20 @@ class Session extends MiddleWare
  * Class LocalSession.
  * @package modules\session
  */
-class LocalSession extends BaseDynamic implements ISession
+class LocalSession extends DynamicClass
 {
     public function __construct()
     {
-        $this->body = $_SESSION;
     }
 
     public function __set($name,$value)
     {
         $_SESSION[$name] = $value;
+    }
+
+    public function __get($name)
+    {
+        return $_SESSION[$name];
     }
 
     public function getName()
@@ -67,14 +70,12 @@ class LocalSession extends BaseDynamic implements ISession
     public function delete($options)
     {
         // TODO: Implement delete() method.
-        parent::delete($options);
         unset($_SESSION[$options]);
     }
 
     public function clear()
     {
         // TODO: Implement clear() method.
-        parent::clear();
         session_destroy();
     }
 }

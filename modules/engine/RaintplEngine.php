@@ -8,7 +8,8 @@
 
 namespace modules\engine;
 
-use com\cube\view\ViewEngine;
+use cube\view\ViewEngine;
+use cube\core\Config;
 use modules\engine\raintpl\RainTPL;
 
 /**
@@ -25,12 +26,12 @@ class RaintplEngine extends ViewEngine
     {
         parent::__construct();
 
-        $this->app->load('./modules/engine/raintpl/rain.tpl.class.php');
+        Config::load('modules/engine/raintpl/rain.tpl.class.php');
 
         RainTPL::configure('base_url', null);
-        RainTPL::configure("root_dir", constant('BASE_DIR'));
-        RainTPL::configure("tpl_dir", 'view/');
-        RainTPL::configure("cache_dir", "tmp/");
+        RainTPL::configure("root_dir", Config::get('BASE_DIR'));
+        RainTPL::configure("tpl_dir", Config::get('dir', 'view') . '/');
+        RainTPL::configure("cache_dir", Config::get('dir', 'tmp') . '/');
 
     }
 
