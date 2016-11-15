@@ -38,6 +38,12 @@ final class Connect
      * @var array
      */
     private $middleWares;
+    /**
+     * Loaded route name.
+     * such as '/filter'
+     * @var string
+     */
+    private $loadingRouterName = '';
 
     /**
      * Connect constructor.
@@ -73,12 +79,11 @@ final class Connect
 
                 next($this->middleWares);
                 if (is_array($middleWare)) {
-                    $filter = $middleWare['filter'];
-                    $instance = $middleWare['instance'];
+                    list($filter, $instance) = $middleWare;
                     if ($this->routerMatch($filter)) {
                         //execute the router middleWare.
                         $instance($this->req, $this->res, $this->connectNext->next());
-                    }else{
+                    } else {
                         $this->next();
                     }
                 } else {
@@ -95,15 +100,21 @@ final class Connect
     }
 
     /**
-     * add router middleware className String.
+     * add middleWare.
+     * $router = Application::router();
+     * $router->on(Cookie::create());
+     *
+     * add router middleWare.
+     * $router->on('/filter',function($req,$res,$next){}
+     *
+     * add router php fileName.
+     * $router->on('user');//then the framework will find the /router/user.php,and load it.
+     *
      * @param $filter
      * @param $object router ClassName or Instance.
      */
     public function on(...$args)
     {
-        //(args length == 1 && is_array) = MiddleWare List
-        //(args length == 1 && !is_array) = MiddleWare Instance
-        //(args length == 2) == RouterMiddleWare function
         switch (count($args)) {
             case 1:
                 $list = is_array($args[0]) ? $args[0] : [$args[0]];
@@ -112,7 +123,11 @@ final class Connect
                 }
                 break;
             case 2:
-                array_push($this->middleWares, ['filter' => $this->fillFilter($args[0]), 'instance' => $args[1]]);
+                if (is_string($args[1])) {
+                    $this->analyzeAllRouters($args[0], $args[1]);
+                } else {
+                    array_push($this->middleWares, [$this->fillFilter($args[0]), $args[1]]);
+                }
                 break;
             default:
                 throw new \Exception('middleWare append error');
@@ -130,6 +145,21 @@ final class Connect
         }
     }
 
+    /**
+     * find all router middleWares.
+     */
+    private function analyzeAllRouters($filter, $fileName)
+    {
+        if ($this->routerMatch($filter) && $fileName) {
+            $this->loadingRouterName = $filter;
+            Config::load($fileName);
+            $this->loadingRouterName = '';
+        }
+    }
+
+    /**
+     * execute next middleWare.
+     */
     private function next()
     {
         $nextFunction = $this->connectNext->next();
@@ -148,6 +178,9 @@ final class Connect
         } else if (substr($filter, 0, 1) != '/') {
             $filter = '/' . $filter;
         }
+        if ($this->loadingRouterName && $this->loadingRouterName != '/') {
+            $filter = substr($this->loadingRouterName, -1) == '/' ? substr($this->loadingRouterName, 1) . $filter : $this->loadingRouterName . $filter;
+        }
         return $filter;
     }
 
@@ -156,14 +189,14 @@ final class Connect
      */
     private function routerMatch($filter)
     {
-        $path = $this->req->path;
-
         /**
          * $path = '/dir/name';
          * $filter = '/dir';
          * $filter = '/dir/:name';
          * $path contains $filter
          */
+        $path = $this->req->path;
+        $this->req->route = $filter;
         if (strpos($path, $filter) === 0) {
             return true;
         } else if (strstr($filter, ':') == true) {
@@ -178,7 +211,6 @@ final class Connect
                     }
                 }
                 $this->req->params = $params;
-                $this->req->route = $filter;
                 return true;
             }
         } else {

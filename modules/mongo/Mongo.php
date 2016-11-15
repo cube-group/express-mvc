@@ -12,7 +12,7 @@ use cube\log\Log;
 
 //extension check.
 if (SystemUtil::check_unknown_extension('mongo')) {
-    throw new \Exception('Redis Ext Error.');
+    throw new \Exception('Mongo Ext Error.');
 }
 
 /**

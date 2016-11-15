@@ -96,7 +96,7 @@ final class Config
     {
         $arr = null;
         if (empty($options)) {
-            return;
+            return false;
         } elseif (is_array($options)) {
             $arr = $options;
         } else {

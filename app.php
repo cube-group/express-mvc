@@ -11,13 +11,16 @@ use cube\core\Request;
 $router = Application::router();
 
 $router->on(function (Request $req, Response $res, $next) {
-    if(!$req->query->username){
+    if (!$req->query->username) {
         $res->send('auth error');
         return;
     }
     $next();
 });
 
+$router->on('/router', 'router/test.php');
+
+$router->on('/user', 'router/user.php');
 
 $router->on('/redirect', function (Request $req, Response $res, $next) {
     $res->redirect('./www.php?router=http');
