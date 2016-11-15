@@ -1,5 +1,6 @@
 # php-mvc-express(like node.js express framework)
 * I recently insisted on the idea of the core to the node.js-express framework.
+* Seven days from Nodejs-express seamless switching to php-mvc-express development! :)
 * Author by linyang created on 2016-08.
 
 ### ./cube
