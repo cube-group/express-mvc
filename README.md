@@ -30,11 +30,7 @@ $router->on(function($req,$res,$next){
 * router mode middleWare fileName.
 ```javascript
 $router = Application::router();
-$router->on('/test','router/test.php'){
-    $a = 'helloWorld!'; //your code.
-    $next(); //next middleWare.
-    $a = ''; //gc
-});
+$router->on('/test','router/test.php');
 ```
 * router mode middleWare.
 ```javascript
