@@ -8,19 +8,62 @@
 
 namespace modules\image;
 
+use cube\utils\SystemUtil;
+
 //extension check.
-if (SystemUtil::check_unknown_extension('gd')) {
-    throw new \Exception('GD Ext Error.');
+if (SystemUtil::check_unknown_extension('imagick')) {
+    throw new \Exception('imagick Ext Error.');
 }
 
 /**
  * Class Image.
- * 图像处理类.
  * @package modules\image
  */
 final class Image
 {
-    private function __construct()
+    /**
+     * PPT TO PDF
+     * you need setup the libreoffice and libreoffice-headless
+     * yum install libreoffice libreoffice-headless
+     * @param $source
+     * @return bool|string
+     */
+    public static function ppt2pdf($source)
     {
+        if (system('export DISPLAY=:0.0 && libreoffice --headless --invisible --convert-to pdf ' . $source) === 0) {
+            $info = pathinfo($source);
+            return $info['dirname'] . '/' . explode('.', $info['basename'])[0] . 'pdf';
+        }
+        return false;
     }
+
+    /**
+     * PDF TO PIC
+     * @param $source  pdf filename
+     * @param $path export the file dir path
+     * @param $extension pic extension name
+     * @param $page page number
+     * @return array
+     */
+    public static function pdf2pic($source, $path, $extension = 'jpg', $page = -1)
+    {
+        $im = new \Imagick();
+        $im->setCompressionQuality(100);
+        if ($page == -1) {
+            $im->readImage($source);
+        } else {
+            $im->readImage($source . "[" . $page . "]");
+        }
+        foreach ($im as $key => $var) {
+            $var->setImageFormat($extension);
+            $filename = $path . "/" . $key . '.png';
+            if ($var->writeImage($filename) == true) {
+                $return[] = $filename;
+            }
+        }
+        return $return;
+    }
+
 }
+
+?>

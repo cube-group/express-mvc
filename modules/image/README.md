@@ -1,2 +1,8 @@
-# 该模块(插件)处理图像,如:jpg、png、gif等;
-* 尚未实现,建议使用GD扩展进行操作
+### ext by imagick.so
+* imagick.so go to the site "pecl.php.net/pcakge/imagick"
+* you should setup the ImageMagick and ImageMagick-devel software.
+### what is Image's functions?
+* pdf parsed to pic
+```javascript
+$pic_files = Image::pdf2pic('a.pdf','./','png');//return array
+```

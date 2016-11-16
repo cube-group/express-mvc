@@ -11,8 +11,8 @@ namespace modules\orm;
 use cube\log\Log;
 use cube\utils\SystemUtil;
 
-    //extension check.
-if (SystemUtil::check_unknown_extension(['pdo','pdo_mysql'])) {
+//extension check.
+if (SystemUtil::check_unknown_extension(['pdo', 'pdo_mysql'])) {
     throw new \Exception('PDO Ext Error.');
 }
 

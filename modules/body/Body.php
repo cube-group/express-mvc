@@ -86,7 +86,7 @@ class BodyInstance extends DynamicClass
      * get the http upload file numbers.
      * @return int
      */
-    public function files_num()
+    public function fileNumber()
     {
         return count($_FILES);
     }

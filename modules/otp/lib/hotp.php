@@ -20,7 +20,8 @@
  * THE SOFTWARE.
  */
 
-namespace OTPHP {
+
+namespace modules\otp {
   /**
    * HOTP - One time password generator 
    * 

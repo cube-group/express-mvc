@@ -9,14 +9,13 @@
     }
   ],
   "log": {
-    "log": "./log/cube.log",
-    "mysql": "./log/cube.mysql"
+    "log": "log/cube.log",
+    "mysql": "log/cube.mysql"
   },
   "dir": {
     "view": "view",
     "tmp": "tmp",
-    "router": "router",
-    "upload": "upload"
+    "router": "router"
   },
   "core": {
     "facade": "/www.php",
@@ -30,9 +29,6 @@
     "modules/engine/RaintplEngine.php",
     "modules/cookie/Cookie.php",
     "modules/session/Session.php",
-    "modules/session_redis/RedisSession.php",
-    "modules/body/Body.php",
-    "modules/mongo/Mongo.php",
-    "modules/redis/Redis.php"
+    "modules/body/Body.php"
   ]
 }
