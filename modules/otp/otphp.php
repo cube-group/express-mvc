@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-require_once __DIR__ . '/base32.php';
-require_once __DIR__ . '/otp.php';
-require_once __DIR__ . '/hotp.php';
-require_once __DIR__ . '/totp.php';
+require_once __DIR__ . '/lib/base32.php';
+require_once __DIR__ . '/lib/otp.php';
+require_once __DIR__ . '/lib/hotp.php';
+require_once __DIR__ . '/lib/totp.php';

@@ -21,7 +21,7 @@
  */
 
 
-namespace modules\otp {
+namespace OTPHP {
 /**
  * One Time Password Generator 
  * 
