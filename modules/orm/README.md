@@ -1,31 +1,34 @@
-# orm
+# php-orm
 orm curd for the mysql
 
 ## cube-php/orm needs
 * POD Ext.
 
-## cube-php/framework contains the orm.
-* <a href='https://github.com/cube-group/php-orm'>click me , and go to check the php-orm lib</a>
+## cube-group/php-orm.
+* <a href='https://github.com/cube-group/php-orm'>click me , and go to check the php-orm</a>
 
 ## how to use the cube-orm?
 ```javascript
-require __DIR__ . './DB.php';
+//Dependency Library
+require __DIR__ . '/utils/Utils.php';
+require __DIR__ . '/fs/FS.php';
+require __DIR__ . '/log/Log.php';
+//Core Library
+require __DIR__ . '/orm/DB.php';
 
 use orm\DB;
 
-$config = [
-    'host' => 'localhost',
-    'port' => 3306,
-    'user' => 'root',
-    'password' => '',
-    'db' => 'system',
-    'prefix' => 'cube_orm_'
-];
-
 //init orm config.
-DB::init($config);
+DB::init([
+    'host' => 'weixin001.mysql.rds.aliyuncs.com',
+    'port' => 3306,
+    'db' => 'ceshi',
+    'username' => 'linyang',
+    'password' => 'xyq2525307',
+    'prefix' => 'ceshi_'
+]);
 
-DB::model('list')->where('a=1')->group('userid')->select();
+print_r(DB::model('list')->select());
 ```
 
 ## Class com\cube\db\DB
