@@ -20,15 +20,15 @@ use orm\DB;
 
 //init orm config.
 DB::init([
-    'host' => 'weixin001.mysql.rds.aliyuncs.com',
+    'host' => 'localhost',
     'port' => 3306,
-    'db' => 'ceshi',
-    'username' => 'linyang',
-    'password' => 'xyq2525307',
-    'prefix' => 'ceshi_'
+    'db' => 'system',
+    'username' => 'root',
+    'password' => '',
+    'prefix' => ''
 ]);
 
-print_r(DB::model('list')->select());
+print_r(DB::model('user')->select());
 ```
 
 ## Class com\cube\db\DB
