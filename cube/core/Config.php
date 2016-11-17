@@ -17,6 +17,7 @@ use cube\fs\FS;
  */
 final class Config
 {
+
     /**
      * 全局配置.
      * @var array
@@ -82,6 +83,11 @@ final class Config
                 case 'TIME_ZONE':
                     self::$VALUE['START_TIME'] = microtime(true);
                     date_default_timezone_set($value);
+                    break;
+                case 'TMP':
+                    if ($value === true) {
+                        ini_set('upload_tmp_dir', self::$VALUE['BASE_DIR'] . self::$VALUE['dir']['tmp']);
+                    }
                     break;
             }
         }

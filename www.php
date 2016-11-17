@@ -12,17 +12,8 @@
 require 'cube/core/Application.php';
 
 use cube\core\Application;
-use modules\session\Session;
-use modules\cookie\Cookie;
-use modules\body\Body;
 
 //initialize the cube framework.
-Application::init(__DIR__)->start(
-    [
-        Cookie::create(),
-        Body::create(),
-        Session::create()
-    ]
-);
+Application::init(__DIR__)->start()
 
 ?>

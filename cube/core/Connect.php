@@ -49,18 +49,13 @@ final class Connect
      * Connect constructor.
      * @param $res
      * @param $req
-     * @param $modules initial modules.
      */
-    public function __construct($req, $res, $modules = null)
+    public function __construct($req, $res)
     {
         $this->middleWares = [];
 
         $this->req = $req;
         $this->res = $res;
-
-        if (!empty($modules)) {
-            $this->on($modules);
-        }
     }
 
     /**

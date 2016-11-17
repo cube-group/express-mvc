@@ -109,17 +109,16 @@ final class Application
 
     /**
      * start Application.
-     * @param $modules
      * @throws \Exception
      */
-    public function start($modules)
+    public function start()
     {
         if (!empty(self::$connect)) {
             throw new \Exception('Application has been started');
         }
 
         //init connect.
-        self::$connect = new Connect(new Request(), new Response(), $modules);
+        self::$connect = new Connect(new Request(), new Response());
         //load the logic.
         Config::load(Config::get('core', 'app'));
         //start connect.
