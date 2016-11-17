@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-require_once dirname(__FILE__) . '/../lib/otphp.php';
+require_once dirname(__FILE__) . '/../lib/OTPHP.php';
 
 class HOPTTest extends PHPUnit_Framework_TestCase {
   public function test_it_gets_the_good_code() {

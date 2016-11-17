@@ -14,6 +14,6 @@ require 'cube/core/Application.php';
 use cube\core\Application;
 
 //initialize the cube framework.
-Application::init(__DIR__)->start()
+Application::init(__DIR__)->start();
 
 ?>

@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-require_once dirname(__FILE__) . '/../lib/otphp.php';
+require_once dirname(__FILE__) . '/../lib/OTPHP.php';
 
 class TOPTTest extends PHPUnit_Framework_TestCase {
 
