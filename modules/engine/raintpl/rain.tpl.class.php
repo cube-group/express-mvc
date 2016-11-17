@@ -9,7 +9,7 @@
  *  @version 2.7.2
  */
 
-namespace modules\engine\raintpl;
+namespace engine\raintpl;
 
 class RainTPL{
 

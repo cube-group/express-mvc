@@ -6,10 +6,13 @@
  * Time: 下午2:41
  */
 
-namespace cube\view;
+namespace engine;
 
-use cube\core\Config;
-use cube\fs\FS;
+use fs\FS;
+
+require_once __DIR__.'/EchoEngine.php';
+require_once __DIR__.'/AngularEngine.php';
+require_once __DIR__.'/RaintplEngine.php';
 
 /**
  * Class ViewEngine
@@ -38,6 +41,6 @@ class ViewEngine
      */
     final protected function getViewPagePath($name)
     {
-        return Config::get('BASE_DIR') . Config::get('dir', 'view') . '/' . $name . ".html";
+        return constant('VIEW_DIR') . $name . ".html";
     }
 }

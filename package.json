@@ -9,8 +9,8 @@
     }
   ],
   "log": {
-    "log": "log/cube.log",
-    "mysql": "log/cube.mysql"
+    "log": "log/log.log",
+    "sql": "log/sql.log"
   },
   "dir": {
     "view": "view",
@@ -26,9 +26,14 @@
     "jsonp": "callback"
   },
   "modules": [
-    "modules/engine/RaintplEngine.php",
+    "modules/utils/Utils.php",
+    "modules/engine/autoload.php",
+    "modules/body/Body.php",
     "modules/cookie/Cookie.php",
     "modules/session/Session.php",
-    "modules/body/Body.php"
+    "modules/fs/FS.php",
+    "modules/http/Http.php",
+    "modules/log/Log.php",
+    "modules/orm/DB.php"
   ]
 }

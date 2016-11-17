@@ -5,7 +5,7 @@
  * Date: 16/11/17
  * Time: 上午10:10
  */
-namespace modules\mvc;
+namespace mvc;
 
 /**
  * Class MVC.

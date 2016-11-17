@@ -1,7 +1,12 @@
 <?php
 
-namespace cube\http;
-use cube\utils\URLUtil;
+namespace http;
+
+use utils\Utils;
+
+if (Utils::is_miss_ext('curl')) {
+    throw new \Exception('Ext curl is not exist!');
+}
 
 /**
  * Created by PhpStorm.
@@ -25,7 +30,7 @@ final class Http
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
 
-        if (URLUtil::isHTTPS($url)) {
+        if (Utils::isHTTPS($url)) {
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); // 从证书中检查SSL加密算法是否存在
         }
@@ -54,7 +59,7 @@ final class Http
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
 
-        if (self::isHTTPS($url)) {
+        if (Utils::isHTTPS($url)) {
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1); // 从证书中检查SSL加密算法是否存在
         }

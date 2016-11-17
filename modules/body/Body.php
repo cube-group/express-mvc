@@ -6,9 +6,8 @@
  * Time: 下午5:09
  */
 
-namespace modules\body;
-
-use cube\core\DynamicClass;
+namespace body;
+use utils\DynamicClass;
 
 /**
  * Class Body.

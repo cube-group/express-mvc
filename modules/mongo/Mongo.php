@@ -5,19 +5,18 @@
  * Date: 16/9/13
  * Time: 下午12:20
  */
-namespace modules\mongo;
+namespace mongo;
 
-use cube\utils\SystemUtil;
-use cube\log\Log;
+use log\Log;
+use utils\Utils;
 
-//extension check.
-if (SystemUtil::check_unknown_extension('mongo')) {
-    throw new \Exception('Mongo Ext Error.');
+if ($ext = Utils::is_miss_ext('mongo')) {
+    throw new \Exception('Ext ' . $ext . ' is not exist!');
 }
 
 /**
  * Class MongoStore.
- * 
+ *
  * @package modules\mongo
  */
 final class Mongo
@@ -148,8 +147,8 @@ final class Mongo
         if (empty(self::$mongo)) {
             $options = self::$options;
             try {
-                self::$mongo = new \MongoClient('mongodb://'.$options['host'] . ':' . $options['port'],
-                array('username'=>$options['user'],'password'=>$options['password'],'db'=>$options['db'])
+                self::$mongo = new \MongoClient('mongodb://' . $options['host'] . ':' . $options['port'],
+                    array('username' => $options['user'], 'password' => $options['password'], 'db' => $options['db'])
                 );
 
                 Log::log('Mongo Connected host: ' . $options['host'] . ' port: ' . $options['port'] . ' db: ' . $options['db']);

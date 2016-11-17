@@ -6,11 +6,10 @@
  * Time: 上午10:23
  */
 
-namespace cube\core;
+namespace cube;
 
-use cube\fs\FS;
-use cube\log\Log;
-use cube\view\ViewEngine;
+use fs\FS;
+use log\Log;
 
 
 /**
@@ -47,7 +46,7 @@ final class Response
         header("Content-Disposition: attachment; filename=" . pathinfo($path)['basename']);
         echo FS::read($path);
 
-        Log::log('Response download', true);
+        Log::log('Response download', $this->getTimer());
     }
 
     /**
@@ -58,7 +57,7 @@ final class Response
     {
         echo $value;
 
-        Log::log('Response send', true);
+        Log::log('Response send', $this->getTimer());
     }
 
     /**
@@ -69,7 +68,7 @@ final class Response
     {
         echo json_encode($value);
 
-        Log::log('Response json', true);
+        Log::log('Response json', $this->getTimer());
     }
 
     /**
@@ -88,20 +87,20 @@ final class Response
         }
         echo $callback_func . '(' . json_encode($value) . ')';
 
-        Log::log('Response jsonp', true);
+        Log::log('Response jsonp', $this->getTimer());
     }
 
     /**
      * send the content to the client by the viewEngine.
-     * @param ViewEngine $viewEngine
+     * @param $viewEngine
      * @param viewName the name of template
      * @param $value parameters
      */
-    public function render(ViewEngine $viewEngine, $viewName, $value = null)
+    public function render($viewEngine, $viewName, $value = null)
     {
         $viewEngine->render($viewName, $value);
 
-        Log::log('Response render ' . $viewName, true);
+        Log::log('Response render ' . $viewName, $this->getTimer());
     }
 
     /**
@@ -111,8 +110,8 @@ final class Response
     public function redirect($value)
     {
         $this->statusCode(301)->location($value);
-        
-        Log::log('Response redirect ' . $value, true);
+
+        Log::log('Response redirect ' . $value, $this->getTimer());
     }
 
     /**
@@ -175,5 +174,16 @@ final class Response
         }
 
         return $this;
+    }
+
+
+    /**
+     * Get the application run duration microtime.
+     *
+     * @return int
+     */
+    public function getTimer()
+    {
+        return intval((microtime(true) - constant('START_TIME')) * 1000);
     }
 }

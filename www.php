@@ -9,9 +9,9 @@
  */
 
 //include all cube libs.
-require 'cube/core/Application.php';
+require './cube/Application.php';
 
-use cube\core\Application;
+use cube\Application;
 
 //initialize the cube framework.
 Application::init(__DIR__)->start();

@@ -6,9 +6,8 @@
  * Time: 上午11:48
  */
 
-namespace modules\cookie;
-
-use cube\core\DynamicClass;
+namespace cookie;
+use utils\DynamicClass;
 
 /**
  * class Cookie.

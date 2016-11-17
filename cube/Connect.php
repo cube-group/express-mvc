@@ -6,10 +6,9 @@
  * Time: 上午9:59
  */
 
-namespace cube\middleware;
+namespace cube;
 
-use cube\core\Config;
-use cube\view\EchoEngine;
+use engine\EchoEngine;
 
 /**
  * Class Connect.
@@ -162,7 +161,14 @@ final class Connect
     }
 
     /**
-     * return the checked filter.
+     * fill the filter string.
+     * such as
+     * / => /
+     * /user => /user/
+     * user => /user/
+     * user/a => /user/a/
+     * /user/a => /user/a/
+     *
      * @param $filter
      * @return string
      */
@@ -176,41 +182,66 @@ final class Connect
         if ($this->loadingRouterName && $this->loadingRouterName != '/') {
             $filter = substr($this->loadingRouterName, -1) == '/' ? substr($this->loadingRouterName, 1) . $filter : $this->loadingRouterName . $filter;
         }
+        if ($filter != '/' && substr($filter, -1) != '/') {
+            $filter .= '/';
+        }
         return $filter;
     }
 
     /**
      * filter router string & router-path.
+     *
+     * demo: match
+     * path: /user/
+     * filter: /
+     *
+     * demo: not match
+     * path: /user/
+     * filter : /u
+     *
+     * demo: not match
+     * path: /user or /user/ or /user/a/b
+     * filter: /user/:id
+     *
+     * demo: match
+     * path: /user/a
+     * filter: /user/:id
+     *
+     * demo: match
+     * path: /user/a/b
+     * filter: /user/:id/:name
+     *
+     * demo: not match
+     * path: /user/a/
+     * filter: /user/:id/:name
      */
     private function routerMatch($filter)
     {
-        /**
-         * $path = '/dir/name';
-         * $filter = '/dir';
-         * $filter = '/dir/:name';
-         * $path contains $filter
-         */
         $path = $this->req->path;
         $this->req->route = $filter;
+
         if (strpos($path, $filter) === 0) {
             return true;
         } else if (strstr($filter, ':') == true) {
             //get the params from the path.
-            if (strpos($path, explode(':', $filter)[0]) === 0) {
-                $path_stack = explode('/', $path);
-                $filter_stack = explode('/', $filter);
+            $path_stack = explode('/', $path);
+            $filter_stack = explode('/', $filter);
+            //use strict.
+            if (count($path_stack) == count($filter_stack)) {
                 $params = [];
                 foreach ($filter_stack as $key => $value) {
-                    if (strstr($value, ':')) {
+                    if ($value != '' && strstr($value, ':') == true) {
                         $params[explode(':', $value)[1]] = $path_stack[$key];
+                    } else if ($value != $path_stack[$key]) {
+                        //length equal but other value not equal
+                        return false;
                     }
                 }
                 $this->req->params = $params;
                 return true;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 }
 

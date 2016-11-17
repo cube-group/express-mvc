@@ -6,11 +6,8 @@
  * Time: 下午10:27
  */
 
-namespace modules\engine;
-
-use cube\view\ViewEngine;
-use cube\core\Config;
-use modules\engine\raintpl\RainTPL;
+namespace engine;
+use engine\raintpl\RainTPL;
 
 /**
  * Class RaintplEngine.
@@ -19,20 +16,14 @@ use modules\engine\raintpl\RainTPL;
  */
 class RaintplEngine extends ViewEngine
 {
-    /**
-     * RaintplEngine constructor.
-     */
     public function __construct()
     {
-        parent::__construct();
-
-        Config::load('modules/engine/raintpl/rain.tpl.class.php');
+        require __DIR__ . '/raintpl/rain.tpl.class.php';
 
         RainTPL::configure('base_url', null);
-        RainTPL::configure("root_dir", Config::get('BASE_DIR'));
-        RainTPL::configure("tpl_dir", Config::get('dir', 'view') . '/');
-        RainTPL::configure("cache_dir", Config::get('dir', 'tmp') . '/');
-
+        RainTPL::configure("root_dir", constant('BASE_DIR'));
+        RainTPL::configure("tpl_dir", constant('BASE_DIR') . constant('VIEW_DIR') . '/');
+        RainTPL::configure("cache_dir", constant('BASE_DIR') . constant('TMP_DIR') . '/');
     }
 
     public function render($name, $data = null)

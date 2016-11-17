@@ -6,14 +6,13 @@
  * Time: 下午12:20
  */
 
-namespace modules\redis;
+namespace redis;
 
-use cube\log\Log;
-use cube\utils\SystemUtil;
+use log\Log;
+use utils\Utils;
 
-//extension check.
-if (SystemUtil::check_unknown_extension('redis')) {
-    throw new \Exception('Redis Ext Error.');
+if ($ext = Utils::is_miss_ext('redis')) {
+    throw new \Exception('Ext ' . $ext . ' is not exist!');
 }
 
 /**
@@ -102,7 +101,8 @@ class Redis
                 Log::log('Redis Connected host: ' . $options['host'] . ' port: ' . $options['port'] . ' db: ' . $options['db']);
             } catch (\RedisException $e) {
                 return null;
-                Log::log('Redis Error ' . $e->getTraceAsString());
+                Log:
+                log('Redis Error ' . $e->getTraceAsString());
             }
         }
 

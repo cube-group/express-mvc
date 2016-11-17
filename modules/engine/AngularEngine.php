@@ -6,9 +6,7 @@
  * Time: 下午10:20
  */
 
-namespace cube\view;
-
-use cube\view\view;
+namespace engine;
 
 /**
  * Class AngualrEngine.

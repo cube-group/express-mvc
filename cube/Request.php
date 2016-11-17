@@ -6,9 +6,9 @@
  * Time: 上午10:23
  */
 
-namespace cube\core;
+namespace cube;
 
-use cube\log\Log;
+use log\Log;
 
 /**
  * Class Request.
@@ -84,7 +84,7 @@ final class Request
         $this->initCoreInfo();
         $this->initPathInfo();
 
-        //request log.
+        //request log.log.
         Log::log($this->baseUrl);
     }
 
@@ -113,10 +113,16 @@ final class Request
             }
         }
 
+        //fill the path string.
         if (empty($path)) {
             $path = '/';
-        } else if ($path != '/' && substr($path, -1) == '/') {
-            $path = substr($path, 0, -1);
+        } else if ($path != '/') {
+            if (substr($path, 0, 1) != '/') {
+                $path = '/' . $path;
+            }
+            if (substr($path, -1) != '/') {
+                $path .= '/';
+            }
         }
         //lower string.
         $this->path = strtolower($path);

@@ -6,10 +6,8 @@
  * Time: 下午1:47
  */
 
-namespace modules\session;
-
-use cube\core\DynamicClass;
-use cube\core\Config;
+namespace session;
+use utils\DynamicClass;
 
 /**
  * Class Session.
@@ -22,8 +20,8 @@ class Session
     {
         return function ($req, $res, $next) {
             //default action.
-            session_set_cookie_params(Config::get('core', 'session_timeout'));
-            session_name(Config::get('core', 'session_name'));
+            session_set_cookie_params(constant('CONFIG')['core']['session_timeout']);
+            session_name(constant('CONFIG')['core']['session_name']);
             session_start();
             session_regenerate_id(true);
 
@@ -45,7 +43,7 @@ class LocalSession extends DynamicClass
     {
     }
 
-    public function __set($name,$value)
+    public function __set($name, $value)
     {
         $_SESSION[$name] = $value;
     }

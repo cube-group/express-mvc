@@ -6,11 +6,21 @@
  * Time: 上午10:54
  */
 
-$router = \cube\core\Application::router();
+use cube\Application;
+
+$router = Application::router();
 
 $router->on('/', function ($req, $res, $next) {
-    $res->send('catch user');
+    //$req->route => /user/
     $next();
 });
 
-echo __FILE__.'<br>';
+$router->on('/:id/:name/pwd', function ($req, $res, $next) {
+    //$req->route => /user/:id/:name/:pwd
+    $res->json($req->params);
+});
+
+$router->on('/http', function ($req, $res, $next) {
+    //$req->route => /user/http
+    $res->send(\http\Http::get('https://github.com/cube-group'));
+});

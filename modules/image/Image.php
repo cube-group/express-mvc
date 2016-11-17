@@ -6,13 +6,12 @@
  * Time: 上午10:01
  */
 
-namespace modules\image;
+namespace image;
 
-use cube\utils\SystemUtil;
+use utils\Utils;
 
-//extension check.
-if (SystemUtil::check_unknown_extension('imagick')) {
-    throw new \Exception('imagick Ext Error.');
+if ($ext = Utils::is_miss_ext('imagick')) {
+    throw new \Exception('Ext ' . $ext . ' is not exist!');
 }
 
 /**

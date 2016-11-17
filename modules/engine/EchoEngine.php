@@ -1,8 +1,6 @@
 <?php
 
-namespace cube\view;
-
-use cube\view\view;
+namespace engine;
 
 /**
  * Class ViewEngine.

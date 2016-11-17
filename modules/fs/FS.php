@@ -6,9 +6,7 @@
  * Time: 下午10:53
  */
 
-namespace cube\fs;
-
-use cube\core\Config;
+namespace fs;
 
 /**
  * Class FS.
@@ -19,6 +17,27 @@ final class FS
 {
     private function __construct()
     {
+    }
+
+    /**
+     * Load the php file in the cube framework.
+     *
+     * @param $files
+     */
+    public static function load($files)
+    {
+        $arr = null;
+        if (empty($files)) {
+            return;
+        } elseif (is_array($files)) {
+            $arr = $files;
+        } else {
+            $arr = array($files);
+        }
+        $base_dir = defined('BASE_DIR') ? constant('BASE_DIR') : '';
+        foreach ($arr as $file) {
+            require_once $base_dir . $file;
+        }
     }
 
     /**
@@ -173,7 +192,7 @@ final class FS
             return null;
         }
         $tmp_file_name = md5(time() + rand(0, 100000)) . (empty($key) ? '' : '_' . $key);
-        $tmp_file_path = Config::get('BASE_DIR') . Config::get('dir', 'download') . '/' . $tmp_file_name;
+        $tmp_file_path = constant('DOWNLOAD_DIR') . $tmp_file_name;
         file_put_contents($tmp_file_path, $content);
         return array(array('name' => $tmp_file_name, 'path' => $tmp_file_path));
     }
@@ -233,7 +252,7 @@ final class FS
                 continue;
             }
             $tmp_file_name = md5(time() + rand(0, 100000)) . '_' . $file['name'];
-            $tmp_file_path = Config::get('BASE_DIR') . Config::get('dir', 'download') . '/' . $tmp_file_name;
+            $tmp_file_path = constant('DOWNLOAD_DIR') . $tmp_file_name;
             if (move_uploaded_file($file['tmp_name'], $tmp_file_path)) {
                 array_push($stack, array('name' => $tmp_file_name, 'path' => $tmp_file_path));
             }

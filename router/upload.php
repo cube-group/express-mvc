@@ -6,8 +6,8 @@
  * Time: 下午6:57
  */
 
-use cube\core\Application;
-use cube\fs\FS;
+use cube\Application;
+use fs\FS;
 
 $router = Application::router();
 

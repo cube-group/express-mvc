@@ -4,13 +4,12 @@
  * User: linyang
  * Date: 16/11/9
  */
-use cube\core\Application;
-use cube\core\Response;
-use cube\core\Request;
-use modules\session\Session;
-use modules\cookie\Cookie;
-use modules\body\Body;
-
+use cube\Application;
+use cube\Request;
+use cube\Response;
+use cookie\Cookie;
+use session\Session;
+use body\Body;
 
 $router = Application::router();
 
@@ -20,7 +19,6 @@ $router->on(Cookie::create());
 $router->on(Session::create());
 //body parser.
 $router->on(Body::create());
-
 
 $router->on(function (Request $req, Response $res, $next) {
     //...auth code
