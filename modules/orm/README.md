@@ -5,14 +5,13 @@ orm curd for the mysql
 * POD Ext.
 
 ## cube-php/framework contains the orm.
-* <a href='https://github.com/cube-php/framework'>click me , and go to check the cube-php/framework</a>
+* <a href='https://github.com/cube-group/php-orm'>click me , and go to check the php-orm lib</a>
 
 ## how to use the cube-orm?
 ```javascript
-require __DIR__ . './orm/DB.php';
+require __DIR__ . './DB.php';
 
 use orm\DB;
-
 
 $config = [
     'host' => 'localhost',
