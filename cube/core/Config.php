@@ -79,6 +79,7 @@ final class Config
             switch ($key) {
                 case 'BASE_DIR':
                     self::$VALUE['BASE_DIR'] = $value . '/';
+                    define('BASE_DIR', self::$VALUE['BASE_DIR']);
                     break;
                 case 'TIME_ZONE':
                     self::$VALUE['START_TIME'] = microtime(true);

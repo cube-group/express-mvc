@@ -29,7 +29,6 @@
     "modules/engine/RaintplEngine.php",
     "modules/cookie/Cookie.php",
     "modules/session/Session.php",
-    "modules/body/Body.php",
-    "modules/otp/otphp.php"
+    "modules/body/Body.php"
   ]
 }
