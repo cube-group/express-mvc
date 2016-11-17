@@ -91,12 +91,12 @@ final class Application
 
         //check php version.
         if (!SystemUtil::check_version()) {
-            throw new \Exception('PHP VERSION IS LOW.', CubeException::$VERSION_ERROR);
+            throw new \Exception('PHP VERSION IS LOW.');
         }
         //check exts.
         $unknown_ext = SystemUtil::check_unknown_extension();
         if (!empty($unknown_ext)) {
-            throw new \Exception('Unknown Ext ' . $unknown_ext, CubeException::$EXT_ERROR);
+            throw new \Exception('Unknown Ext ');
         }
 
         Config::init();

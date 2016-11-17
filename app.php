@@ -14,8 +14,11 @@ use modules\body\Body;
 
 $router = Application::router();
 
+//cookie parser.
 $router->on(Cookie::create());
+//session parser.
 $router->on(Session::create());
+//body parser.
 $router->on(Body::create());
 
 
