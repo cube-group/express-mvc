@@ -29,3 +29,7 @@ $router->on(function (Request $req, Response $res, $next) {
 
 $router->on('/user', 'router/user.php');
 $router->on('/upload', 'router/upload.php');
+
+$router->on('/', function ($req, $res, $next) {
+    $res->render(new \engine\EchoEngine(), 'index');
+});

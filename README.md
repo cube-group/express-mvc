@@ -3,15 +3,6 @@
 * Seven days from Nodejs-express seamless switching to php-mvc-express development! :)
 * Author by linyang created on 2016-08.
 
-### ./cube
-* /cube/core - core classes
-* /cube/fs - file system classes
-* /cube/http - http/https request class
-* /cube/log - system log
-* /cube/utils - tools
-* /cube/view - ViewEngine (EchoEngine & AngularEngine)
-
-
 ### ./package.json - config file
 *  dir - dir config
 *  core - core config
