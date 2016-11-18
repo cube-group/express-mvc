@@ -2,36 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d7beb79-3c1f-458c-9b12-407c7a75010b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/mvc/README.md" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modules/otp/lib/hotp.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modules/otp/tests/TOTPTest.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modules/session/RedisSessionInstance.php" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/body/Body.php" afterPath="$PROJECT_DIR$/modules/body/autoload.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/cookie/Cookie.php" afterPath="$PROJECT_DIR$/modules/cookie/autoload.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/otp/LICENCE" afterPath="$PROJECT_DIR$/modules/otphp/LICENCE" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/otp/README.markdown" afterPath="$PROJECT_DIR$/modules/otphp/README.markdown" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/otp/lib/base32.php" afterPath="$PROJECT_DIR$/modules/otphp/lib/base32.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/otp/lib/otp.php" afterPath="$PROJECT_DIR$/modules/otphp/lib/otp.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/otp/lib/totp.php" afterPath="$PROJECT_DIR$/modules/otphp/lib/totp.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/otp/otphp.php" afterPath="$PROJECT_DIR$/modules/otphp/autoload.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/otp/tests/HOTPTest.php" afterPath="$PROJECT_DIR$/modules/otphp/tests/HOTPTest.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/otp/tests/OTPTest.php" afterPath="$PROJECT_DIR$/modules/otphp/tests/OTPTest.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/otp/tests/TestTest.php" afterPath="$PROJECT_DIR$/modules/otphp/tests/TestTest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cube/Application.php" afterPath="$PROJECT_DIR$/cube/Application.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cube/Connect.php" afterPath="$PROJECT_DIR$/cube/Connect.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/engine/autoload.php" afterPath="$PROJECT_DIR$/modules/engine/autoload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/fs/FS.php" afterPath="$PROJECT_DIR$/modules/fs/FS.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/mongo/Mongo.php" afterPath="$PROJECT_DIR$/modules/mongo/Mongo.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/mongo/README.md" afterPath="$PROJECT_DIR$/modules/mongo/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/mvc/autoload.php" afterPath="$PROJECT_DIR$/modules/mvc/autoload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/redis/README.md" afterPath="$PROJECT_DIR$/modules/redis/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/redis/Redis.php" afterPath="$PROJECT_DIR$/modules/redis/Redis.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/session/README.md" afterPath="$PROJECT_DIR$/modules/session/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/session/RedisSession.php" afterPath="$PROJECT_DIR$/modules/session/RedisSession.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www.php" afterPath="$PROJECT_DIR$/www.php" />
     </list>
     <ignored path="framework.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,31 +24,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="log.log" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/log/log.log">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
+        <entry file="file://$PROJECT_DIR$/modules/session/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="106" column="31" selection-start-line="106" selection-start-column="31" selection-end-line="106" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Log.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/log/Log.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
-              <caret line="76" column="58" selection-start-line="76" selection-start-column="58" selection-end-line="76" selection-end-column="58" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Application.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cube/Application.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="159" column="13" selection-start-line="159" selection-start-column="13" selection-end-line="159" selection-end-column="13" />
+            <state relative-caret-position="470">
+              <caret line="45" column="2" selection-start-line="45" selection-start-column="2" selection-end-line="45" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -126,7 +87,6 @@
         <option value="$PROJECT_DIR$/view/500.html" />
         <option value="$PROJECT_DIR$/modules/engine/autoload.php" />
         <option value="$PROJECT_DIR$/t.php" />
-        <option value="$PROJECT_DIR$/modules/session/README.md" />
         <option value="$PROJECT_DIR$/modules/redis/Redis.php" />
         <option value="$PROJECT_DIR$/modules/redis/README.md" />
         <option value="$PROJECT_DIR$/modules/mongo/README.md" />
@@ -149,6 +109,7 @@
         <option value="$PROJECT_DIR$/log/log.log" />
         <option value="$PROJECT_DIR$/cube/Application.php" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/modules/session/README.md" />
       </list>
     </option>
   </component>
@@ -221,7 +182,25 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="cube" />
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="php-mvc-express" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="php-mvc-express" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="session" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -344,12 +323,12 @@
       <workItem from="1479381700502" duration="1492000" />
       <workItem from="1479384008458" duration="120000" />
       <workItem from="1479384176047" duration="291000" />
-      <workItem from="1479434508912" duration="6765000" />
+      <workItem from="1479434508912" duration="6891000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="112779000" />
+    <option name="totallyTimeSpent" value="112905000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -472,14 +451,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/session/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="55" column="31" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -755,17 +726,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/log/log.log">
-      <provider editor-type-id="images">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cube/Connect.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -794,6 +754,25 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
           <caret line="106" column="31" selection-start-line="106" selection-start-column="31" selection-end-line="106" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log/log.log">
+      <provider editor-type-id="images">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/session/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="470">
+          <caret line="45" column="2" selection-start-line="45" selection-start-column="2" selection-end-line="45" selection-end-column="2" />
           <folding />
         </state>
       </provider>

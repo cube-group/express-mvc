@@ -43,7 +43,7 @@ $req->session->getID();
 ```javascript
 $req->session->username = 'hello';
 ```
-*get the session value
+* get the session value
 ```javascript
 echo $req->session->username;
 ```
