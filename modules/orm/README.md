@@ -31,13 +31,13 @@ DB::init([
 print_r(DB::model('user')->select());
 ```
 
-## Class com\cube\db\DB
+## Class orm\DB
 *  static init($options);// init db config
 *  static model($tableName);//get the orm instance
 *  static query($sql,$task = false);
 *  static exec($sql,$task = true);
 
-## Class com\cube\db\DBModel
+## Class orm\DBModel
 *  __construct($tableName);
 *  task(); // return the DBModel ,the sql will executed as the task when you use this
 *  where($options);//return the DBModel
