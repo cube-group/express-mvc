@@ -18,7 +18,7 @@ $router->on('/session',function($req,$res,$next){
 ### RemoteSession(RedisSession)
 * Class inheritance relation: DynamicClass->RedisSession
 * session_name(cookie key) ,please set the package.json-core-session_name
-* session_timeout(cookie time) , please set the packagejson-core-session_timeout
+* session_timeout(cookie time) , please set the package.json-core-session_timeout
 ```javascript
 //Dependency Library
 requi
