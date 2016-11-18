@@ -1,0 +1,77 @@
+[2016-11-18 13:01:50] http://localhost:63342/php-mvc-express/www.php?_ijt=6cfi226798r2lpde56iuu5fj5m
+[2016-11-18 13:01:50] Response render index(18 ms)
+[2016-11-18 13:01:51] http://localhost:63342/php-mvc-express/www.php?_ijt=jgk47u6jrr091uuhluf2u0c5f4&router=user/a/htt/pwd
+[2016-11-18 13:01:51] Response json(12 ms)
+[2016-11-18 13:01:52] http://localhost:63342/php-mvc-express/www.php?_ijt=tfot6r184ctcnfr0dmpjmkbess&router=user/htt/a/pwd
+[2016-11-18 13:01:52] Response json(2 ms)
+[2016-11-18 14:23:11] http://localhost:63342/php-mvc-express/www.php?_ijt=kdria007pj6u89nh7kp0q537fp
+[2016-11-18 14:23:11] Response render index(9 ms)
+[2016-11-18 14:23:19] http://localhost:63342/php-mvc-express/www.php?_ijt=kdria007pj6u89nh7kp0q537fp&router=user/db
+[2016-11-18 14:23:19] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:23:19] Response render 500(9 ms)
+[2016-11-18 14:24:05] http://localhost:63342/php-mvc-express/www.php?_ijt=kdria007pj6u89nh7kp0q537fp&router=user/db
+[2016-11-18 14:24:05] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:24:05] Response render 500(7 ms)
+[2016-11-18 14:24:21] http://localhost:63342/php-mvc-express/www.php?_ijt=78o399tg4dt6m7t8j2hghc8p41
+[2016-11-18 14:24:21] Response render index(5 ms)
+[2016-11-18 14:24:26] http://localhost:63342/php-mvc-express/www.php?_ijt=78o399tg4dt6m7t8j2hghc8p41&router=/user/db
+[2016-11-18 14:24:26] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:24:26] Response render 500(4 ms)
+[2016-11-18 14:29:25] http://localhost:63342/php-mvc-express/www.php?_ijt=qnikub0ntb7prkuf754c2kodbn
+[2016-11-18 14:29:25] Response render index(9 ms)
+[2016-11-18 14:29:31] http://localhost:63342/php-mvc-express/www.php?_ijt=qnikub0ntb7prkuf754c2kodbn&router=user/db
+[2016-11-18 14:29:31] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:29:31] Response render 500(14 ms)
+[2016-11-18 14:29:34] http://localhost:63342/php-mvc-express/www.php?_ijt=qnikub0ntb7prkuf754c2kodbn&router=user/db
+[2016-11-18 14:29:34] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:29:34] Response render 500(5 ms)
+[2016-11-18 14:29:35] http://localhost:63342/php-mvc-express/www.php?_ijt=qnikub0ntb7prkuf754c2kodbn&router=user/db
+[2016-11-18 14:29:35] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:29:35] Response render 500(5 ms)
+[2016-11-18 14:47:08] http://localhost:63342/php-mvc-express/www.php?_ijt=h4m67ogneejn175o309t8f1ta5
+[2016-11-18 14:47:08] Response render index(26 ms)
+[2016-11-18 14:47:15] http://localhost:63342/php-mvc-express/www.php?_ijt=h4m67ogneejn175o309t8f1ta5&router=/user/db
+[2016-11-18 14:47:15] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:47:15] Response render 500(15 ms)
+[2016-11-18 14:49:19] http://localhost:63342/php-mvc-express/www.php?_ijt=r5jm2fmffmrme2bkmf2ct16aua
+[2016-11-18 14:49:19] Response render index(20 ms)
+[2016-11-18 14:49:21] http://localhost:63342/php-mvc-express/www.php?_ijt=h4m67ogneejn175o309t8f1ta5&router=/user/db
+[2016-11-18 14:49:21] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:49:21] Response render 500(14 ms)
+[2016-11-18 14:49:23] http://localhost:63342/php-mvc-express/www.php?_ijt=h4m67ogneejn175o309t8f1ta5&router=/user/db
+[2016-11-18 14:49:23] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:49:23] Response render 500(5 ms)
+[2016-11-18 14:49:25] http://localhost:63342/php-mvc-express/www.php?_ijt=h4m67ogneejn175o309t8f1ta5&router=/user/db
+[2016-11-18 14:49:25] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:49:25] Response render 500(5 ms)
+[2016-11-18 14:49:28] http://localhost:63342/php-mvc-express/www.php?_ijt=h4m67ogneejn175o309t8f1ta5&router=/user/db
+[2016-11-18 14:49:28] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:49:28] Response render 500(5 ms)
+[2016-11-18 14:49:30] http://localhost:63342/php-mvc-express/www.php?_ijt=h4m67ogneejn175o309t8f1ta5&router=/user/db
+[2016-11-18 14:49:30] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:49:30] Response render 500(5 ms)
+[2016-11-18 14:56:09] http://localhost:63342/php-mvc-express/www.php?_ijt=h4m67ogneejn175o309t8f1ta5&router=/user/db
+[2016-11-18 14:56:09] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 14:56:09] Response render 500(9 ms)
+[2016-11-18 15:01:33] http://localhost:63342/php-mvc-express/www.php?_ijt=h4m67ogneejn175o309t8f1ta5&router=/user/db
+[2016-11-18 15:01:33] Exception SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known
+[2016-11-18 15:01:33] Response render 500(37 ms)
+[2016-11-18 15:02:49] http://localhost:63342/php-mvc-express/www.php?_ijt=h4m67ogneejn175o309t8f1ta5&router=/user/db
+[2016-11-18 15:02:49] Exception SQLSTATE[HY000] [2002] Connection refused
+[2016-11-18 15:02:49] Response render 500(35 ms)
+[2016-11-18 15:04:15] http://localhost:63342/php-mvc-express/www.php?_ijt=iojuhmp2vuuag14plq6ui8aanu
+[2016-11-18 15:04:15] Response render index(13 ms)
+[2016-11-18 15:04:21] http://localhost:63342/php-mvc-express/www.php?_ijt=iojuhmp2vuuag14plq6ui8aanu&router=/user/db
+[2016-11-18 15:04:21] Exception Orm connect error.
+[2016-11-18 15:04:21] Response render 500(5 ms)
+[2016-11-18 15:04:50] http://localhost:63342/php-mvc-express/www.php?_ijt=iojuhmp2vuuag14plq6ui8aanu
+[2016-11-18 15:04:50] Response render index(6 ms)
+[2016-11-18 15:04:55] http://localhost:63342/php-mvc-express/www.php?_ijt=iojuhmp2vuuag14plq6ui8aanu&router=/user/db
+[2016-11-18 15:04:55] Exception Orm connect error. 
+[2016-11-18 15:04:55] Response render 500(5 ms)
+[2016-11-18 15:05:10] http://localhost:63342/php-mvc-express/www.php?_ijt=iojuhmp2vuuag14plq6ui8aanu&router=/user/db
+[2016-11-18 15:05:10] Exception Orm connect error. SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 15:05:10] Response render 500(5 ms)
+[2016-11-18 15:05:25] http://localhost:63342/php-mvc-express/www.php?_ijt=iojuhmp2vuuag14plq6ui8aanu&router=/user/db
+[2016-11-18 15:05:25] Exception SQLSTATE[HY000] [2002] No such file or directory
+[2016-11-18 15:05:25] Response render 500(5 ms)

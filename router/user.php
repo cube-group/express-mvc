@@ -24,3 +24,15 @@ $router->on('/http', function ($req, $res, $next) {
     //$req->route => /user/http
     $res->send(\http\Http::get('https://github.com/cube-group'));
 });
+
+$router->on('/db', function ($req, $res, $next) {
+    \orm\DB::init([
+        'host' => 'localhost',
+        'port' => 3306,
+        'db' => 'system',
+        'username' => 'root',
+        'password' => '',
+        'prefix' => ''
+    ]);
+    $res->json(\orm\DB::model('user')->select());
+});

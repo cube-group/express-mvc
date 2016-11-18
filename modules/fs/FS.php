@@ -157,39 +157,64 @@ final class FS
     /**
      * put the format php input stream into the temporary file.
      *
-     * array(
-     *      array('tmp'=>'file name','path'=>'file path name')
-     * );
-     * @param null $content file content
-     * @param string $key file name
+     * return [
+     *      ['tmp'=>'file name','path'=>'file path name']
+     * ];
+     *
+     * return [
+     *      ['tmp'=>'file name','error'=>'size']
+     * ];
+     *
+     * options [
+     *      'size'=>102400,//size kb
+     *      'type'=>['image/png','image/jpeg','image/jpg','image/gif','pdf','txt','html']
+     * ]
+     * @param $content content
+     * @param $key fileName
+     * @param $options
      * @return array|null
      * @throws \Exception
      */
     public static function saveInputAsFile($content, $key = '', $options = null)
     {
-        if (empty($content)) {
-            return null;
+        if (empty($key)) {
+            $key = md5(time() + rand(0, 10000));
         }
-        $tmp_file_name = md5(time() + rand(0, 100000)) . (empty($key) ? '' : '_' . $key);
-        $tmp_file_path = constant('DOWNLOAD_DIR') . $tmp_file_name;
-        file_put_contents($tmp_file_path, $content);
-        return array(array('name' => $tmp_file_name, 'path' => $tmp_file_path));
+        if (empty($content)) {
+            return [['name' => $key, 'error' => 'null']];
+        }
+        if ($options && $options['size'] && strlen($content) > $options['size']) {
+            return [['name' => $key, 'error' => 'size']];
+        }
+        $key = time() . '-' . $key;
+        $tmp_file = constant('TMP_DIR') . $key;
+        if (file_put_contents($tmp_file, $content) > 0) {
+            return [['name' => $key, 'path' => $tmp_file]];
+        } else {
+            return [['name' => $key, 'error' => 'write']];
+        }
     }
 
     /**
      * put the format upload files into the temporary files.
-     * array(
+     * return [
      *      array('tmp'=>'file name','path'=>'file path name'),
      *      array('tmp'=>'file name','path'=>'file path name'),
      *      array('tmp'=>'file name','path'=>'file path name')
-     * );
-     * @param $options config
+     * ];
+     *
+     * options [
+     *      'size'=>102400,//size kb
+     *      'type'=>['image/png','image/jpeg','image/jpg','image/gif','pdf','txt','html']
+     * ]
+     *
+     * @param $options
      * @return array|null
      */
     public static function saveUploadAsFile($options = null)
     {
         if (count($_FILES) > 0) {
-            $files = array();
+            $files = [];
             foreach ($_FILES as $file) {
                 if (count($file['name']) == 1) {
                     /**
@@ -216,27 +241,35 @@ final class FS
                     }
                 }
             }
-            return self::save_upload($files);
+            return self::save_upload($files, $options);
         }
         return null;
     }
 
-    private static function save_upload($files)
+    private static function save_upload($files, $options)
     {
-        $stack = array();
-
+        $stack = [];
         foreach ($files as $file) {
             if ($file['error'] > 0) {
-                array_push($stack, array('name' => $file['name'], 'path' => ''));
+                array_push($stack, ['name' => $file['name'], 'error' => $file['error']]);
                 continue;
             }
-            $tmp_file_name = md5(time() + rand(0, 100000)) . '_' . $file['name'];
-            $tmp_file_path = constant('DOWNLOAD_DIR') . $tmp_file_name;
-            if (move_uploaded_file($file['tmp_name'], $tmp_file_path)) {
-                array_push($stack, array('name' => $tmp_file_name, 'path' => $tmp_file_path));
+            if ($options['size'] && $file['size'] > $options['size']) {
+                array_push($stack, ['name' => $file['name'], 'error' => 'size']);
+                continue;
+            }
+            if ($options['type'] && is_array($options['type']) && in_array($file['type'], $options['type'])) {
+                array_push($stack, ['name' => $file['name'], 'error' => 'type']);
+                continue;
+            }
+            $key = md5(time() + rand(0, 10000)) . '-' . $file['name'];
+            $tmp_file = constant('TMP_DIR') . $key;
+            if (move_uploaded_file($file['tmp_name'], $tmp_file)) {
+                array_push($stack, ['name' => $key, 'path' => $tmp_file]);
+            }else{
+                array_push($stack, ['name' => $key, 'error' => 'write']);
             }
         }
-
         return $stack;
     }
 }

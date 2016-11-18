@@ -192,7 +192,7 @@ final class DB
                 if ($stat = self::$pdo->query($sql)) {
                     $result = $stat->fetchColumn();
                     if ($task == true) self::$pdo->commit();
-                }else{
+                } else {
                     if ($task == true) self::$pdo->rollBack();
                 }
 
