@@ -24,17 +24,21 @@ class MVC
 
     /**
      * create middleware.
-     * @param $options
+     * @param $controllerDir
+     * @param $modelDir
+     * @param $safe set the safe-mode,default is safety.
      * @return \Closure
      */
-    public static function create($options)
+    public static function create($controllerDir, $modelDir, $safe = true)
     {
-        self::$options = $options;
+        self::$options = ['controller' => $controllerDir, 'model' => $modelDir, 'safe' => $safe];
 
         return function ($req = null, $res = null, $next = '') {
+
             if (!defined('BASE_DIR')) {
                 throw new \Exception('BASE_DIR not defined!');
             }
+
             $base_dir = constant('BASE_DIR');
             $controller_dir = (self::$options['controller'] ? self::$options['controller'] : 'controller');
             $model_dir = (self::$options['model'] ? self::$options['model'] : 'model');
@@ -49,6 +53,9 @@ class MVC
             if ($next) {
                 $next();
             }
+
+            //gc
+            self::gc();
         };
     }
 
@@ -81,6 +88,20 @@ class MVC
             return self::$controllers[$className]->$method($value);
         }
         return null;
+    }
+
+    private function gc()
+    {
+        self::$options = null;
+
+        self::$c_dir = null;
+        self::$m_dir = null;
+
+        self::$controllers = null;
+        self::$models = null;
+
+        self::$req = null;
+        self::$res = null;
     }
 }
 
