@@ -34,6 +34,6 @@
     "modules/fs/FS.php",
     "modules/http/Http.php",
     "modules/log/Log.php",
-    "modules/orm/DB.php"
+    "modules/orm/autoload.php"
   ]
 }
