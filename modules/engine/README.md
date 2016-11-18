@@ -1,4 +1,4 @@
-### ViewEngine For the Response->render!
+### ViewEngine For the Response->render($engine,$name,$data);
 * $res->render($engine,$name,$data=null);//$engine is \engine\ViewEngine
 * \engine\EchoEngine implements.
 ```javascript
@@ -16,9 +16,9 @@ class AngularEngine extends ViewEngine{
     }
 }
 ```
-* \engine\RainTplEngine implements.
+* \engine\RaintplEngine implements.
 ```javascript
-class RainTplEngine extends ViewEngine{
+class RaintplEngine extends ViewEngine{
     public function render($name,$data=null){
           //render the html by the raintpl
     }
