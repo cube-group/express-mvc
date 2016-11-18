@@ -53,6 +53,6 @@ $req->session->delete('key');
 ```
 * clear all session.
 ```javascript
-$app->$req->session->clear();
+$req->session->clear();
 ```
 * if you want to change the session_name和session_timeout, please change the core options['session_name','session_timeout'] in the package.json config file.
