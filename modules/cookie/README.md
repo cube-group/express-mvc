@@ -1,6 +1,6 @@
-# This module is used to implement the Application->Request->cookie.
-* $app->$req->cookie->set($key,$value,$time);
-* $app->$req->cookie->delete($key);
-* $app->$req->cookie->clear();
-* $app->$req->cookie->$key = $value;
-* $app->$req->cookie->$key;
+### Request->cookie
+* $req->cookie->set($key,$value,$time);
+* $req->cookie->delete($key);
+* $req->cookie->clear();
+* $req->cookie->$key = $value;
+* $req->cookie->$key;
