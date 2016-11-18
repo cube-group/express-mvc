@@ -22,17 +22,17 @@ if ($ext = Utils::is_miss_ext('mongo')) {
 final class Mongo
 {
     /**
-     * 数据库参数暂存对象.
+     * mongo config.
      * @var
      */
     private static $options;
     /**
-     * Mongodb连接实例.
+     * mongo connect instance.
      * @var \MongoClient
      */
     private static $mongo;
     /**
-     * DB 连接实例.
+     * mongo database connect instance.
      * @var
      */
     private static $db;
@@ -43,7 +43,7 @@ final class Mongo
      *      'host'=>'localhost',
      *      'port'=>27017,
      *      'db'=>'db',
-     *      'user'=>'username',
+     *      'username'=>'username',
      *      'password'=>'密码'
      * );
      * @param $options
@@ -54,7 +54,8 @@ final class Mongo
     }
 
     /**
-     * 关闭MongoDB的所有连接.
+     * close the mongodb connection.
+     *
      * @return bool
      */
     public static function close()
@@ -84,7 +85,8 @@ final class Mongo
     }
 
     /**
-     * 获取collection引用.
+     * get the mongo collection.
+     *
      * Mongo::model('list')->find();
      * SQL:select * from list;
      * Mongo::model('list')->find(array('name'=>'hello'));
@@ -123,8 +125,8 @@ final class Mongo
      * Mongo::model('list')->update(array('name'=>'hello'),array('$inc'=>array('a'=>1));
      * SQL:update list a=a+1 where name="hello";
      *
-     * ...$筛选器,$or/$and/$gt/$gte/$lt/$lte...
-     * ...更多$修改器百度去吧,$set/$inc/$unset/$push/$pop/$upsert...
+     * ...$filter: $or/$and/$gt/$gte/$lt/$lte...
+     * ...more $ you need to google...$set/$inc/$unset/$push/$pop/$upsert...
      *
      * Mongo::model('list')->remove({'name'=>'hello'});
      * SQL:delete from list where name="hello";
@@ -148,7 +150,7 @@ final class Mongo
             $options = self::$options;
             try {
                 self::$mongo = new \MongoClient('mongodb://' . $options['host'] . ':' . $options['port'],
-                    array('username' => $options['user'], 'password' => $options['password'], 'db' => $options['db'])
+                    array('username' => $options['username'], 'password' => $options['password'], 'db' => $options['db'])
                 );
 
                 Log::log('Mongo Connected host: ' . $options['host'] . ' port: ' . $options['port'] . ' db: ' . $options['db']);

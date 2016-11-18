@@ -146,7 +146,7 @@ final class Connect
     {
         if ($this->routerMatch($filter) && $fileName) {
             $this->loadingRouterName = $filter;
-            Config::load($fileName);
+            import($fileName);
             $this->loadingRouterName = '';
         }
     }

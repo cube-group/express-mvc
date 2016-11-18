@@ -80,7 +80,7 @@ final class Application
         //init connect.
         self::$connect = new Connect(new Request(), new Response());
         //load the logic.
-        Config::load(Config::get('core', 'app'));
+        import(Config::get('core', 'app'));
         //start connect.
         self::$connect->start();
         //garbageCollection.
@@ -140,28 +140,8 @@ final class Config
     }
 
     /**
-     * Load the php file in the cube framework.
-     *
-     * @param $files
-     */
-    public static function load($files)
-    {
-        $arr = null;
-        if (empty($files)) {
-            return;
-        } elseif (is_array($files)) {
-            $arr = $files;
-        } else {
-            $arr = array($files);
-        }
-        $base_dir = defined('BASE_DIR') ? constant('BASE_DIR') : '';
-        foreach ($arr as $file) {
-            require_once $base_dir . $file;
-        }
-    }
-
-    /**
      * append the package.json object info.
+     * all constant value.
      *
      * @param $json
      * @throws \Exception
@@ -182,15 +162,14 @@ final class Config
 
             define('VIEW_DIR', self::$VALUE['BASE_DIR'] . self::$VALUE['dir']['view'] . '/');
             define('TMP_DIR', self::$VALUE['BASE_DIR'] . self::$VALUE['dir']['tmp'] . '/');
-            define('DOWNLOAD_DIR', self::$VALUE['BASE_DIR'] . self::$VALUE['dir']['download'] . '/');
-            define('LOG_PATH',self::$VALUE['BASE_DIR'] . self::$VALUE['log']['log']);
-            define('LOG_SQL_PATH',self::$VALUE['BASE_DIR'] . self::$VALUE['log']['sql']);
+            define('LOG_PATH', self::$VALUE['BASE_DIR'] . self::$VALUE['log']['log']);
+            define('LOG_SQL_PATH', self::$VALUE['BASE_DIR'] . self::$VALUE['log']['sql']);
             define('CONFIG', $json);
 
             ini_set('upload_tmp_dir', constant('TMP_DIR'));
 
-            self::load(self::LIBS);
-            self::load($json['modules']);
+            import(self::LIBS);
+            import($json['modules']);
 
         } else {
             throw new \Exception('config is error or null!');

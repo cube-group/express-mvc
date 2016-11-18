@@ -31,7 +31,7 @@ class MVC
     {
         self::$options = $options;
 
-        return function ($req, $res, $next) {
+        return function ($req = null, $res = null, $next = '') {
             if (!defined('BASE_DIR')) {
                 throw new \Exception('BASE_DIR not defined!');
             }
@@ -46,7 +46,9 @@ class MVC
             self::$c_dir = [$controller_dir, $base_dir . $controller_dir];
             self::$m_dir = [$model_dir, $base_dir . $model_dir];
 
-            $next();
+            if ($next) {
+                $next();
+            }
         };
     }
 
@@ -65,7 +67,7 @@ class MVC
             $filePath = $c_dir . '/' . $className . 'Controller.php';
 
             if (is_file($filePath)) {
-                require_once $filePath;
+                import($filePath);
 
                 $instance = new \ReflectionClass($c_path . '\\' . $className . 'Controller');
                 self::$controllers[$className] = $instance->newInstance($className);
@@ -128,7 +130,7 @@ class MVC_Controller
             $filePath = $m_dir . '/' . $className . 'Model.php';
 
             if (is_file($filePath)) {
-                require_once $filePath;
+                import($filePath);
 
                 $instance = new \ReflectionClass($m_path . '\\' . $className . 'Model');
                 MVC::$models[$className] = $instance->newInstance($className);

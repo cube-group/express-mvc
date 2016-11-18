@@ -10,9 +10,9 @@ namespace engine;
 
 use fs\FS;
 
-require_once __DIR__.'/EchoEngine.php';
-require_once __DIR__.'/AngularEngine.php';
-require_once __DIR__.'/RaintplEngine.php';
+require __DIR__.'/EchoEngine.php';
+require __DIR__.'/AngularEngine.php';
+require __DIR__.'/RaintplEngine.php';
 
 /**
  * Class ViewEngine

@@ -12,7 +12,6 @@ use utils\DynamicClass;
 
 /**
  * Class RedisSession.
- * Session中间件,也实现了ISession接口。
  * @package modules\session
  */
 class RedisSession
@@ -52,7 +51,7 @@ class RedisSession
 
 /**
  * Class RedisSessionInstance.
- * 远程session存储.
+ *
  * @package modules\session
  */
 class RedisSessionInstance extends DynamicClass
@@ -130,7 +129,7 @@ class RedisSessionInstance extends DynamicClass
     }
 
     /**
-     * 关闭redis连接.
+     * close the redis connection.
      */
     public function close()
     {

@@ -9,6 +9,7 @@
  */
 
 //include all cube libs.
+require './modules/import/autoload.php';
 require './cube/Application.php';
 
 use cube\Application;

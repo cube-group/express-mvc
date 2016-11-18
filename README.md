@@ -8,6 +8,10 @@
 *  core - core config
 *  modules - modules loaded
 
+### where is your log file???
+* log.log - info/error/exception log
+* sql.log - orm log
+
 ### middleWare append
 * initial mode middleWare.
 ```javascript
@@ -71,6 +75,35 @@ location ~ \.php {
 }
 ```
 
-### fast and simple!
-* You do not need to write code in the import file, simply by modifying the configuration file and the logic code to complete what you want!
+### GLOBAL CONST VALUE
+* check defined('VALUE'), and use by constant('VALUE')
+```javascript
+//get the absolute project dir.
+$result = constant('BASE_DIR');
+//result: /User/xx/github/php-mvc-express/
+
+//get the application startTime(ms).
+$result = constant('START_TIME');
+//result: as microtime(true)
+
+//get the application view template dir.
+$result = constant('VIEW_DIR');
+//result:  /User/xx/github/php-mvc-express/view/
+
+//get the application tmp(or upload) dir.
+$result = constant('TMP_DIR');
+//result:  /User/xx/github/php-mvc-express/tmp/
+
+//get the application log.log path.
+$result = constant('LOG_PATH');
+//result:  /User/xx/github/php-mvc-express/log/log.log
+
+//get the application sql.log path.
+$result = constant('LOG_SQL_PATH');
+//result:  /User/xx/github/php-mvc-express/log/sql.log
+
+//get the application package.json json object.
+$result = constant('CONFIG');
+//result: package.json as array
+```
 

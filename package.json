@@ -28,8 +28,8 @@
   "modules": [
     "modules/utils/Utils.php",
     "modules/engine/autoload.php",
-    "modules/body/Body.php",
-    "modules/cookie/Cookie.php",
+    "modules/body/autoload.php",
+    "modules/cookie/autoload.php",
     "modules/session/Session.php",
     "modules/fs/FS.php",
     "modules/http/Http.php",

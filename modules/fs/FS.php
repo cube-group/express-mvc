@@ -20,27 +20,6 @@ final class FS
     }
 
     /**
-     * Load the php file in the cube framework.
-     *
-     * @param $files
-     */
-    public static function load($files)
-    {
-        $arr = null;
-        if (empty($files)) {
-            return;
-        } elseif (is_array($files)) {
-            $arr = $files;
-        } else {
-            $arr = array($files);
-        }
-        $base_dir = defined('BASE_DIR') ? constant('BASE_DIR') : '';
-        foreach ($arr as $file) {
-            require_once $base_dir . $file;
-        }
-    }
-
-    /**
      * move the file or dir.
      * @param $source
      * @param $des
