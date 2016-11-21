@@ -29,7 +29,7 @@ final class Image
      */
     public static function ppt2pdf($source)
     {
-        if (system('export DISPLAY=:0.0 && libreoffice --headless --invisible --convert-to pdf ' . $source) === 0) {
+        if (system('export DISPLAY=:0.0 && libreoffice --headless --invisible --convert-to pdf ' . $source) !== false) {
             $info = pathinfo($source);
             return $info['dirname'] . '/' . explode('.', $info['basename'])[0] . 'pdf';
         }
@@ -62,6 +62,7 @@ final class Image
         }
         return $return;
     }
+
 }
 
 ?>
