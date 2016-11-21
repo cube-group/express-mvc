@@ -30,7 +30,7 @@ final class Image
     public static function ppt2pdf($source, $tmp_path = '/tmp/')
     {
         $shell = 'export DISPLAY=:0.0 && libreoffice --headless --invisible --convert-to pdf ' . $source;
-        $shell .= ' outdir ' . $tmp_path;
+        $shell .= ' --outdir ' . $tmp_path;
         if (system($shell) !== false) {
             $info = pathinfo($source);
             return $info['dirname'] . '/' . explode('.', $info['basename'])[0] . '.pdf';
