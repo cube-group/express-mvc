@@ -158,11 +158,11 @@ final class FS
      * put the format php input stream into the temporary file.
      *
      * return [
-     *      ['tmp'=>'file name','path'=>'file path name']
+     *      ['name'=>'file name','path'=>'file path name']
      * ];
      *
      * return [
-     *      ['tmp'=>'file name','error'=>'size']
+     *      ['name'=>'file name','error'=>'size']
      * ];
      *
      * options [
@@ -198,9 +198,9 @@ final class FS
     /**
      * put the format upload files into the temporary files.
      * return [
-     *      array('tmp'=>'file name','path'=>'file path name'),
-     *      array('tmp'=>'file name','path'=>'file path name'),
-     *      array('tmp'=>'file name','path'=>'file path name')
+     *      array('name'=>'file name','path'=>'file path name'),
+     *      array('name'=>'file name','path'=>'file path name'),
+     *      array('name'=>'file name','path'=>'file path name')
      * ];
      *
      * options [
