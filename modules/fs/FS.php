@@ -254,19 +254,23 @@ final class FS
                 array_push($stack, ['name' => $file['name'], 'error' => $file['error']]);
                 continue;
             }
-            if ($options['size'] && $file['size'] > $options['size']) {
-                array_push($stack, ['name' => $file['name'], 'error' => 'size']);
-                continue;
+
+            if ($options) {
+                if ($options['size'] && $file['size'] > $options['size']) {
+                    array_push($stack, ['name' => $file['name'], 'error' => 'size']);
+                    continue;
+                }
+                if ($options['type'] && is_array($options['type']) && in_array($file['type'], $options['type'])) {
+                    array_push($stack, ['name' => $file['name'], 'error' => 'type']);
+                    continue;
+                }
             }
-            if ($options['type'] && is_array($options['type']) && in_array($file['type'], $options['type'])) {
-                array_push($stack, ['name' => $file['name'], 'error' => 'type']);
-                continue;
-            }
+
             $key = md5(time() + rand(0, 10000)) . '-' . $file['name'];
             $tmp_file = constant('TMP_DIR') . $key;
             if (move_uploaded_file($file['tmp_name'], $tmp_file)) {
                 array_push($stack, ['name' => $key, 'path' => $tmp_file]);
-            }else{
+            } else {
                 array_push($stack, ['name' => $key, 'error' => 'write']);
             }
         }
