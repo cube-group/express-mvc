@@ -34,21 +34,12 @@ class MVC
         self::$options = ['controller' => $controllerDir, 'model' => $modelDir, 'safe' => $safe];
 
         return function ($req = null, $res = null, $next = '') {
+            self::$c_dir = (self::$options['controller'] ? self::$options['controller'] : 'controller');
+            self::$m_dir = (self::$options['model'] ? self::$options['model'] : 'model');
 
-            if (!defined('BASE_DIR')) {
-                throw new \Exception('BASE_DIR not defined!');
-            }
-
-            $base_dir = constant('BASE_DIR');
-            $controller_dir = (self::$options['controller'] ? self::$options['controller'] : 'controller');
-            $model_dir = (self::$options['model'] ? self::$options['model'] : 'model');
-
-            if (!is_dir($controller_dir) || !is_dir($model_dir)) {
+            if (!is_dir(self::$c_dir) || !is_dir(self::$m_dir)) {
                 throw new \Exception('controller or model dir not exists!');
             }
-
-            self::$c_dir = [$controller_dir, $base_dir . $controller_dir];
-            self::$m_dir = [$model_dir, $base_dir . $model_dir];
 
             if ($next) {
                 $next();
@@ -70,13 +61,12 @@ class MVC
     {
         if (!self::$controllers[$className]) {
             $className = strtoupper(substr($className, 0, 1)) . substr($className, 1);
-            list($c_path, $c_dir) = self::$c_dir;
-            $filePath = $c_dir . '/' . $className . 'Controller.php';
+            $filePath = MVC::$c_dir . '/' . $className . 'Controller.php';
 
             if (is_file($filePath)) {
                 import($filePath);
 
-                $instance = new \ReflectionClass($c_path . '\\' . $className . 'Controller');
+                $instance = new \ReflectionClass(MVC::$c_dir . '\\' . $className . 'Controller');
                 self::$controllers[$className] = $instance->newInstance($className);
             }
         }
@@ -144,13 +134,12 @@ class MVC_Controller
     {
         $className = $this->className;
         if (!MVC::$models[$className]) {
-            list($m_path, $m_dir) = MVC::$m_dir;
-            $filePath = $m_dir . '/' . $className . 'Model.php';
+            $filePath = MVC::$m_dir. '/' . $className . 'Model.php';
 
             if (is_file($filePath)) {
                 import($filePath);
 
-                $instance = new \ReflectionClass($m_path . '\\' . $className . 'Model');
+                $instance = new \ReflectionClass(MVC::$m_dir . '\\' . $className . 'Model');
                 MVC::$models[$className] = $instance->newInstance($className);
             }
         }
