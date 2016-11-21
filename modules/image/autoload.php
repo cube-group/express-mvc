@@ -27,11 +27,13 @@ final class Image
      * @param $source
      * @return bool|string
      */
-    public static function ppt2pdf($source)
+    public static function ppt2pdf($source, $tmp_path = '/tmp/')
     {
-        if (system('export DISPLAY=:0.0 && libreoffice --headless --invisible --convert-to pdf ' . $source) !== false) {
+        $shell = 'export DISPLAY=:0.0 && libreoffice --headless --invisible --convert-to pdf ' . $source;
+        $shell .= ' outdir ' . $tmp_path;
+        if (system($shell) !== false) {
             $info = pathinfo($source);
-            return $info['dirname'] . '/' . explode('.', $info['basename'])[0] . 'pdf';
+            return $info['dirname'] . '/' . explode('.', $info['basename'])[0] . '.pdf';
         }
         return false;
     }
@@ -39,12 +41,12 @@ final class Image
     /**
      * PDF TO PIC
      * @param $source  pdf filename
-     * @param $path export the file dir path
+     * @param $tmp_path export the file dir path
      * @param $extension pic extension name
      * @param $page page number
      * @return array
      */
-    public static function pdf2pic($source, $path, $extension = 'jpg', $page = -1)
+    public static function pdf2pic($source, $tmp_path = '/tmp/', $extension = 'jpg', $page = -1)
     {
         $im = new \Imagick();
         $im->setCompressionQuality(100);
@@ -55,7 +57,7 @@ final class Image
         }
         foreach ($im as $key => $var) {
             $var->setImageFormat($extension);
-            $filename = $path . "/" . $key . '.png';
+            $filename = $tmp_path . "/" . $key . '.png';
             if ($var->writeImage($filename) == true) {
                 $return[] = $filename;
             }
