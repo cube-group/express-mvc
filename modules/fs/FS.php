@@ -158,11 +158,11 @@ final class FS
      * put the format php input stream into the temporary file.
      *
      * return [
-     *      ['name'=>'file name','path'=>'file path name']
+     *      ['tmp'=>'file name','path'=>'file path name']
      * ];
      *
      * return [
-     *      ['name'=>'file name','error'=>'size']
+     *      ['tmp'=>'file name','error'=>'size']
      * ];
      *
      * options [
@@ -198,9 +198,9 @@ final class FS
     /**
      * put the format upload files into the temporary files.
      * return [
-     *      array('name'=>'file name','path'=>'file path name'),
-     *      array('name'=>'file name','path'=>'file path name'),
-     *      array('name'=>'file name','path'=>'file path name')
+     *      array('tmp'=>'file name','path'=>'file path name'),
+     *      array('tmp'=>'file name','path'=>'file path name'),
+     *      array('tmp'=>'file name','path'=>'file path name')
      * ];
      *
      * options [
@@ -213,25 +213,98 @@ final class FS
      */
     public static function saveUploadAsFile($options = null)
     {
+        /**
+         * once select - multiple upload.
+         * <input name="files[]">
+         * <input name="files[]">
+         *
+         * array (size=1)
+         * 'files' =>
+         * array (size=5)
+         * 'name' =>
+         * array (size=2)
+         * 0 => string 'a-0.jpg' (length=7)
+         * 1 => string 'cube-icon.png' (length=13)
+         * 'type' =>
+         * array (size=2)
+         * 0 => string 'image/jpeg' (length=10)
+         * 1 => string 'image/png' (length=9)
+         * 'tmp_name' =>
+         * array (size=2)
+         * 0 => string '/tmp/phpE8JDrd' (length=14)
+         * 1 => string '/tmp/phpRWD2w1' (length=14)
+         * 'error' =>
+         * array (size=2)
+         * 0 => int 0
+         * 1 => int 0
+         * 'size' =>
+         * array (size=2)
+         * 0 => int 43596
+         * 1 => int 4368
+         */
+
+        /**
+         * once select - multiple upload.
+         * <input name="files[]" multiple/>
+         *
+         * array (size=1)
+         * 'files' =>
+         * array (size=5)
+         * 'name' =>
+         * array (size=2)
+         * 0 => string 'a-0.jpg' (length=7)
+         * 1 => string 'cube-icon.png' (length=13)
+         * 'type' =>
+         * array (size=2)
+         * 0 => string 'image/jpeg' (length=10)
+         * 1 => string 'image/png' (length=9)
+         * 'tmp_name' =>
+         * array (size=2)
+         * 0 => string '/tmp/phpE8JDrd' (length=14)
+         * 1 => string '/tmp/phpRWD2w1' (length=14)
+         * 'error' =>
+         * array (size=2)
+         * 0 => int 0
+         * 1 => int 0
+         * 'size' =>
+         * array (size=2)
+         * 0 => int 43596
+         * 1 => int 4368
+         */
+
+
+        /**
+         * multiple select - multiple upload.
+         * <input name="file1">
+         * <input name="file2">
+         *
+         * array (size=2)
+         * 'file1' =>
+         * array (size=5)
+         * 'name' => string 'a-0.jpg' (length=7)
+         * 'type' => string 'image/jpeg' (length=10)
+         * 'tmp_name' => string '/tmp/phpmRuGBJ' (length=14)
+         * 'error' => int 0
+         * 'size' => int 43596
+         * 'file2' =>
+         * array (size=5)
+         * 'name' => string 'cube-icon.png' (length=13)
+         * 'type' => string 'image/png' (length=9)
+         * 'tmp_name' => string '/tmp/phpuGDaDv' (length=14)
+         * 'error' => int 0
+         * 'size' => int 4368
+         */
+
         if (count($_FILES) > 0) {
             $files = [];
             foreach ($_FILES as $file) {
+                //multiple select.
                 if (count($file['name']) == 1) {
-                    /**
-                     * support different file name.
-                     * <input type='file' name='file1'/>
-                     * <input type='file' name='file2'/>
-                     * array(2) { ["files1"]=> array(5) { ["name"]=> string(12) "IMG_4042.PNG" ["type"]=> string(9) "image/png" ["tmp_name"]=> string(39) "/usr/local/nginx/html/fs/temp/phphC7PiD" ["error"]=> int(0) ["size"]=> int(390315) } ["files2"]=> array(5) { ["name"]=> string(12) "IMG_4043.PNG" ["type"]=> string(9) "image/png" ["tmp_name"]=> string(39) "/usr/local/nginx/html/fs/temp/php1DMbhl" ["error"]=> int(0) ["size"]=> int(487587) } }
-                     */
                     array_push($files, $file);
                 } else {
-                    /**
-                     * support the same file name.
-                     * <input type='file' name='files[]'/>
-                     * array(1) { ["files"]=> array(5) { ["name"]=> array(2) { [0]=> string(12) "IMG_4042.PNG" [1]=> string(12) "IMG_4043.PNG" } ["type"]=> array(2) { [0]=> string(9) "image/png" [1]=> string(9) "image/png" } ["tmp_name"]=> array(2) { [0]=> string(39) "/usr/local/nginx/html/fs/temp/phpA4eEvt" [1]=> string(39) "/usr/local/nginx/html/fs/temp/phpZ2Ri0w" } ["error"]=> array(2) { [0]=> int(0) [1]=> int(0) } ["size"]=> array(2) { [0]=> int(390315) [1]=> int(487587) } } }
-                     */
+                    //once select.
                     foreach ($file['name'] as $key1 => $name) {
-                        $files[$key1] = array('name' => $name);
+                        $files[$key1] = ['name' => $name];
                     }
                     $params = ['type', 'tmp_name', 'error', 'size'];
                     foreach ($params as $param) {
