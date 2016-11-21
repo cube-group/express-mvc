@@ -197,7 +197,7 @@ final class Config
 }
 
 
-//error_reporting(0);
+error_reporting(0);
 
 function onErrorHandler()
 {
