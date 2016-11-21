@@ -62,7 +62,6 @@ final class Image
         }
         return $return;
     }
-
 }
 
 ?>

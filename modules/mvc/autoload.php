@@ -99,9 +99,6 @@ class MVC
 
         self::$controllers = null;
         self::$models = null;
-
-        self::$req = null;
-        self::$res = null;
     }
 }
 
