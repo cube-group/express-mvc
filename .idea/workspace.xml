@@ -28,8 +28,8 @@
       <file leaf-file-name="FS.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/fs/FS.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="242" column="24" selection-start-line="242" selection-start-column="24" selection-end-line="242" selection-end-column="24" />
+            <state relative-caret-position="193">
+              <caret line="318" column="20" selection-start-line="318" selection-start-column="20" selection-end-line="318" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -146,7 +146,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -199,6 +198,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -330,12 +330,13 @@
       <workItem from="1479698385985" duration="155000" />
       <workItem from="1479699444513" duration="34000" />
       <workItem from="1479709586714" duration="85000" />
-      <workItem from="1479715063807" duration="13000" />
+      <workItem from="1479715063807" duration="58000" />
+      <workItem from="1479717416677" duration="5000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="121800000" />
+    <option name="totallyTimeSpent" value="121850000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -350,7 +351,7 @@
     <frame x="1366" y="-107" width="1920" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.185836" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18743344" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298647" sideWeight="0.51277953" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -722,8 +723,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/fs/FS.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="242" column="24" selection-start-line="242" selection-start-column="24" selection-end-line="242" selection-end-column="24" />
+        <state relative-caret-position="193">
+          <caret line="318" column="20" selection-start-line="318" selection-start-column="20" selection-end-line="318" selection-end-column="20" />
           <folding />
         </state>
       </provider>

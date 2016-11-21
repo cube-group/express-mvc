@@ -299,7 +299,7 @@ final class FS
             $files = [];
             foreach ($_FILES as $file) {
                 //multiple select.
-                if (count($file['name']) == 1) {
+                if (is_string($file['name'])) {
                     array_push($files, $file);
                 } else {
                     //once select.
@@ -323,7 +323,7 @@ final class FS
     {
         $stack = [];
         foreach ($files as $file) {
-            if ($file['error'] > 0) {
+            if ($file['error']) {
                 array_push($stack, ['name' => $file['name'], 'error' => $file['error']]);
                 continue;
             }
@@ -333,7 +333,7 @@ final class FS
                     array_push($stack, ['name' => $file['name'], 'error' => 'size']);
                     continue;
                 }
-                if ($options['type'] && is_array($options['type']) && in_array($file['type'], $options['type'])) {
+                if ($options['type'] && is_array($options['type']) && !in_array($file['type'], $options['type'])) {
                     array_push($stack, ['name' => $file['name'], 'error' => 'type']);
                     continue;
                 }
