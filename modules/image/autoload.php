@@ -21,24 +21,6 @@ if ($ext = Utils::is_miss_ext('imagick')) {
 final class Image
 {
     /**
-     * PPT TO PDF
-     * you need setup the libreoffice and libreoffice-headless
-     * yum install libreoffice libreoffice-headless
-     * @param $source
-     * @return bool|string
-     */
-    public static function ppt2pdf($source, $tmp_path = '/tmp/')
-    {
-        $shell = 'export DISPLAY=:0.0 && libreoffice --headless --invisible --convert-to pdf ' . $source;
-        $shell .= ' --outdir ' . $tmp_path;
-        if (system($shell) !== false) {
-            $info = pathinfo($source);
-            return $info['dirname'] . '/' . explode('.', $info['basename'])[0] . '.pdf';
-        }
-        return false;
-    }
-
-    /**
      * PDF TO PIC
      * @param $source  pdf filename
      * @param $tmp_path export the file dir path
