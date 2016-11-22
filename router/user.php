@@ -6,9 +6,9 @@
  * Time: 上午10:54
  */
 
-use cube\Application;
+use cube\App;
 
-$router = Application::router();
+$router = App::router();
 
 $router->on('/', function ($req, $res, $next) {
     //$req->route => /user/

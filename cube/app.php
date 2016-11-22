@@ -13,82 +13,88 @@ use log\Log;
 use utils\Utils;
 
 /**
- * Class Application.
+ * Class App.
  * Cube HTTP Framework Facade Core Class.
+ *
  * @package com\cube\core
  */
-final class Application
+final class App
 {
     /**
-     * core connect router.
-     * @var
+     * connect instance.
+     * @var null
      */
-    private static $connect;
-
-    private static $instance;
-
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new Application();
-        }
-        return self::$instance;
-    }
+    private static $connect = null;
+    /**
+     * cube/Request.
+     * @var null
+     */
+    private static $req = null;
+    /**
+     * cube/Response.
+     * @var null
+     */
+    private static $res = null;
 
     /**
      * Application GarbageCollection.
      */
     public static function gc()
     {
-        if (!empty(self::$connect)) {
+        if (self::$connect) {
             self::$connect->gc();
+            self::$connect = null;
         }
+        self::$req = null;
+        self::$res = null;
+
         Log::flush();
     }
 
     /**
-     * initialize Application Framework.
-     * @param $www_dir the dir of the project
+     * initialize the app.
+     *
+     * options:[
+     *      'base_dir'=>'project dir',
+     *      'time_zone'=>'zone',
+     *      'time_limit'=>'set_time_limit',
+     *      'error_report'=>'0/1'
+     * ]
+     * @param $options
      */
-    public static function init($www_dir)
+    public static function init($options)
     {
-        if (!empty(self::$instance)) {
-            throw new \Exception('Application exists');
+        if (self::$connect) {
+            throw new \Exception('Error App init!');
         }
 
-        //load libs & engine & modules.
-        Config::init($www_dir, 'Asia/Shanghai');
+        //load libs & modules.
+        Config::init($options);
 
         //check php version.
         if (!Utils::is_legal_php_version('5.6.0')) {
-            throw new \Exception('PHP VERSION IS LOW.');
+            throw new \Exception('PHP VERSION IS LOW!');
         }
 
-        return self::getInstance();
-    }
+        self::$req = new Request();
 
-    /**
-     * start Application.
-     * @throws \Exception
-     */
-    public function start()
-    {
-        if (!empty(self::$connect)) {
-            throw new \Exception('Application has been started');
-        }
+        self::$res = new Response();
 
-        //init connect.
-        self::$connect = new Connect(new Request(), new Response());
+        self::$connect = new Connect(self::$req, self::$res);
+
         //load the logic.
         import(Config::get('core', 'app'));
-        //start connect.
+
+        //app start.
         self::$connect->start();
-        //garbageCollection.
+
+        //gc.
         self::gc();
     }
 
     /**
-     * get the core connect.
+     * create a child app instance.
+     *
      * @return mixed
      */
     public static function router()
@@ -97,7 +103,7 @@ final class Application
     }
 
     /**
-     * Global Render the view engine.
+     * global render the view engine.
      *
      * @param $engine
      * @param $name
@@ -105,11 +111,16 @@ final class Application
      */
     public static function globalRender($engine, $name, $value = null)
     {
-        if (!empty(self::$connect)) {
-            self::$connect->res->render($engine, $name, $value);
+        if (self::$res) {
+            self::$res->render($engine, $name, $value);
         } else {
             $engine->render('500', $value);
         }
+    }
+
+    private function __construct()
+    {
+        //private
     }
 }
 
@@ -125,9 +136,9 @@ final class Config
      * Framework init dependency package1.
      */
     const LIBS = [
-        'cube/Connect.php',
         'cube/Request.php',
         'cube/Response.php',
+        'cube/Connect.php',
     ];
     /**
      * cube global config object.
@@ -142,37 +153,46 @@ final class Config
     /**
      * append the package.json object info.
      * all constant value.
-     *
+     *options:[
+     *      'base_dir'=>'project dir',
+     *      'time_zone'=>'zone',
+     *      'time_limit'=>'set_time_limit',
+     *      'error_report'=>'0/1'
+     * ]
      * @param $json
      * @throws \Exception
      */
-    public static function init($www_dir, $time_zone)
+    public static function init($options)
     {
-        self::$VALUE['BASE_DIR'] = $www_dir . '/';
-        define('BASE_DIR', self::$VALUE['BASE_DIR']);
-        define('START_TIME', microtime(true));
-        date_default_timezone_set($time_zone);
+        if (!$options) {
+            $options = [];
+        }
+        $options['base_dir'] = $options['base_dir'] ? ($options['base_dir'] . '/') : (__DIR__ . '/../');
 
-        $json = json_decode(file_get_contents(self::$VALUE['BASE_DIR'] . 'package.json'), true);
-        if (!empty($json)) {
-            foreach (self::$VALUE as $key => $value) {
-                $json[$key] = $value;
-            }
+        set_time_limit($options['time_limit'] ? $options['time_limit'] : 0);
+        error_reporting($options['error_report'] ? $options['error_report'] : 0);
+        date_default_timezone_set($options['time_zone'] ? $options['time_zone'] : 'Asia/Shanghai');
+
+        define('BASE_DIR', $options['base_dir']);
+        define('START_TIME', microtime(true));
+
+        if ($json = json_decode(file_get_contents($options['base_dir'] . 'package.json'), true)) {
             self::$VALUE = $json;
 
-            define('VIEW_DIR', self::$VALUE['BASE_DIR'] . self::$VALUE['dir']['view'] . '/');
-            define('TMP_DIR', self::$VALUE['BASE_DIR'] . self::$VALUE['dir']['tmp'] . '/');
-            define('LOG_PATH', self::$VALUE['BASE_DIR'] . self::$VALUE['log']['log']);
-            define('LOG_SQL_PATH', self::$VALUE['BASE_DIR'] . self::$VALUE['log']['sql']);
+            define('VIEW_DIR', $options['base_dir'] . $json['dir']['view'] . '/');
+            define('TMP_DIR', $options['base_dir'] . $json['dir']['tmp'] . '/');
+            define('LOG_PATH', $options['base_dir'] . $json['log']['log']);
+            define('LOG_SQL_PATH', $options['base_dir'] . $json['log']['sql']);
             define('CONFIG', $json);
 
-            ini_set('upload_tmp_dir', constant('TMP_DIR'));
+            ini_set('upload_tmp_dir', $options['base_dir'] . $json['dir']['tmp'] . '/');
 
             import(self::LIBS);
             import($json['modules']);
 
         } else {
-            throw new \Exception('config is error or null!');
+            import(['modules/fs/autoload', 'modules/log/autoload.php', 'modules/engine/autoload.php']);
+            throw new \Exception('config is error or null');
         }
     }
 
@@ -196,9 +216,6 @@ final class Config
     }
 }
 
-
-error_reporting(0);
-
 function onErrorHandler()
 {
     if ($e = error_get_last()) {
@@ -208,10 +225,10 @@ function onErrorHandler()
             case E_CORE_ERROR:
             case E_COMPILE_ERROR:
             case E_USER_ERROR:
-                Log::log('Error ' . $e['message']);
+                //Log::log('Error ' . $e['message']);
                 $errors = array('msg' => $e['message'], 'level' => $e['type'], 'line' => $e['line'], 'file' => $e['file']);
-                Application::globalRender(new AngularEngine(), '500', $errors);
-                Application::gc();
+                App::globalRender(new AngularEngine(), '500', $errors);
+                App::gc();
                 break;
         }
     }
@@ -223,11 +240,11 @@ function onErrorHandler()
  */
 function onExceptionHandler(\Exception $e)
 {
-    Log::log('Exception ' . $e->getMessage());
+    //Log::log('Exception ' . $e->getMessage());
 
     $errors = array('msg' => $e->getMessage(), 'level' => $e->getCode(), 'line' => $e->getLine(), 'file' => $e->getFile());
-    Application::globalRender(new AngularEngine(), '500', $errors);
-    Application::gc();
+    App::globalRender(new AngularEngine(), '500', $errors);
+    App::gc();
 }
 
 set_error_handler('cube\onErrorHandler');

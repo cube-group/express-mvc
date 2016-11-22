@@ -1,13 +1,11 @@
 {
-  "name": "cube",
+  "name": "cube-group/express-mvc",
   "version": "1.1.0",
   "start": "php ./www.php",
-  "author": [
-    {
-      "name": "linyang",
-      "mail": "lin2798003@sina.com"
-    }
-  ],
+  "author": {
+    "name": "linyang",
+    "mail": "lin2798003@sina.com"
+  },
   "log": {
     "log": "log/log.log",
     "sql": "log/sql.log"
@@ -26,14 +24,14 @@
     "jsonp": "callback"
   },
   "modules": [
-    "modules/utils/Utils.php",
+    "modules/utils/autoload.php",
     "modules/engine/autoload.php",
     "modules/body/autoload.php",
     "modules/cookie/autoload.php",
     "modules/session/Session.php",
-    "modules/fs/FS.php",
-    "modules/http/Http.php",
-    "modules/log/Log.php",
-    "modules/orm/autoload.php"
+    "modules/fs/autoload.php",
+    "modules/http/autoload.php",
+    "modules/log/autoload.php",
+    "modules/orm/autoload.php".
   ]
 }

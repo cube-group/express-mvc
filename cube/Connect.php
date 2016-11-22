@@ -21,12 +21,12 @@ final class Connect
      * request instance reference.
      * @var
      */
-    public $req;
+    private $req;
     /**
      * response instance reference.
      * @var
      */
-    public $res;
+    private $res;
     /**
      * next function instance.
      * @var
@@ -64,7 +64,7 @@ final class Connect
      */
     public function start()
     {
-        if (!empty($this->connectNext)) {
+        if ($this->connectNext) {
             throw new \Exception('Connect has been started!');
         }
 
@@ -95,14 +95,14 @@ final class Connect
 
     /**
      * add middleWare.
-     * $router = Application::router();
+     * $router = Cube::router();
      * $router->on(Cookie::create());
      *
      * add router middleWare.
      * $router->on('/filter',function($req,$res,$next){}
      *
      * add router php fileName.
-     * $router->on('user');//then the framework will find the /router/user.php,and load it.
+     * $router->on('/user,'router/user');//then the framework will find the /router/user.php,and load it.
      *
      * @param $filter
      * @param $object router ClassName or Instance.

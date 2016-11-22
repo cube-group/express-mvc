@@ -18,6 +18,9 @@ function import($files)
     $base_dir = defined('BASE_DIR') ? constant('BASE_DIR') : '';
     foreach ($arr as $file) {
         $file = $base_dir . $file;
+        if (!strstr($file, '.php')) {
+            $file .= '.php';
+        }
         isset($GLOBALS['import-require-once-' . $file]) or require $file;
     }
 }

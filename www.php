@@ -10,11 +10,14 @@
 
 //include all cube libs.
 require './modules/import/autoload.php';
-require './cube/Application.php';
-
-use cube\Application;
+require './cube/App.php';
 
 //initialize the cube framework.
-Application::init(__DIR__)->start();
+\cube\App::init([
+    'base_dir' => __DIR__,
+    'time_limit' => 0,
+    'error_report' => 1,
+    'time_zone' => 'Asia/Shanghai'
+]);
 
 ?>

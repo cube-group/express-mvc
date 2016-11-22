@@ -1,0 +1,16 @@
+[2016-11-22 23:55:26] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp
+[2016-11-22 23:55:26] Response render 500(32 ms)
+[2016-11-22 23:56:52] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp
+[2016-11-22 23:56:52] Response render 500(5 ms)
+[2016-11-22 23:57:07] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp
+[2016-11-22 23:57:07] Response render index(15 ms)
+[2016-11-22 23:57:25] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp
+[2016-11-22 23:57:25] Response render index(5 ms)
+[2016-11-22 23:57:32] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp&router=user
+[2016-11-22 23:57:32] Response render 500(13 ms)
+[2016-11-22 23:58:09] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp&router=user
+[2016-11-22 23:58:09] Response render index(6 ms)
+[2016-11-22 23:58:30] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp&router=user/a/b/pwd
+[2016-11-22 23:58:30] Response json(5 ms)
+[2016-11-22 23:58:48] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp&router=upload
+[2016-11-22 23:58:48] Response send(5 ms)

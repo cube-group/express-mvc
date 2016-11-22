@@ -6,10 +6,10 @@
  * Time: 下午6:57
  */
 
-use cube\Application;
+use cube\App;
 use fs\FS;
 
-$router = Application::router();
+$router = App::router();
 
 $router->on('/', function ($req, $res, $next) {
     if ($req->body->fileNumber() > 0) {

@@ -4,14 +4,14 @@
  * User: linyang
  * Date: 16/11/9
  */
-use cube\Application;
+use cube\App;
 use cube\Request;
 use cube\Response;
 use cookie\Cookie;
 use session\Session;
 use body\Body;
 
-$router = Application::router();
+$router = App::router();
 
 //cookie parser.
 $router->on(Cookie::create());
