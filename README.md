@@ -12,10 +12,26 @@
 * log.log - info/error/exception log
 * sql.log - orm log
 
+### app init
+```javascript
+
+//include all cube libs.
+require './modules/import/autoload.php';
+require './cube/App.php';
+
+//initialize the cube framework.
+\cube\App::init([
+    'base_dir' => __DIR__, //root dir
+    'time_limit' => 0, //program exec time limit (s)
+    'error_report' => 1, //display error or not
+    'time_zone' => 'Asia/Shanghai' //time zone
+]);
+```
+
 ### middleWare append
 * initial mode middleWare.
 ```javascript
-$router = Application::router();
+$router = App::router();
 $router->on(function($req,$res,$next){
     $a = 'helloWorld!'; //your code.
     $next(); //next middleWare.
@@ -24,12 +40,12 @@ $router->on(function($req,$res,$next){
 ```
 * router mode middleWare fileName.
 ```javascript
-$router = Application::router();
+$router = App::router();
 $router->on('/test','router/test.php');
 ```
 * router mode middleWare.
 ```javascript
-$router = Application::router();
+$router = App::router();
 $router->on('/index',function($req,$res,$next){
     $a = 'helloWorld!'; //your code.
     $next(); //next middleWare.
@@ -45,7 +61,7 @@ otherwise the network address is used directly to resolve the path.
 ./www.php?router=http (Cube Framework Application will find the router config from the package.json)
 
 //application filter the pathinfo.
-$router= Application::Router();
+$router= App::Router();
 $router.on('/http',function($req,$res,$next){
     $res->send('get');
     $next();
