@@ -4,8 +4,8 @@ namespace http;
 
 use utils\Utils;
 
-if (Utils::is_miss_ext('curl')) {
-    throw new \Exception('Ext curl is not exist!');
+if ($ext = Utils::is_miss_ext('curl')) {
+    throw new \Exception('Ext ' . $ext . ' is not exist!');
 }
 
 /**
@@ -23,24 +23,28 @@ final class Http
     /**
      * http/https get request.
      * @param $url
+     * @param timeout
+     * @param $CA
      * @return mixed
      */
-    public static function get($url)
+    public static function get($url, $timeout = 15, $CA = '')
     {
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
 
         if (Utils::isHTTPS($url)) {
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); // 从证书中检查SSL加密算法是否存在
+            if ($CA) {
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+                curl_setopt($curl, CURLOPT_CAINFO, $CA); //CA root file
+                curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            } else {
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1);
+            }
         }
-
-        curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // 模拟用户使用的浏览器
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1); // 使用自动跳转
-        curl_setopt($curl, CURLOPT_AUTOREFERER, 1); // 自动设置Referer
-        curl_setopt($curl, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
-        curl_setopt($curl, CURLOPT_HEADER, 0); // 显示返回的Header区域内容
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
         $result = curl_exec($curl);
         curl_close($curl);
@@ -50,27 +54,32 @@ final class Http
     /**
      * http/https post request.
      * @param $url
+     * @param $data
+     * @param timeout
+     * @param $CA
      * @return mixed
      */
-    public static function post($url, $data)
+    public static function post($url, $data, $timeout = 15, $CA = '')
     {
-        $params = http_build_query($data);
-
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
 
         if (Utils::isHTTPS($url)) {
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1); // 从证书中检查SSL加密算法是否存在
+            if ($CA) {
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+                curl_setopt($curl, CURLOPT_CAINFO, $CA); //CA root file
+                curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            } else {
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1);
+            }
         }
-        curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // 模拟用户使用的浏览器
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1); // 使用自动跳转
-        curl_setopt($curl, CURLOPT_AUTOREFERER, 1); // 自动设置Referer
-        curl_setopt($curl, CURLOPT_POST, 1); // 发送一个常规的Post请求
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $params); // Post提交的数据包
-        curl_setopt($curl, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
-        curl_setopt($curl, CURLOPT_HEADER, 0); // 显示返回的Header区域内容
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Expect:'));
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
         $result = curl_exec($curl);
         curl_close($curl);
