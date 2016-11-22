@@ -10,7 +10,7 @@
 
 //include all cube libs.
 require './modules/import/autoload.php';
-require './cube/App.php';
+require './cube/Ap.php';
 
 //initialize the cube framework.
 \cube\App::init([

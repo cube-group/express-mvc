@@ -32,6 +32,6 @@
     "modules/fs/autoload.php",
     "modules/http/autoload.php",
     "modules/log/autoload.php",
-    "modules/orm/autoload.php".
+    "modules/orm/autoload.php"
   ]
 }
