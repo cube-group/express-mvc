@@ -13,7 +13,7 @@ require './modules/import/autoload.php';
 require './cube/App.php';
 
 //start the mode of multiple kernel.
-\cube\App::multiple(false);
+\cube\App::multiple(true);
 
 //initialize the cube framework.
 \cube\App::init([
