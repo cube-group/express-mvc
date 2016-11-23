@@ -24,10 +24,9 @@ $app->on(function ($req, $res, $next) {
 });
 
 //add router path.
-$app->on('user/', 'router/user.php');
+$app->on('/user', 'router/user.php');
 $app->on('/upload', 'router/upload.php');
 
-//add router middleWare.
 $app->on('/', function ($req, $res, $next) {
     $res->render(new \engine\EchoEngine(), 'index');
 });

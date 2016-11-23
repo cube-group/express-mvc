@@ -9,6 +9,7 @@
 namespace cube;
 
 use engine\AngularEngine;
+use engine\ViewEngine;
 use log\Log;
 use utils\Utils;
 
@@ -27,17 +28,17 @@ final class App
     private static $multiple = false;
     /**
      * facade router instance.
-     * @var null
+     * @var Router
      */
     private static $router = null;
     /**
      * cube/Request.
-     * @var null
+     * @var Request
      */
     private static $req = null;
     /**
      * cube/Response.
-     * @var null
+     * @var Response
      */
     private static $res = null;
 
@@ -58,8 +59,7 @@ final class App
 
     /**
      * set the kernel mode.
-     *
-     * @param $flag
+     * @param $flag boolean
      */
     public static function multiple($flag)
     {
@@ -78,7 +78,7 @@ final class App
      *      'time_limit'=>'set_time_limit',
      *      'error_report'=>'0/1'
      * ]
-     * @param $options
+     * @param $options array
      */
     public static function init($options)
     {
@@ -137,7 +137,7 @@ final class App
     /**
      * return the facade router.
      *
-     * @return null
+     * @return Router
      */
     public static function app()
     {
@@ -147,7 +147,7 @@ final class App
     /**
      * create a child app instance.
      *
-     * @return mixed
+     * @return Router
      */
     public static function Router()
     {
@@ -157,9 +157,9 @@ final class App
     /**
      * global render the view engine.
      *
-     * @param $engine
-     * @param $name
-     * @param null $value
+     * @param $engine ViewEngine
+     * @param $name string
+     * @param $value object
      */
     public static function globalRender($engine, $name, $value = null)
     {
@@ -211,7 +211,7 @@ final class Config
      *      'time_limit'=>'set_time_limit',
      *      'error_report'=>'0/1'
      * ]
-     * @param $json
+     * @param $json array
      * @throws \Exception
      */
     public static function init($options)
@@ -250,7 +250,8 @@ final class Config
     /**
      * Get the package.json object children value.
      *
-     * @param $key
+     * @param $args array
+     * @return object | null
      */
     public static function get(...$args)
     {

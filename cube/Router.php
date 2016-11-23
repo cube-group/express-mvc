@@ -29,7 +29,11 @@ final class Router
     private static $parentFilter = '';
 
     /**
-     * create a Router instance.
+     * create a router instance.
+     * @param $req Request
+     * @param $res Response
+     * @return Router
+     * @throws \Exception
      */
     public static function createFactory($req, $res)
     {
@@ -44,17 +48,17 @@ final class Router
 
     /**
      * request instance reference.
-     * @var
+     * @var Request
      */
     private $req;
     /**
      * response instance reference.
-     * @var
+     * @var Response
      */
     private $res;
     /**
      * next function instance.
-     * @var
+     * @var Connect
      */
     private $connect;
     /**
@@ -64,10 +68,14 @@ final class Router
     private $middleWares;
     /**
      * parent router.
-     * @var null
+     * @var Router
      */
     private $parent = null;
 
+    /**
+     * get the test stack.
+     * @return array
+     */
     public function stack()
     {
         return $this->middleWares;
@@ -186,6 +194,8 @@ final class Router
 
     /**
      * parse the php path name string to Router instance.
+     * @param $filter string
+     * @param $fileName string
      */
     private function pushAsRouter($filter, $fileName)
     {
@@ -203,6 +213,7 @@ final class Router
 
     /**
      * execute next middleWare.
+     * @return void
      */
     private function next()
     {
@@ -219,7 +230,7 @@ final class Router
      * user/a => /user/a/
      * /user/a => /user/a/
      *
-     * @param $value
+     * @param $value string
      * @return string
      */
     private function fillFilter($value = '')
@@ -268,12 +279,14 @@ final class Router
      * demo: not match
      * path: /user/a/
      * filter: /user/:id/:name
+     *
+     * @param $filter string
      */
     private function routerMatch($filter)
     {
-        $path = $this->req->path;
         $this->req->route = $filter;
 
+        $path = $this->req->path;
         if (strpos($path, $filter) === 0) {
             return true;
         } else if (strstr($filter, ':') == true) {
@@ -309,11 +322,19 @@ class Connect
 {
     private $body;
 
+    /**
+     * Connect constructor.
+     * @param $next \Closure
+     */
     public function __construct($next)
     {
         $this->body = [$next];
     }
 
+    /**
+     * return the next function.
+     * @return \Closure
+     */
     public function next()
     {
         return $this->body[0];

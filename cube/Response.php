@@ -8,6 +8,7 @@
 
 namespace cube;
 
+use engine\ViewEngine;
 use fs\FS;
 use log\Log;
 
@@ -26,6 +27,7 @@ final class Response
     /**
      * url location to the client.
      * @param $path
+     * @return $this
      */
     public function location($path)
     {
@@ -74,16 +76,17 @@ final class Response
     /**
      * send the jsonp string to the client.
      * @param $value
+     * @return void
      */
     public function jsonp($value)
     {
         $callback_str = Config::get('core', 'jsonp');
         if (empty($callback_str)) {
-            return $this;
+            return;
         }
         $callback_func = $_GET[$callback_str];
         if (empty($callback_func)) {
-            return $this;
+            return;
         }
         echo $callback_func . '(' . json_encode($value) . ')';
 
@@ -92,9 +95,9 @@ final class Response
 
     /**
      * send the content to the client by the viewEngine.
-     * @param $viewEngine
-     * @param viewName the name of template
-     * @param $value parameters
+     * @param $viewEngine ViewEngine
+     * @param viewName string
+     * @param $value object
      */
     public function render($viewEngine, $viewName, $value = null)
     {
@@ -104,8 +107,8 @@ final class Response
     }
 
     /**
-     * redirect router.
-     * @param $value
+     * redirect url.
+     * @param $value string
      */
     public function redirect($value)
     {
@@ -116,7 +119,7 @@ final class Response
 
     /**
      * set httpHeader status.
-     * @param $code
+     * @param $code integer
      */
     public function statusCode($code)
     {

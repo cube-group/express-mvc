@@ -1,83 +1,20 @@
-[2016-11-22 23:55:26] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp
-[2016-11-22 23:55:26] Response render 500(32 ms)
-[2016-11-22 23:56:52] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp
-[2016-11-22 23:56:52] Response render 500(5 ms)
-[2016-11-22 23:57:07] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp
-[2016-11-22 23:57:07] Response render index(15 ms)
-[2016-11-22 23:57:25] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp
-[2016-11-22 23:57:25] Response render index(5 ms)
-[2016-11-22 23:57:32] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp&router=user
-[2016-11-22 23:57:32] Response render 500(13 ms)
-[2016-11-22 23:58:09] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp&router=user
-[2016-11-22 23:58:09] Response render index(6 ms)
-[2016-11-22 23:58:30] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp&router=user/a/b/pwd
-[2016-11-22 23:58:30] Response json(5 ms)
-[2016-11-22 23:58:48] http://localhost:63342/express-mvc/www.php?_ijt=4pphdgkqib0i3gjs3548bh12tp&router=upload
-[2016-11-22 23:58:48] Response send(5 ms)
-[2016-11-23 13:27:32] Error require(): Failed opening required '/Users/linyang/github/express-mvc/cube/Connect.php' (include_path='.:')
-[2016-11-23 13:30:26] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a
-[2016-11-23 13:30:26] Response render index(19 ms)
-[2016-11-23 13:31:16] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a
-[2016-11-23 13:31:16] Response render index(13 ms)
-[2016-11-23 13:37:13] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a
-[2016-11-23 13:37:13] Response render index(13 ms)
-[2016-11-23 13:38:35] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 13:38:35] Response render index(13 ms)
-[2016-11-23 14:17:58] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a
-[2016-11-23 14:17:58] Response render index(12 ms)
-[2016-11-23 14:18:12] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:18:12] Response render index(6 ms)
-[2016-11-23 14:24:52] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:24:52] Response render index(15 ms)
-[2016-11-23 14:25:04] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:25:04] Response render index(6 ms)
-[2016-11-23 14:25:59] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:25:59] Response render index(12 ms)
-[2016-11-23 14:27:35] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:27:35] Response render index(14 ms)
-[2016-11-23 14:31:05] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:31:05] Response render index(14 ms)
-[2016-11-23 14:34:10] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:34:10] Response render index(6 ms)
-[2016-11-23 14:34:50] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:34:50] Response render index(13 ms)
-[2016-11-23 14:34:53] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:34:53] Response render index(5 ms)
-[2016-11-23 14:38:07] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:38:07] Response render index(14 ms)
-[2016-11-23 14:38:26] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:38:26] Response render index(5 ms)
-[2016-11-23 14:38:56] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:38:56] Response render index(5 ms)
-[2016-11-23 14:40:35] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:40:35] Response render index(5 ms)
-[2016-11-23 14:41:05] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user/http
-[2016-11-23 14:41:08] Response send(3234 ms)
-[2016-11-23 14:41:29] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:41:29] Response render index(14 ms)
-[2016-11-23 14:41:30] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:41:30] Response render index(13 ms)
-[2016-11-23 14:43:44] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:43:44] Response render index(14 ms)
-[2016-11-23 14:45:36] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:45:36] Response render index(14 ms)
-[2016-11-23 14:45:38] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:45:38] Response render index(5 ms)
-[2016-11-23 14:46:13] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user/http
-[2016-11-23 14:46:25] Response send(11841 ms)
-[2016-11-23 14:46:25] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:46:25] Response render index(8 ms)
-[2016-11-23 14:46:25] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:46:25] Response render index(7 ms)
-[2016-11-23 14:46:49] http://localhost:63342/express-mvc/www.php?_ijt=ffs7udk5nlsb1l654doma2lge9
-[2016-11-23 14:46:49] Response render index(5 ms)
-[2016-11-23 14:47:04] http://localhost:63342/express-mvc/www.php?_ijt=ffs7udk5nlsb1l654doma2lge9&router=/user
-[2016-11-23 14:47:04] Response render index(3 ms)
-[2016-11-23 14:47:09] http://localhost:63342/express-mvc/www.php?_ijt=6gatihopgnf4ub9dni55duot5a&router=/user
-[2016-11-23 14:47:09] Response render index(5 ms)
-[2016-11-23 14:47:27] http://localhost:63342/express-mvc/www.php?_ijt=ffs7udk5nlsb1l654doma2lge9&router=/user/repeat
-[2016-11-23 14:47:27] Response render index(30 ms)
-[2016-11-23 14:48:59] http://localhost:63342/express-mvc/www.php?_ijt=ffs7udk5nlsb1l654doma2lge9&router=/user/repeat
-[2016-11-23 14:48:59] Response render index(13 ms)
-[2016-11-23 14:53:29] http://localhost:63342/express-mvc/www.php?_ijt=ffs7udk5nlsb1l654doma2lge9&router=/user/repeat
-[2016-11-23 14:53:29] Response send(13 ms)
+[2016-11-23 22:20:22] http://localhost:63342/express-mvc/www.php?_ijt=qm28k0opvdtca9ncqdaiefgmq1
+[2016-11-23 22:20:22] Response render index(38 ms)
+[2016-11-23 22:20:33] http://localhost:63342/express-mvc/www.php?_ijt=qm28k0opvdtca9ncqdaiefgmq1
+[2016-11-23 22:20:33] Response render index(37 ms)
+[2016-11-23 22:21:36] http://localhost:63342/express-mvc/www.php?_ijt=qm28k0opvdtca9ncqdaiefgmq1
+[2016-11-23 22:21:36] Response render index(83 ms)
+[2016-11-23 22:21:41] http://localhost:63342/express-mvc/www.php?_ijt=qm28k0opvdtca9ncqdaiefgmq1
+[2016-11-23 22:21:41] Response render index(85 ms)
+[2016-11-23 22:21:59] http://localhost:63342/express-mvc/www.php?_ijt=qm28k0opvdtca9ncqdaiefgmq1
+[2016-11-23 22:21:59] Response render index(95 ms)
+[2016-11-23 22:27:02] http://localhost:63342/express-mvc/www.php?_ijt=qm28k0opvdtca9ncqdaiefgmq1&router=/user/repeat
+[2016-11-23 22:27:02] Response send(71 ms)
+[2016-11-23 22:27:17] http://localhost:63342/express-mvc/www.php?_ijt=qm28k0opvdtca9ncqdaiefgmq1&router=/user/repeat
+[2016-11-23 22:27:17] Response send(84 ms)
+[2016-11-23 22:27:21] http://localhost:63342/express-mvc/www.php?_ijt=qm28k0opvdtca9ncqdaiefgmq1&router=/user/repeat
+[2016-11-23 22:27:21] Response send(87 ms)
+[2016-11-23 22:27:23] http://localhost:63342/express-mvc/www.php?_ijt=qm28k0opvdtca9ncqdaiefgmq1&router=/user/repeat
+[2016-11-23 22:27:24] Response send(81 ms)
+[2016-11-23 22:49:56] http://localhost:63342/express-mvc/www.php?_ijt=rdr0pl0fai4dkd2m0837e2fh9r
+[2016-11-23 22:49:56] Response render index(5 ms)

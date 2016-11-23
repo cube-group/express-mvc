@@ -17,15 +17,18 @@ use log\Log;
 final class Request
 {
     /**
-     * @var string user ip
+     * user ip
+     * @var string
      */
     public $ip = '';
     /**
-     * @var string request protocol
+     * request protocol
+     * @var string
      */
     public $protocol = 'http';
     /**
-     * @var string request host
+     * request host
+     * @var string
      */
     public $host = '';
     /**
@@ -34,45 +37,48 @@ final class Request
      */
     public $uri = '';
     /**
-     * @var string http refer
+     * http refer
+     * @var string
      */
     public $refer = '';
     /**
-     * @var string router string
+     * router string
+     * @var string
      */
     public $path = '';
     /**
-     * @var string original http/https url
+     * original http/https url
+     * @var string
      */
     public $baseUrl = '';
     /**
-     * @var array all request headers(only read)
-     */
-    public $headers;
-    /**
-     * @var array cookie instance
+     * cookie instance
+     * @var object
      */
     public $cookie;
     /**
-     * @var array session instance
+     *  session instance
+     * @var object
      */
     public $session;
     /**
-     * @var array body instance
+     *  body instance
+     * @var object
      */
     public $body;
     /**
-     * @var array query instance
+     *  query instance
+     * @var object
      */
     public $query;
     /**
      * /router/:id/:name,$params['id']
-     * @var
+     * @var array
      */
     public $params;
     /**
      * current router filter string.
-     * @var
+     * @var string
      */
     public $route;
 
@@ -130,7 +136,7 @@ final class Request
 
     /**
      * post check.
-     * @return mixed
+     * @return boolean
      */
     public function post()
     {
@@ -167,8 +173,7 @@ final class Request
 
     /**
      * set body instance.
-     * @param BaseDynamic $cookie
-     * @return array
+     * @param $body
      */
     public function body($body)
     {
@@ -177,8 +182,7 @@ final class Request
 
     /**
      * set cookie instance.
-     * @param ICookie $cookie
-     * @return array
+     * @param $cookie
      */
     public function cookie($cookie)
     {
@@ -187,7 +191,7 @@ final class Request
 
     /**
      * set session instance.
-     * @return array
+     * @param $session
      */
     public function session($session)
     {
@@ -196,7 +200,7 @@ final class Request
 
     /**
      * set params instance.
-     * @param BaseDynamic $params
+     * @param $params
      */
     public function params($params)
     {
