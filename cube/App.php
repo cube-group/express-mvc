@@ -21,10 +21,15 @@ use utils\Utils;
 final class App
 {
     /**
-     * connect instance.
+     * startup multiple kernel mode.
+     * @var bool
+     */
+    private static $multiple = false;
+    /**
+     * facade router instance.
      * @var null
      */
-    private static $connect = null;
+    private static $router = null;
     /**
      * cube/Request.
      * @var null
@@ -41,14 +46,27 @@ final class App
      */
     public static function gc()
     {
-        if (self::$connect) {
-            self::$connect->gc();
-            self::$connect = null;
+        if (self::$router) {
+            self::$router->gc();
+            self::$router = null;
         }
         self::$req = null;
         self::$res = null;
 
         Log::flush();
+    }
+
+    /**
+     * set the kernel mode.
+     *
+     * @param $flag
+     */
+    public static function multiple($flag)
+    {
+        if (self::$router) {
+            throw new \Exception('App has been initialized!');
+        }
+        self::$multiple = $flag;
     }
 
     /**
@@ -64,8 +82,8 @@ final class App
      */
     public static function init($options)
     {
-        if (self::$connect) {
-            throw new \Exception('Error App init!');
+        if (self::$router) {
+            throw new \Exception('App has been initialized!');
         }
 
         //load libs & modules.
@@ -80,16 +98,50 @@ final class App
 
         self::$res = new Response();
 
-        self::$connect = new Connect(self::$req, self::$res);
+        self::$router = new Router(self::$req, self::$res);
 
         //load the logic.
         import(Config::get('core', 'app'));
 
         //app start.
-        self::$connect->start();
+        self::$router->start();
+
+//        echo "<pre>";
+//        print_r(self::$router->stack());
+//        echo "</pre>";
 
         //gc.
         self::gc();
+    }
+
+    /**
+     * add middleWare or path by the facade router.
+     *
+     * @param array ...$args
+     */
+    public static function on(...$args)
+    {
+        switch (count($args)) {
+            case 1:
+                self::$router->on($args[0]);
+                break;
+            case 2:
+                self::$router->on($args[0], $args[1]);
+                break;
+            default:
+                throw new \Exception('middleWare add error');
+                break;
+        }
+    }
+
+    /**
+     * return the facade router.
+     *
+     * @return null
+     */
+    public static function app()
+    {
+        return self::$router;
     }
 
     /**
@@ -97,9 +149,9 @@ final class App
      *
      * @return mixed
      */
-    public static function router()
+    public static function Router()
     {
-        return self::$connect;
+        return self::$multiple ? Router::createFactory(self::$req, self::$res) : self::$router;
     }
 
     /**
@@ -138,7 +190,7 @@ final class Config
     const LIBS = [
         'cube/Request.php',
         'cube/Response.php',
-        'cube/Connect.php',
+        'cube/Router.php',
     ];
     /**
      * cube global config object.
@@ -191,7 +243,6 @@ final class Config
             import($json['modules']);
 
         } else {
-            import(['modules/fs/autoload', 'modules/log/autoload.php', 'modules/engine/autoload.php']);
             throw new \Exception('config is error or null');
         }
     }
@@ -219,13 +270,18 @@ final class Config
 function onErrorHandler()
 {
     if ($e = error_get_last()) {
+        import([
+            'modules/fs/autoload',
+            'modules/log/autoload.php',
+            'modules/engine/autoload.php'
+        ]);
         switch ($e['type']) {
             case E_ERROR:
             case E_PARSE:
             case E_CORE_ERROR:
             case E_COMPILE_ERROR:
             case E_USER_ERROR:
-                //Log::log('Error ' . $e['message']);
+                Log::log('Error ' . $e['message']);
                 $errors = array('msg' => $e['message'], 'level' => $e['type'], 'line' => $e['line'], 'file' => $e['file']);
                 App::globalRender(new AngularEngine(), '500', $errors);
                 App::gc();
@@ -240,8 +296,13 @@ function onErrorHandler()
  */
 function onExceptionHandler(\Exception $e)
 {
-    //Log::log('Exception ' . $e->getMessage());
+    import([
+        'modules/fs/autoload',
+        'modules/log/autoload.php',
+        'modules/engine/autoload.php'
+    ]);
 
+    Log::log('Exception ' . $e->getMessage());
     $errors = array('msg' => $e->getMessage(), 'level' => $e->getCode(), 'line' => $e->getLine(), 'file' => $e->getFile());
     App::globalRender(new AngularEngine(), '500', $errors);
     App::gc();

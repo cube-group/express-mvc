@@ -15,8 +15,33 @@ use engine\EchoEngine;
  * MiddleWare Controller.
  * @package com\cube\middleware
  */
-final class Connect
+final class Router
 {
+    /**
+     * parent router.
+     * @var string
+     */
+    private static $parentRouter = null;
+    /**
+     * parent router filter.
+     * @var string
+     */
+    private static $parentFilter = '';
+
+    /**
+     * create a Router instance.
+     */
+    public static function createFactory($req, $res)
+    {
+        if (!self::$parentRouter) {
+            throw new \Exception('Router::createFactory no routerParent!');
+        }
+        $router = new Router($req, $res);
+        self::$parentRouter->on(self::$parentFilter, $router);
+        return $router;
+    }
+
+
     /**
      * request instance reference.
      * @var
@@ -31,18 +56,22 @@ final class Connect
      * next function instance.
      * @var
      */
-    private $connectNext;
+    private $connect;
     /**
      * middleWare stack.
      * @var array
      */
     private $middleWares;
     /**
-     * Loaded route name.
-     * such as '/filter'
-     * @var string
+     * parent router.
+     * @var null
      */
-    private $loadingRouterName = '';
+    private $parent = null;
+
+    public function stack()
+    {
+        return $this->middleWares;
+    }
 
     /**
      * Connect constructor.
@@ -55,6 +84,8 @@ final class Connect
 
         $this->req = $req;
         $this->res = $res;
+
+        $this->parent = self::$parentRouter;
     }
 
     /**
@@ -64,29 +95,38 @@ final class Connect
      */
     public function start()
     {
-        if ($this->connectNext) {
+        if ($this->connect) {
             throw new \Exception('Connect has been started!');
         }
 
-        $this->connectNext = new ConnectNext(function () {
+        $this->connect = new Connect(function () {
             if ($middleWare = current($this->middleWares)) {
 
                 next($this->middleWares);
+
                 if (is_array($middleWare)) {
                     list($filter, $instance) = $middleWare;
                     if ($this->routerMatch($filter)) {
                         //execute the router middleWare.
-                        $instance($this->req, $this->res, $this->connectNext->next());
+                        if (get_class($instance) == 'Closure') {
+                            $instance($this->req, $this->res, $this->connect->next());
+                        } else {
+                            $instance->start();
+                        }
                     } else {
                         $this->next();
                     }
                 } else {
                     //execute the initial middleWare.
-                    $middleWare($this->req, $this->res, $this->connectNext->next());
+                    $middleWare($this->req, $this->res, $this->connect->next());
                 }
             } else {
                 //catch 404.
-                $this->res->render(new EchoEngine(), '404');
+                if ($this->parent) {
+                    $this->parent->next();
+                } else {
+                    $this->res->render(new EchoEngine(), '404');
+                }
             }
         });
 
@@ -118,13 +158,13 @@ final class Connect
                 break;
             case 2:
                 if (is_string($args[1])) {
-                    $this->analyzeAllRouters($args[0], $args[1]);
+                    $this->pushAsRouter($args[0], $args[1]);
                 } else {
                     array_push($this->middleWares, [$this->fillFilter($args[0]), $args[1]]);
                 }
                 break;
             default:
-                throw new \Exception('middleWare append error');
+                throw new \Exception('middleWare add error');
                 break;
         }
     }
@@ -135,19 +175,29 @@ final class Connect
     public function gc()
     {
         foreach ($this->middleWares as $key => $item) {
+            if ($item) {
+                if (is_array($item) && get_class($item) == 'Closure') {
+                    $item->gc();
+                }
+            }
             unset($this->middleWares[$key]);
         }
     }
 
     /**
-     * find all router middleWares.
+     * parse the php path name string to Router instance.
      */
-    private function analyzeAllRouters($filter, $fileName)
+    private function pushAsRouter($filter, $fileName)
     {
+        $filter = $this->fillFilter($filter);
         if ($this->routerMatch($filter) && $fileName) {
-            $this->loadingRouterName = $filter;
+            self::$parentRouter = $this;
+            self::$parentFilter = $filter;
+
             import($fileName);
-            $this->loadingRouterName = '';
+
+            self::$parentRouter = null;
+            self::$parentFilter = '';
         }
     }
 
@@ -156,7 +206,7 @@ final class Connect
      */
     private function next()
     {
-        $nextFunction = $this->connectNext->next();
+        $nextFunction = $this->connect->next();
         $nextFunction();
     }
 
@@ -169,23 +219,27 @@ final class Connect
      * user/a => /user/a/
      * /user/a => /user/a/
      *
-     * @param $filter
+     * @param $value
      * @return string
      */
-    private function fillFilter($filter = '')
+    private function fillFilter($value = '')
     {
-        if (empty($filter)) {
-            $filter = '/';
-        } else if (substr($filter, 0, 1) != '/') {
-            $filter = '/' . $filter;
+        if (!$value) {
+            $value = '/';
+        } else if (substr($value, 0, 1) != '/') {
+            $value = '/' . $value;
         }
-        if ($this->loadingRouterName && $this->loadingRouterName != '/') {
-            $filter = substr($this->loadingRouterName, -1) == '/' ? substr($this->loadingRouterName, 1) . $filter : $this->loadingRouterName . $filter;
+        if (self::$parentFilter) {
+            if (self::$parentFilter == '/') {
+                $value = self::$parentFilter . $value;
+            } else {
+                $value = substr(self::$parentFilter, -1) == '/' ? (substr(self::$parentFilter, 0, -1) . $value) : (self::$parentFilter . $value);
+            }
         }
-        if ($filter != '/' && substr($filter, -1) != '/') {
-            $filter .= '/';
+        if ($value != '/' && substr($value, -1) != '/') {
+            $value .= '/';
         }
-        return $filter;
+        return $value;
     }
 
     /**
@@ -246,22 +300,22 @@ final class Connect
 }
 
 /**
- * Class ConnectNext.
+ * Class Connect.
  * In safe mode, the function is exposed
  *
  * @package cube\middleware
  */
-class ConnectNext
+class Connect
 {
-    private $connect_array;
+    private $body;
 
     public function __construct($next)
     {
-        $this->connect_array = [$next];
+        $this->body = [$next];
     }
 
     public function next()
     {
-        return $this->connect_array[0];
+        return $this->body[0];
     }
 }

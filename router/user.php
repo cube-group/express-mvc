@@ -8,7 +8,7 @@
 
 use cube\App;
 
-$router = App::router();
+$router = App::Router();
 
 $router->on('/', function ($req, $res, $next) {
     //$req->route => /user/
@@ -24,6 +24,8 @@ $router->on('/http', function ($req, $res, $next) {
     //$req->route => /user/http
     $res->send(\http\Http::get('https://github.com/cube-group'));
 });
+
+$router->on('/repeat/','router/upload.php');
 
 $router->on('/db', function ($req, $res, $next) {
     \orm\DB::init([

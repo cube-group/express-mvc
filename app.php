@@ -5,31 +5,29 @@
  * Date: 16/11/9
  */
 use cube\App;
-use cube\Request;
-use cube\Response;
 use cookie\Cookie;
 use session\Session;
 use body\Body;
 
-$router = App::router();
+$app = App::app();
 
-//cookie parser.
-$router->on(Cookie::create());
-//session parser.
-$router->on(Session::create());
-//body parser.
-$router->on(Body::create());
+//cookie parser middleWare.
+$app->on(Cookie::create());
+//session parser middleWare.
+$app->on(Session::create());
+//body parser middleWare.
+$app->on(Body::create());
 
-$router->on(function (Request $req, Response $res, $next) {
-    //...auth code
-    if (true) {
-        $next();
-    }
+//add common middleWare.
+$app->on(function ($req, $res, $next) {
+    $next();
 });
 
-$router->on('/user', 'router/user.php');
-$router->on('/upload', 'router/upload.php');
+//add router path.
+$app->on('user/', 'router/user.php');
+$app->on('/upload', 'router/upload.php');
 
-$router->on('/', function ($req, $res, $next) {
+//add router middleWare.
+$app->on('/', function ($req, $res, $next) {
     $res->render(new \engine\EchoEngine(), 'index');
 });

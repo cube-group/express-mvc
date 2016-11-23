@@ -9,7 +9,7 @@
 use cube\App;
 use fs\FS;
 
-$router = App::router();
+$router = App::Router();
 
 $router->on('/', function ($req, $res, $next) {
     if ($req->body->fileNumber() > 0) {
