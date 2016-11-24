@@ -23,5 +23,3 @@ $router->on('/', function ($req, $res, $next) {
         }
     }
 });
-
-echo 'user.php<br>';

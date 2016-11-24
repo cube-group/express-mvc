@@ -22,11 +22,6 @@ use utils\Utils;
 final class App
 {
     /**
-     * startup multiple kernel mode.
-     * @var bool
-     */
-    private static $multiple = false;
-    /**
      * facade router instance.
      * @var Router
      */
@@ -55,18 +50,6 @@ final class App
         self::$res = null;
 
         Log::flush();
-    }
-
-    /**
-     * set the kernel mode.
-     * @param $flag boolean
-     */
-    public static function multiple($flag)
-    {
-        if (self::$router) {
-            throw new \Exception('App has been initialized!');
-        }
-        self::$multiple = $flag;
     }
 
     /**
@@ -109,8 +92,9 @@ final class App
 
         //debug
         if ($options && $options['debug']) {
+            Stack::show(self::$router->stack());
             echo "<pre>";
-            print_r(self::$router->stack());
+            echo Stack::result();
             echo "</pre>";
         }
 
@@ -155,7 +139,7 @@ final class App
      */
     public static function Router()
     {
-        return self::$multiple ? Router::createFactory(self::$req, self::$res) : self::$router;
+        return Router::createFactory(self::$req, self::$res);
     }
 
     /**
@@ -177,6 +161,47 @@ final class App
     private function __construct()
     {
         //private
+    }
+}
+
+/**
+ * Class Stack.
+ * @package cube
+ */
+final class Stack
+{
+    private static $str = '<b>Router</b><br>';
+    private static $rightStr = '';
+
+    /**
+     * analyze the stack of the facade router.
+     * @param $stack
+     */
+    public static function show($stack)
+    {
+        if ($stack) {
+            self::$rightStr .= '   ';
+            foreach ($stack as $item) {
+                if (is_array($item)) {
+                    if (is_string($item[1])) {
+                        self::$str .= self::$rightStr . '( ' . $item[0] . ' , ' . $item[1] . ' )<br>';
+                    } else if (get_class($item[1]) == 'Closure') {
+                        self::$str .= '<b>' . self::$rightStr . '( ' . $item[0] . ' , function($req,$res,$next) ) )</b><br>';
+                    } else {
+                        self::$str .= '<b>' . self::$rightStr . '( ' . $item[0] . ' , Router )</b><br>';
+                        self::show($item[1]->stack());
+                    }
+                } else {
+                    self::$str .= '<b>' . self::$rightStr . '( function($req,$res,$next )</b><br>';
+                }
+            }
+            self::$rightStr = substr(self::$rightStr, 0, -3);
+        }
+    }
+
+    public static function result()
+    {
+        return self::$str;
     }
 }
 

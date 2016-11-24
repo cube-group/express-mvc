@@ -18,15 +18,15 @@ use engine\EchoEngine;
 final class Router
 {
     /**
-     * parent router.
+     * global parent router.
      * @var string
      */
-    private static $parentRouter = null;
+    private static $globalParentRouter = null;
     /**
-     * parent router filter.
+     * child router filter.
      * @var string
      */
-    private static $parentFilter = '';
+    private static $globalFilter = '';
 
     /**
      * create a router instance.
@@ -37,12 +37,46 @@ final class Router
      */
     public static function createFactory($req, $res)
     {
-        if (!self::$parentRouter) {
+        if (!self::$globalParentRouter) {
             throw new \Exception('Router::createFactory no routerParent!');
         }
-        $router = new Router($req, $res);
-        self::$parentRouter->on(self::$parentFilter, $router);
+        $router = new Router($req, $res, self::$globalFilter);
+        self::$globalParentRouter->on(self::$globalFilter, $router);
         return $router;
+    }
+
+    /**
+     * filter the filter string.
+     * @param $filter string
+     * @return string
+     */
+    private static function getFilter($filter)
+    {
+        if (!$filter || $filter == '/') {
+            return '/';
+        }
+        if (substr($filter, 0, 1) != '/') {
+            $filter = '/' . $filter;
+        }
+        if (substr($filter, -1) != '/') {
+            $filter .= '/';
+        }
+        return $filter;
+    }
+
+    /**
+     * fill the filter string.
+     * $routerFilter: /user/
+     * $filter: /login
+     * absoluteFilter: /user/login/
+     *
+     * @param $filter string
+     * @param $routerFilter string
+     * @return string
+     */
+    private static function getAbsoluteFilter($filter, $routerFilter)
+    {
+        return substr($routerFilter, 0, -1) . self::getFilter($filter);
     }
 
 
@@ -67,33 +101,31 @@ final class Router
      */
     private $middleWares;
     /**
-     * parent router.
+     * parent router (for the multiple mode).
      * @var Router
      */
     private $parent = null;
-
     /**
-     * get the test stack.
-     * @return array
+     * current router filter (for the multiple mode).
+     * @var string
      */
-    public function stack()
-    {
-        return $this->middleWares;
-    }
+    private $filter = '';
 
     /**
      * Connect constructor.
-     * @param $res
-     * @param $req
+     * @param $req Request
+     * @param $res Response
+     * @param $filter string
      */
-    public function __construct($req, $res)
+    public function __construct($req, $res, $filter = '/')
     {
         $this->middleWares = [];
 
         $this->req = $req;
         $this->res = $res;
 
-        $this->parent = self::$parentRouter;
+        $this->parent = self::$globalParentRouter;
+        $this->filter = $this->parent ? self::getAbsoluteFilter($filter, $this->parent->filter()) : $filter;
     }
 
     /**
@@ -114,7 +146,7 @@ final class Router
 
                 if (is_array($middleWare)) {
                     list($filter, $instance) = $middleWare;
-                    if ($this->routerMatch($filter)) {
+                    if (!is_string($instance) && $this->routerMatch($filter)) {
                         //execute the router middleWare.
                         if (get_class($instance) == 'Closure') {
                             $instance($this->req, $this->res, $this->connect->next());
@@ -168,7 +200,7 @@ final class Router
                 if (is_string($args[1])) {
                     $this->pushAsRouter($args[0], $args[1]);
                 } else {
-                    array_push($this->middleWares, [$this->fillFilter($args[0]), $args[1]]);
+                    array_push($this->middleWares, [self::getFilter($args[0]), $args[1]]);
                 }
                 break;
             default:
@@ -182,15 +214,36 @@ final class Router
      */
     public function gc()
     {
+        $this->req = null;
+        $this->res = null;
+        $this->parent = null;
+        $this->filter = '';
         foreach ($this->middleWares as $key => $item) {
-            if ($item) {
-                if (is_array($item) && get_class($item) == 'Closure') {
-                    $item->gc();
-                }
+            if ($item && is_array($item) && get_class($item[1]) == '\cube\Router') {
+                $item->gc();
             }
             unset($this->middleWares[$key]);
         }
     }
+
+    /**
+     * get the current short filter.
+     * @return string
+     */
+    public function filter()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * get the test stack.
+     * @return array
+     */
+    public function stack()
+    {
+        return $this->middleWares;
+    }
+
 
     /**
      * parse the php path name string to Router instance.
@@ -199,15 +252,17 @@ final class Router
      */
     private function pushAsRouter($filter, $fileName)
     {
-        $filter = $this->fillFilter($filter);
-        if ($this->routerMatch($filter) && $fileName) {
-            self::$parentRouter = $this;
-            self::$parentFilter = $filter;
+        $absoluteFilter = self::getAbsoluteFilter($filter, $this->filter);
+        if ($fileName && $this->routerMatch($absoluteFilter)) {
+            self::$globalParentRouter = $this;
+            self::$globalFilter = $filter;
 
             import($fileName);
 
-            self::$parentRouter = null;
-            self::$parentFilter = '';
+            self::$globalParentRouter = null;
+            self::$globalFilter = '';
+        } else {
+            array_push($this->middleWares, [self::getFilter($filter), $fileName]);
         }
     }
 
@@ -219,38 +274,6 @@ final class Router
     {
         $nextFunction = $this->connect->next();
         $nextFunction();
-    }
-
-    /**
-     * fill the filter string.
-     * such as
-     * / => /
-     * /user => /user/
-     * user => /user/
-     * user/a => /user/a/
-     * /user/a => /user/a/
-     *
-     * @param $value string
-     * @return string
-     */
-    private function fillFilter($value = '')
-    {
-        if (!$value) {
-            $value = '/';
-        } else if (substr($value, 0, 1) != '/') {
-            $value = '/' . $value;
-        }
-        if (self::$parentFilter) {
-            if (self::$parentFilter == '/') {
-                $value = self::$parentFilter . $value;
-            } else {
-                $value = substr(self::$parentFilter, -1) == '/' ? (substr(self::$parentFilter, 0, -1) . $value) : (self::$parentFilter . $value);
-            }
-        }
-        if ($value != '/' && substr($value, -1) != '/') {
-            $value .= '/';
-        }
-        return $value;
     }
 
     /**

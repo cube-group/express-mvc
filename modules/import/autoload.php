@@ -21,6 +21,9 @@ function import($files)
         if (!strstr($file, '.php')) {
             $file .= '.php';
         }
+        if (!is_file($file)) {
+            continue;
+        }
         isset($GLOBALS['import-require-once-' . $file]) or require $file;
     }
 }
