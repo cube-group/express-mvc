@@ -38,7 +38,7 @@ final class Router
     public static function createFactory($req, $res)
     {
         if (!self::$globalParentRouter) {
-            throw new \Exception('Router::createFactory no routerParent!');
+            throw new \Exception('Router::createFactory no globalParentRouter!');
         }
         $router = new Router($req, $res, self::$globalFilter);
         self::$globalParentRouter->on(self::$globalFilter, $router);
