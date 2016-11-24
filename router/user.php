@@ -38,3 +38,5 @@ $router->on('/db', function ($req, $res, $next) {
     ]);
     $res->json(\orm\DB::model('user')->select());
 });
+
+echo 'user.php<br>';

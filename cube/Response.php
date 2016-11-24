@@ -31,10 +31,7 @@ final class Response
      */
     public function location($path)
     {
-        try {
-            header('Location:' . $path);
-        } catch (\Exception $e) {
-        }
+        header('Location:' . $path);
         return $this;
     }
 
