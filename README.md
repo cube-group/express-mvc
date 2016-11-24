@@ -31,7 +31,7 @@ require './cube/App.php';
 ### middleWare append
 * initial mode middleWare.
 ```javascript
-$router = App::router();
+$router = App::Router();
 $router->on(function($req,$res,$next){
     $a = 'helloWorld!'; //your code.
     $next(); //next middleWare.
@@ -40,12 +40,12 @@ $router->on(function($req,$res,$next){
 ```
 * router mode middleWare fileName.
 ```javascript
-$router = App::router();
+$router = App::Router();
 $router->on('/test','router/test.php');
 ```
 * router mode middleWare.
 ```javascript
-$router = App::router();
+$router = App::Router();
 $router->on('/index',function($req,$res,$next){
     $a = 'helloWorld!'; //your code.
     $next(); //next middleWare.
@@ -68,6 +68,7 @@ $router.on('/http',function($req,$res,$next){
 }
 ```
 * Standard router pathinfo, change the nginx.conf
+* url will be '/www.php/user/login' or '/www.php/user/login/www.php'
 ```javascript
 location / {
     if (!-e $request_filename) {
@@ -78,7 +79,7 @@ location / {
 
 location ~ \.php {
     fastcgi_pass 127.0.0.1:9000;
-    fastcgi_index index.php;
+    fastcgi_index www.php;
     include fastcgi_params;
     set $real_script_name $fastcgi_script_name;
     if ($fastcgi_script_name ~ "^(.+?\.php)(/.+)$") {

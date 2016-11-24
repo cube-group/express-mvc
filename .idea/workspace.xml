@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8d7beb79-3c1f-458c-9b12-407c7a75010b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cube/Response.php" afterPath="$PROJECT_DIR$/cube/Response.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/log.log" afterPath="$PROJECT_DIR$/log/log.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/router/upload.php" afterPath="$PROJECT_DIR$/router/upload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/router/user.php" afterPath="$PROJECT_DIR$/router/user.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="framework.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +25,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="App.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="App.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cube/App.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="389">
@@ -36,6 +33,16 @@
               <folding>
                 <element signature="e#107#132#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="70" column="67" selection-start-line="70" selection-start-column="67" selection-end-line="70" selection-end-column="67" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -104,7 +111,6 @@
         <option value="$PROJECT_DIR$/cube/Connect.php" />
         <option value="$PROJECT_DIR$/modules/import/autoload.php" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/cube/Request.php" />
         <option value="$PROJECT_DIR$/cube/Router.php" />
         <option value="$PROJECT_DIR$/cube/App.php" />
@@ -116,6 +122,7 @@
         <option value="$PROJECT_DIR$/a.html" />
         <option value="$PROJECT_DIR$/test.php" />
         <option value="$PROJECT_DIR$/log/log.log" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -324,12 +331,12 @@
       <workItem from="1479826949522" duration="4086000" />
       <workItem from="1479866973218" duration="12456000" />
       <workItem from="1479909384948" duration="2714000" />
-      <workItem from="1479953327682" duration="1396000" />
+      <workItem from="1479953327682" duration="1687000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="149482000" />
+    <option name="totallyTimeSpent" value="149773000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -351,7 +358,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2944622" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08515057" sideWeight="0.48722044" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29595014" sideWeight="0.48722044" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -622,13 +629,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="3" selection-start-line="28" selection-start-column="3" selection-end-line="28" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -744,6 +744,14 @@
           <folding>
             <element signature="e#107#132#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="70" column="67" selection-start-line="70" selection-start-column="67" selection-end-line="70" selection-end-column="67" />
+          <folding />
         </state>
       </provider>
     </entry>
