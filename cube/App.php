@@ -76,7 +76,8 @@ final class App
      *      'base_dir'=>'project dir',
      *      'time_zone'=>'zone',
      *      'time_limit'=>'set_time_limit',
-     *      'error_report'=>'0/1'
+     *      'error_report'=>'0/1',
+     *      'debug'=>1
      * ]
      * @param $options array
      */
@@ -106,9 +107,12 @@ final class App
         //app start.
         self::$router->start();
 
-//        echo "<pre>";
-//        print_r(self::$router->stack());
-//        echo "</pre>";
+        //debug
+        if ($options && $options['debug']) {
+            echo "<pre>";
+            print_r(self::$router->stack());
+            echo "</pre>";
+        }
 
         //gc.
         self::gc();

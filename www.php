@@ -20,7 +20,8 @@ require './cube/App.php';
     'base_dir' => __DIR__,
     'time_limit' => 0,
     'error_report' => 1,
-    'time_zone' => 'Asia/Shanghai'
+    'time_zone' => 'Asia/Shanghai',
+    'debug' => 1
 ]);
 
 ?>

@@ -24,7 +24,8 @@ require './cube/App.php';
     'base_dir' => __DIR__, //root dir
     'time_limit' => 0, //program exec time limit (s)
     'error_report' => 1, //display error or not
-    'time_zone' => 'Asia/Shanghai' //time zone
+    'time_zone' => 'Asia/Shanghai', //time zone
+    'debug'=>1 //display the stack of the middlewares
 ]);
 ```
 
