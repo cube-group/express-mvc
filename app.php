@@ -11,22 +11,30 @@ use body\Body;
 
 $app = App::app();
 
-//cookie parser middleWare.
+//cookie parser middleware.
 $app->on(Cookie::create());
-//session parser middleWare.
+//session parser middleware.
 $app->on(Session::create());
-//body parser middleWare.
+//body parser middleware.
 $app->on(Body::create());
 
-//add common middleWare.
+//add common middleware.
 $app->on(function ($req, $res, $next) {
     $next();
 });
 
-//add router path.
+//add virtual router.
 $app->on('/user', 'router/user.php');
-$app->on('/upload', 'router/upload.php');
+$app->on('upload', 'router/upload.php');
 
+
+//add router middleware.
+$app->on('/redirect', function ($req, $res, $next) {
+    $res->redirect('/upload/');
+});
+
+
+//add router middleware.
 $app->on('/', function ($req, $res, $next) {
     $res->render(new \engine\EchoEngine(), 'index');
 });

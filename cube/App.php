@@ -16,13 +16,14 @@ use utils\Utils;
 /**
  * Class App.
  * Cube HTTP Framework Facade Core Class.
- *
- * @package com\cube\core
+ * Copyright(c) 2016 Linyang.
+ * MIT Licensed
+ * @package cube
  */
 final class App
 {
     /**
-     * facade router instance.
+     * facade Router.
      * @var Router
      */
     private static $router = null;
@@ -48,6 +49,7 @@ final class App
         }
         self::$req = null;
         self::$res = null;
+        self::$router = null;
 
         Log::flush();
     }
@@ -88,42 +90,25 @@ final class App
         import(Config::get('core', 'app'));
 
         //app start.
-        self::$router->start();
+        self::$router->next();
 
-        //debug
+        //debug stack.
         if ($options && $options['debug']) {
-            Stack::show(self::$router->stack());
-            echo "<pre>";
-            echo Stack::result();
-            echo "</pre>";
+            Log::log(Stack::value(self::$router->stack()));
         }
 
         //gc.
         self::gc();
     }
 
-    /**
-     * add middleWare or path by the facade router.
-     *
-     * @param array ...$args
-     */
-    public static function on(...$args)
-    {
-        switch (count($args)) {
-            case 1:
-                self::$router->on($args[0]);
-                break;
-            case 2:
-                self::$router->on($args[0], $args[1]);
-                break;
-            default:
-                throw new \Exception('middleWare add error');
-                break;
-        }
-    }
 
     /**
      * return the facade router.
+     *
+     * $app = App::app();
+     * $app->on('/test',function($req,$res,$next){
+     *      $next();
+     * });
      *
      * @return Router
      */
@@ -133,13 +118,68 @@ final class App
     }
 
     /**
-     * create a child app instance.
+     * create a child router.
+     *
+     * RIGHT USAGE OF the App::Router():
+     *
+     * [app.php]
+     * $app = App::app();
+     * $app->on('/test',function($req,$res,$next){
+     *      $next();
+     * });
+     * $app->on('/my','router/my.php');
+     *
+     * [my.php]
+     * $router = App:Router();
+     * $router->on('/',function($req,$res,$next){
+     *      $next();
+     * });
+     * $router->on('/say',function($req,$res,$next){
+     *      $next();
+     * });
+     * --------------------------------------------------
+     * WRONG USAGE OF the App::Router():
+     *
+     * [app.php]
+     * $app = App::app();
+     * $app->on('/test',function($req,$res,$next){
+     *      $next();
+     * });
+     * $app->on('/my','router/my.php');
+     *
+     * $router = App:Router();
+     * $router->on('/',function($req,$res,$next){
+     *      $next();
+     * });
+     * $router->on('/say',function($req,$res,$next){
+     *      $next();
+     * });
+     *
+     * Router at this time will not be put into the queue, and the child Router of the parent Router is lost!
      *
      * @return Router
      */
     public static function Router()
     {
         return Router::createFactory(self::$req, self::$res);
+    }
+
+    /**
+     * redirect the request path.
+     *
+     * @param $value string
+     * @throws \Exception
+     */
+    public static function redirect($value)
+    {
+        if (!self::$router) {
+            throw new \Exception('App has been initialized!');
+        }
+        if ($value) {
+            self::$req->redirected = true;
+            self::$req->path = Utils::pathFilter($value);
+            self::$router->next(true);
+        }
     }
 
     /**
@@ -170,37 +210,48 @@ final class App
  */
 final class Stack
 {
-    private static $str = '<b>Router</b><br>';
+    private static $str = '<b>( / , Router )</b><br>';
     private static $rightStr = '';
 
     /**
      * analyze the stack of the facade router.
-     * @param $stack
+     * @param $stack array
      */
-    public static function show($stack)
+    private static function show($stack)
     {
         if ($stack) {
             self::$rightStr .= '   ';
             foreach ($stack as $item) {
                 if (is_array($item)) {
                     if (is_string($item[1])) {
-                        self::$str .= self::$rightStr . '( ' . $item[0] . ' , ' . $item[1] . ' )<br>';
+                        self::$str .= self::$rightStr . '( ' . $item[0] . ' , ' . $item[1] . " )\r\n";
                     } else if (get_class($item[1]) == 'Closure') {
-                        self::$str .= '<b>' . self::$rightStr . '( ' . $item[0] . ' , function($req,$res,$next) ) )</b><br>';
+                        self::$str .= self::$rightStr . '( ' . $item[0] . ' , function($req,$res,$next'.") )\r\n";
                     } else {
-                        self::$str .= '<b>' . self::$rightStr . '( ' . $item[0] . ' , Router )</b><br>';
+                        self::$str .= self::$rightStr . '( ' . $item[0] . ' , Router , '.$item[2]." )\r\n";
                         self::show($item[1]->stack());
                     }
                 } else {
-                    self::$str .= '<b>' . self::$rightStr . '( function($req,$res,$next )</b><br>';
+                    self::$str .= self::$rightStr . '( function($req,$res,$next'.") )\r\n";
                 }
             }
             self::$rightStr = substr(self::$rightStr, 0, -3);
         }
     }
 
-    public static function result()
+    /**
+     * get the stack result.
+     * @return string
+     */
+    public static function value($value)
     {
+        self::$str = "\r\n";
+        self::$str .= "------------------------ stack ------------------------\r\n";
+        self::$str .= "( / , Router )\r\n";
+        self::$rightStr = '';
+        self::show($value);
+        self::$str .= "------------------------ end ------------------------\r\n";
+
         return self::$str;
     }
 }
@@ -278,6 +329,8 @@ final class Config
 
     /**
      * Get the package.json object children value.
+     *
+     * Config::get('dir','view');
      *
      * @param $args array
      * @return object | null

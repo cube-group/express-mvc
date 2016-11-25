@@ -14,12 +14,9 @@ $router = App::Router();
 $router->on('/', function ($req, $res, $next) {
     if ($req->body->fileNumber() > 0) {
         $res->json(FS::saveUploadAsFile());
+    } else if ($content = $req->body->content()) {
+        $res->json(FS::saveInputAsFile($content, $req->query->key));
     } else {
-        $content = $req->body->content();
-        if (!empty($content)) {
-            $res->json(FS::saveInputAsFile($content, $req->query->key));
-        } else {
-            $res->send('error');
-        }
+        $res->send('error');
     }
 });

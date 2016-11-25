@@ -9,24 +9,23 @@
 namespace cube;
 
 use engine\EchoEngine;
+use utils\Utils;
 
 /**
  * Class Connect.
  * MiddleWare Controller.
- * @package com\cube\middleware
+ * Copyright(c) 2016 Linyang.
+ * MIT Licensed
+ * @package cube
  */
 final class Router
 {
     /**
      * global parent router.
-     * @var string
+     * @var Router
      */
-    private static $globalParentRouter = null;
-    /**
-     * child router filter.
-     * @var string
-     */
-    private static $globalFilter = '';
+    private static $tempParentRouterInfo = null;
+
 
     /**
      * create a router instance.
@@ -37,244 +36,18 @@ final class Router
      */
     public static function createFactory($req, $res)
     {
-        if (!self::$globalParentRouter) {
-            throw new \Exception('Router::createFactory no globalParentRouter!');
+        if (!self::$tempParentRouterInfo) {
+            throw new \Exception('Router::createFactory no globalParentRouter or globalMiddleWare!');
         }
-        $router = new Router($req, $res, self::$globalFilter);
-        self::$globalParentRouter->on(self::$globalFilter, $router);
+
+        list($router, $stack) = self::$tempParentRouterInfo;
+        list($filter, $fileName) = $stack->current();
+        $router = new Router($req, $res, $filter);
+        $stack->current([$filter, $router, $fileName]);
+
         return $router;
     }
 
-    /**
-     * filter the filter string.
-     * @param $filter string
-     * @return string
-     */
-    private static function getFilter($filter)
-    {
-        if (!$filter || $filter == '/') {
-            return '/';
-        }
-        if (substr($filter, 0, 1) != '/') {
-            $filter = '/' . $filter;
-        }
-        if (substr($filter, -1) != '/') {
-            $filter .= '/';
-        }
-        return $filter;
-    }
-
-    /**
-     * fill the filter string.
-     * $routerFilter: /user/
-     * $filter: /login
-     * absoluteFilter: /user/login/
-     *
-     * @param $filter string
-     * @param $routerFilter string
-     * @return string
-     */
-    private static function getAbsoluteFilter($filter, $routerFilter)
-    {
-        return substr($routerFilter, 0, -1) . self::getFilter($filter);
-    }
-
-
-    /**
-     * request instance reference.
-     * @var Request
-     */
-    private $req;
-    /**
-     * response instance reference.
-     * @var Response
-     */
-    private $res;
-    /**
-     * next function instance.
-     * @var Connect
-     */
-    private $connect;
-    /**
-     * middleWare stack.
-     * @var array
-     */
-    private $middleWares;
-    /**
-     * parent router (for the multiple mode).
-     * @var Router
-     */
-    private $parent = null;
-    /**
-     * current router filter (for the multiple mode).
-     * @var string
-     */
-    private $filter = '';
-
-    /**
-     * Connect constructor.
-     * @param $req Request
-     * @param $res Response
-     * @param $filter string
-     */
-    public function __construct($req, $res, $filter = '/')
-    {
-        $this->middleWares = [];
-
-        $this->req = $req;
-        $this->res = $res;
-
-        $this->parent = self::$globalParentRouter;
-        $this->filter = $this->parent ? self::getAbsoluteFilter($filter, $this->parent->filter()) : $filter;
-    }
-
-    /**
-     * start the connect.
-     *
-     * @throws \Exception
-     */
-    public function start()
-    {
-        if ($this->connect) {
-            throw new \Exception('Connect has been started!');
-        }
-
-        $this->connect = new Connect(function () {
-            if ($middleWare = current($this->middleWares)) {
-
-                next($this->middleWares);
-
-                if (is_array($middleWare)) {
-                    list($filter, $instance) = $middleWare;
-                    if (!is_string($instance) && $this->routerMatch($filter)) {
-                        //execute the router middleWare.
-                        if (get_class($instance) == 'Closure') {
-                            $instance($this->req, $this->res, $this->connect->next());
-                        } else {
-                            $instance->start();
-                        }
-                    } else {
-                        $this->next();
-                    }
-                } else {
-                    //execute the initial middleWare.
-                    $middleWare($this->req, $this->res, $this->connect->next());
-                }
-            } else {
-                //catch 404.
-                if ($this->parent) {
-                    $this->parent->next();
-                } else {
-                    $this->res->render(new EchoEngine(), '404');
-                }
-            }
-        });
-
-        $this->next();
-    }
-
-    /**
-     * add middleWare.
-     * $router = Cube::router();
-     * $router->on(Cookie::create());
-     *
-     * add router middleWare.
-     * $router->on('/filter',function($req,$res,$next){}
-     *
-     * add router php fileName.
-     * $router->on('/user,'router/user');//then the framework will find the /router/user.php,and load it.
-     *
-     * @param $filter
-     * @param $object router ClassName or Instance.
-     */
-    public function on(...$args)
-    {
-        switch (count($args)) {
-            case 1:
-                $list = is_array($args[0]) ? $args[0] : [$args[0]];
-                foreach ($list as $m) {
-                    array_push($this->middleWares, $m);
-                }
-                break;
-            case 2:
-                if (is_string($args[1])) {
-                    $this->pushAsRouter($args[0], $args[1]);
-                } else {
-                    array_push($this->middleWares, [self::getFilter($args[0]), $args[1]]);
-                }
-                break;
-            default:
-                throw new \Exception('middleWare add error');
-                break;
-        }
-    }
-
-    /**
-     * remove all middleWare & routerMiddleWare.
-     */
-    public function gc()
-    {
-        $this->req = null;
-        $this->res = null;
-        $this->parent = null;
-        $this->filter = '';
-        foreach ($this->middleWares as $key => $item) {
-            if ($item && is_array($item) && get_class($item[1]) == '\cube\Router') {
-                $item->gc();
-            }
-            unset($this->middleWares[$key]);
-        }
-    }
-
-    /**
-     * get the current short filter.
-     * @return string
-     */
-    public function filter()
-    {
-        return $this->filter;
-    }
-
-    /**
-     * get the test stack.
-     * @return array
-     */
-    public function stack()
-    {
-        return $this->middleWares;
-    }
-
-
-    /**
-     * parse the php path name string to Router instance.
-     * @param $filter string
-     * @param $fileName string
-     */
-    private function pushAsRouter($filter, $fileName)
-    {
-        $absoluteFilter = self::getAbsoluteFilter($filter, $this->filter);
-        if ($fileName && $this->routerMatch($absoluteFilter)) {
-            self::$globalParentRouter = $this;
-            self::$globalFilter = $filter;
-
-            import($fileName);
-
-            self::$globalParentRouter = null;
-            self::$globalFilter = '';
-        } else {
-            array_push($this->middleWares, [self::getFilter($filter), $fileName]);
-        }
-    }
-
-    /**
-     * execute next middleWare.
-     * @return void
-     */
-    private function next()
-    {
-        $nextFunction = $this->connect->next();
-        $nextFunction();
-    }
 
     /**
      * filter router string & router-path.
@@ -305,17 +78,17 @@ final class Router
      *
      * @param $filter string
      */
-    private function routerMatch($filter)
+    private static function match($absoluteFilter, $req)
     {
-        $this->req->route = $filter;
+//        echo 'match: ' . $absoluteFilter . '  ' . $req->path . '<br>';
 
-        $path = $this->req->path;
-        if (strpos($path, $filter) === 0) {
+        if (strpos($req->path, $absoluteFilter) === 0) {
+            $req->route = $absoluteFilter;
             return true;
-        } else if (strstr($filter, ':') == true) {
+        } else if (strstr($absoluteFilter, ':') == true) {
             //get the params from the path.
-            $path_stack = explode('/', $path);
-            $filter_stack = explode('/', $filter);
+            $path_stack = explode('/', $req->path);
+            $filter_stack = explode('/', $absoluteFilter);
             //use strict.
             if (count($path_stack) == count($filter_stack)) {
                 $params = [];
@@ -327,39 +100,301 @@ final class Router
                         return false;
                     }
                 }
-                $this->req->params = $params;
+                $req->params = $params;
+                $req->route = $absoluteFilter;
                 return true;
             }
         }
         return false;
     }
-}
 
-/**
- * Class Connect.
- * In safe mode, the function is exposed
- *
- * @package cube\middleware
- */
-class Connect
-{
-    private $body;
+
+    /**
+     * fill the filter string.
+     *
+     * $routerFilter + $filter => $absoluteFilter
+     * '/user/' + '/login' => '/user/login/'
+     *
+     * @param $filter string
+     * @param $routerFilter string
+     * @return string
+     */
+    private static function getAbsoluteFilter($filter, $routerFilter)
+    {
+        return substr($routerFilter, 0, -1) . Utils::pathFilter($filter);
+    }
+
+
+    /**
+     * request instance reference.
+     * @var Request
+     */
+    private $req;
+    /**
+     * response instance reference.
+     * @var Response
+     */
+    private $res;
+    /**
+     * next function instance.
+     * @var \Closure
+     */
+    private $connect;
+    /**
+     * middleWare stack.
+     * @var MiddlewareArray
+     */
+    private $stack;
+    /**
+     * parent router.
+     * @var Router
+     */
+    private $parent = null;
+    /**
+     * current router filter.
+     * @var string
+     */
+    private $filter = '';
 
     /**
      * Connect constructor.
-     * @param $next \Closure
+     * @param $req Request
+     * @param $res Response
+     * @param $filter string
      */
-    public function __construct($next)
+    public function __construct($req, $res, $filter = '/')
     {
-        $this->body = [$next];
+        $this->stack = new MiddlewareArray();
+
+        $this->req = $req;
+        $this->res = $res;
+
+        $this->parent = self::$tempParentRouterInfo[0];
+        $this->filter = $this->parent ? self::getAbsoluteFilter($filter, $this->parent->filter()) : $filter;
+    }
+
+
+    /**
+     * add middleWare.
+     *
+     * add router middleWare.
+     * $router->on('/filter',function($req,$res,$next){}
+     *
+     * add router php fileName.
+     * $router->on('/user,'router/user');//then the framework will find the /router/user.php,and load it.
+     *
+     * @param $filter
+     * @param $object router ClassName or Instance.
+     */
+    public function on(...$args)
+    {
+        switch (count($args)) {
+            case 1:
+                $list = is_array($args[0]) ? $args[0] : [$args[0]];
+                foreach ($list as $m) {
+                    $this->stack->push($m);
+                }
+                break;
+            case 2:
+                $this->stack->push([Utils::pathFilter($args[0]), $args[1]]);
+                break;
+            default:
+                throw new \Exception('middleWare add error');
+                break;
+        }
     }
 
     /**
-     * return the next function.
-     * @return \Closure
+     * remove all middleWare & routerMiddleWare.
      */
+    public function gc()
+    {
+        foreach ($this->stack->value as $key => $item) {
+            if ($item && is_array($item) && get_class($item[1]) == 'cube\Router') {
+                $item[1]->gc();
+            }
+            $this->stack->del($key);
+        }
+
+        $this->req = null;
+        $this->res = null;
+        $this->parent = null;
+        $this->filter = '';
+        $this->stack = null;
+    }
+
+    /**
+     * get the current short filter.
+     * @return string
+     */
+    public function filter()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * get the test stack.
+     * @return array
+     */
+    public function stack()
+    {
+        return $this->stack->value;
+    }
+
+
+    /**
+     * start the connect.
+     *
+     * @param $reset boolean
+     * @throws \Exception
+     */
+    public function next($reset = false)
+    {
+        if (!$this->connect) {
+            $this->connect = function () {
+                if ($item = $this->stack->current()) {
+                    $this->execMiddleWare($item);
+                } else {
+                    if ($this->parent) {
+                        $this->parent->next();
+                    } else { //catch 404.
+                        $this->res->render(new EchoEngine(), '404');
+                    }
+                }
+            };
+        }
+
+        if (!$this->stack) {
+            throw new \Exception('App can not start!');
+        }
+
+        if ($reset) {
+            $this->stack->reset();
+        }
+
+        $nextFunction = $this->connect;
+        $nextFunction();
+    }
+
+
+    /**
+     * execute the middleWare.
+     *
+     * @param $middleWare array|\Closure
+     */
+    private function execMiddleWare($middleware)
+    {
+        $this->stack->next();
+
+        if (is_array($middleware)) {
+            list($filter, $obj) = $middleware;
+            $absoluteFilter = self::getAbsoluteFilter($filter, $this->filter);
+
+            if (self::match($absoluteFilter, $this->req)) {
+                if (is_string($obj)) {
+                    //( $filter , $fileName )
+                    $this->pushAsRouter($filter, $obj);
+                } else if (get_class($obj) == 'Closure') {
+                    //( $filter , function($req,$res,$next) )
+                    $obj($this->req, $this->res, $this->connect);
+                } else {
+                    //( $filter , Router )
+                    $obj->next();
+                }
+            } else {
+                $this->next();
+            }
+
+        } else if (!$this->req->redirected && get_class($middleware) == 'Closure') {
+            //( function($req,$res,$next) )
+            $middleware($this->req, $this->res, $this->connect);
+        } else {
+            $this->next();
+        }
+    }
+
+
+    /**
+     * parse the php path name string to Router instance.
+     * @param $middleware array
+     */
+    private function pushAsRouter($filter, $fileName)
+    {
+        //move the index prev.
+        $this->stack->prev();
+
+        self::$tempParentRouterInfo = [$this, $this->stack];
+
+        import($fileName);
+
+        //clear temp info.
+        self::$tempParentRouterInfo = null;
+
+        //execute the prev middleWare.
+        $this->stack->execNext();
+
+        $this->stack->next();
+    }
+}
+
+
+/**
+ * Class MiddlewareArray.
+ * Package Array.
+ * @package cube
+ */
+class MiddlewareArray
+{
+    private $value = [];
+    private $index = 0;
+
+    public function __get($name)
+    {
+        // TODO: Implement __get() method.
+        return $this->$name;
+    }
+
+    public function push($value)
+    {
+        array_push($this->value, $value);
+    }
+
+    public function del($i)
+    {
+        unset($this->value[$i]);
+    }
+
+    public function current($value = null)
+    {
+        if ($value) {
+            $this->value[$this->index] = $value;
+        } else {
+            return ($this->index < $this->length()) ? $this->value[$this->index] : false;
+        }
+    }
+
+    public function execNext()
+    {
+        $this->value[$this->index][1]->next();
+    }
+
     public function next()
     {
-        return $this->body[0];
+        $this->index++;
+    }
+
+    public function prev()
+    {
+        $this->index--;
+    }
+
+    public function reset()
+    {
+        $this->index = 0;
+    }
+
+    public function length()
+    {
+        return count($this->value);
     }
 }

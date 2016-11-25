@@ -9,10 +9,13 @@
 namespace cube;
 
 use log\Log;
+use utils\Utils;
 
 /**
  * Class Request.
- * @package com\cube\core
+ * Copyright(c) 2016 Linyang.
+ * MIT Licensed
+ * @package cube
  */
 final class Request
 {
@@ -81,6 +84,11 @@ final class Request
      * @var string
      */
     public $route;
+    /**
+     * it's true after exec App::redirect('').
+     * @var bool
+     */
+    public $redirected = false;
 
     /**
      * Request constructor.
@@ -94,6 +102,10 @@ final class Request
         Log::log($this->baseUrl);
     }
 
+    /**
+     * init core info.
+     *
+     */
     private function initCoreInfo()
     {
         //common.
@@ -105,6 +117,9 @@ final class Request
         $this->baseUrl = $this->protocol . '://' . $this->host . $this->uri;
     }
 
+    /**
+     * init path info.
+     */
     private function initPathInfo()
     {
         $router = Config::get('core', 'router_querystring');
@@ -119,19 +134,7 @@ final class Request
             }
         }
 
-        //fill the path string.
-        if (empty($path)) {
-            $path = '/';
-        } else if ($path != '/') {
-            if (substr($path, 0, 1) != '/') {
-                $path = '/' . $path;
-            }
-            if (substr($path, -1) != '/') {
-                $path .= '/';
-            }
-        }
-        //lower string.
-        $this->path = strtolower($path);
+        $this->path = strtolower(Utils::pathFilter($path));
     }
 
     /**

@@ -63,7 +63,7 @@ class Utils
         if (empty($extensions)) {
             return false;
         }
-        if(!is_array($extensions)){
+        if (!is_array($extensions)) {
             $extensions = [$extensions];
         }
         $env_extensions = get_loaded_extensions();
@@ -76,6 +76,48 @@ class Utils
             }
         }
         return false;
+    }
+
+    /**
+     * preg the value is url or not.
+     *
+     * @param $value
+     * @return bool
+     */
+    public static function is_url($value)
+    {
+        $pattern_url = '/[A-Za-z0-9\-\_]+\.[A-Za-z]{1,}[\43-\176]*$/';
+        if (preg_match($pattern_url, $value)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * parse the string to the standard path
+     *
+     * user => /user/
+     * /user => /user/
+     * user/ => /user/
+     * /user/ => /user/
+     *
+     * @param $value string
+     * @return string
+     */
+    public static function pathFilter($value)
+    {
+        if (empty($value)) {
+            return '/';
+        } else if ($value != '/') {
+            if (substr($value, 0, 1) != '/') {
+                $value = '/' . $value;
+            }
+            if (substr($value, -1) != '/') {
+                $value .= '/';
+            }
+        }
+        return strtolower($value);
     }
 }
 

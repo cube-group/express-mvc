@@ -11,14 +11,20 @@ namespace cube;
 use engine\ViewEngine;
 use fs\FS;
 use log\Log;
+use utils\Utils;
 
 
 /**
  * Class Response
- * @package com\cube\core
+ * Copyright(c) 2016 Linyang.
+ * MIT Licensed
+ * @package cube
  */
 final class Response
 {
+    /**
+     * Response constructor.
+     */
     public function __construct()
     {
         header('ServiceX:' . Config::get('name') . ' version:' . Config::get('version'));
@@ -26,6 +32,9 @@ final class Response
 
     /**
      * url location to the client.
+     *
+     * $res->location('https://github.com/cube-group/express-mvc');
+     *
      * @param $path
      * @return $this
      */
@@ -37,6 +46,9 @@ final class Response
 
     /**
      * file download.
+     *
+     * $res->download('/usr/local/a.rar');
+     *
      * @param $path
      */
     public function download($path)
@@ -50,6 +62,9 @@ final class Response
 
     /**
      * send the simple string to the client.
+     *
+     * $res->send('hello world');
+     *
      * @param $value
      */
     public function send($value)
@@ -61,7 +76,10 @@ final class Response
 
     /**
      * send the json string to the client.
-     * @param $value
+     *
+     * $res->json(['hello world']);
+     *
+     * @param $value array
      */
     public function json($value)
     {
@@ -72,6 +90,9 @@ final class Response
 
     /**
      * send the jsonp string to the client.
+     *
+     * $res->jsonp(['hello world']);
+     *
      * @param $value
      * @return void
      */
@@ -92,6 +113,9 @@ final class Response
 
     /**
      * send the content to the client by the viewEngine.
+     *
+     * $res->render(new \engine\AngularEngine(),'center',['uid''adsfadsf']);
+     *
      * @param $viewEngine ViewEngine
      * @param viewName string
      * @param $value object
@@ -105,13 +129,22 @@ final class Response
 
     /**
      * redirect url.
+     *
+     * $
      * @param $value string
      */
     public function redirect($value)
     {
-        $this->statusCode(301)->location($value);
-
-        Log::log('Response redirect ' . $value, $this->getTimer());
+        if ($value) {
+            if (Utils::is_url($value)) {
+                $this->statusCode(301)->location($value);
+                Log::log('Response redirect ' . $value, $this->getTimer());
+            } else {
+                App::redirect($value);
+            }
+        } else {
+            throw new \Exception('redirect value is illegal');
+        }
     }
 
     /**

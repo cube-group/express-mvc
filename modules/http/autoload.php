@@ -9,10 +9,12 @@ if ($ext = Utils::is_miss_ext('curl')) {
 }
 
 /**
- * Created by PhpStorm.
- * User: linyang
- * Date: 16/8/30
- * Time: 下午2:00
+ * Class Http.
+ * \http\Http
+ * Copyright(c) 2016 Linyang.
+ * MIT Licensed
+ *
+ * @package http
  */
 final class Http
 {
@@ -83,6 +85,30 @@ final class Http
 
         $result = curl_exec($curl);
         curl_close($curl);
+        return $result;
+    }
+
+    /**
+     * post request by the special headers.
+     * @param $url string
+     * @param $data object
+     * @param null $headers array
+     * @param $timeout integer
+     * @return string
+     */
+    public static function postData($url, $data, $header, $timeout = 15)
+    {
+        $opts = [
+            'http' => [
+                'method' => 'POST',
+                'header' => $header,
+                'content' => $data,
+                'timeout' => $timeout
+            ]
+        ];
+
+        $context = stream_context_create($opts);
+        $result = file_get_contents($url, false, $context);
         return $result;
     }
 }
