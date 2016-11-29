@@ -52,8 +52,8 @@ class MVC
 
     /**
      * find and load ControllerClass ,then execute its method.
-     * @param $className
-     * @param $method
+     * @param $className string
+     * @param $method string
      * @param null $value
      * @return mixed
      */
@@ -67,7 +67,7 @@ class MVC
                 import($filePath);
 
                 $instance = new \ReflectionClass(MVC::$c_dir . '\\' . $className . 'Controller');
-                self::$controllers[$className] = $instance->newInstance($className);
+                self::$controllers[$className] = $instance->newInstance();
             }
         }
 
@@ -80,6 +80,9 @@ class MVC
         return null;
     }
 
+    /**
+     * garbage collection.
+     */
     private function gc()
     {
         self::$options = null;
@@ -99,11 +102,6 @@ class MVC
  */
 class MVC_Model
 {
-    /**
-     * class name
-     * @var string
-     */
-    protected $className = '';
 }
 
 /**
@@ -114,41 +112,65 @@ class MVC_Model
 class MVC_Controller
 {
     /**
-     *
-     * @var string
+     * model instance of this controller.
+     * @var MVC_Model
      */
-    protected $className = '';
+    protected $model = null;
 
-    public function __construct($className)
+    /**
+     * MVC_Controller constructor.
+     */
+    public function __construct()
     {
-        $this->className = $className;
+        $className = strtolower(end(explode('\\', get_class($this))));
+        $className = current(explode('controller', $className));
+
+        $this->model = $this->model($className);
     }
 
     /**
-     * get the model proxy instance.
-     * @param $method
+     * get model instance.
+     * @param $modelClassName string
+     * @param string $modelMethodName
      * @param null $value
-     * @param null $className
+     * @return mixed|null
      */
-    public function model($method, $value = null)
+    protected function model($modelClassName, $modelMethodName = '', $value = null)
     {
-        $className = $this->className;
-        if (!MVC::$models[$className]) {
-            $filePath = MVC::$m_dir. '/' . $className . 'Model.php';
+        return self::getModel($modelClassName, $modelMethodName, $value);
+    }
+
+    /**
+     * static get model instance.
+     * security mode.
+     * @param $modelClassName string
+     * @param string $modelMethodName
+     * @param null $value
+     * @return mixed|null
+     */
+    private static function getModel($modelClassName, $modelMethodName = '', $value = null)
+    {
+        if (!MVC::$models[$modelClassName]) {
+            $modelClassName = strtoupper(substr($modelClassName, 0, 1)) . substr($modelClassName, 1);
+            $filePath = MVC::$m_dir . '/' . $modelClassName . 'Model.php';
 
             if (is_file($filePath)) {
                 import($filePath);
 
-                $instance = new \ReflectionClass(MVC::$m_dir . '\\' . $className . 'Model');
-                MVC::$models[$className] = $instance->newInstance($className);
+                $instance = new \ReflectionClass(MVC::$m_dir . '\\' . $modelClassName . 'Model');
+                MVC::$models[$modelClassName] = $instance->newInstance();
             }
         }
 
-        if (!MVC::$models[$className]) {
-            return null;
-        }
-        if (method_exists(MVC::$models[$className], $method)) {
-            return MVC::$models[$className]->$method($value);
+        if (MVC::$models[$modelClassName]) {
+            if ($modelMethodName) {
+                $modelMethodName = $modelClassName = '/' ? 'indexAction' : $modelMethodName . 'Action';
+                if (method_exists(MVC::$models[$modelClassName], $modelMethodName)) {
+                    return MVC::$models[$modelClassName]->$modelMethodName($value);
+                }
+            } else {
+                return MVC::$models[$modelClassName];
+            }
         }
         return null;
     }
