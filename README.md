@@ -32,6 +32,11 @@ require './cube/App.php';
 ### middleWare append
 * initial mode middleWare.
 ```javascript
+$app = App:app();
+$app->on(function($req,$res,$next){
+    //implement your logic.
+});
+
 $router = App::Router();
 $router->on(function($req,$res,$next){
     $a = 'helloWorld!'; //your code.
@@ -51,6 +56,17 @@ $router->on('/index',function($req,$res,$next){
     $a = 'helloWorld!'; //your code.
     $next(); //next middleWare.
     $a = ''; //gc
+});
+```
+### want to use class-reflect rpc mode?
+```javascript
+import('modules/mvc/autoload.php');//or edit in the package.json->modules[]
+
+$app = App:app();
+$app->on(MVC::create('controller_dir_name','model_dir_name'));
+
+$app->on('/user/',function($req,$res,$next)){
+    $res->send(MVC::c('user',$req->body));
 });
 ```
 ### ./www.php (the facade file of the Application)
