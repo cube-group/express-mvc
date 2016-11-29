@@ -9,6 +9,7 @@
 namespace cube;
 
 use log\Log;
+use utils\DynamicClass;
 use utils\Utils;
 
 /**
@@ -207,6 +208,6 @@ final class Request
      */
     public function params($params)
     {
-        $this->params = $params;
+        $this->params = new DynamicClass($params);
     }
 }
