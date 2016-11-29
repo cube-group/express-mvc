@@ -63,10 +63,15 @@ $router->on('/index',function($req,$res,$next){
 import('modules/mvc/autoload.php');//or edit in the package.json->modules[]
 
 $app = App:app();
-$app->on(MVC::create('controller_dir_name','model_dir_name'));
+$app->on(\mvc\MVC::create([
+    'controller_dir' => 'src/controller',
+    'controller_prefix' => 'src\controller',
+    'model_dir' => 'src/model',
+    'model_prefix' => 'src\model'
+]));
 
 $app->on('/user/',function($req,$res,$next)){
-    $res->send(MVC::c('user',$req->body));
+    $res->send(MVC::c('user','login',$req->body));
 });
 ```
 ### ./www.php (the facade file of the Application)
