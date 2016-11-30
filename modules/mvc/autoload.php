@@ -74,18 +74,18 @@ class MVC
 
                 $classPrefix = MVC::$options['controller_prefix'] ? (MVC::$options['controller_prefix'] . '\\' . $className . 'Controller') : ($className . 'Controller');
                 $instance = new \ReflectionClass($classPrefix);
-                self::$controllers[$className] = $instance->newInstance();
+                self::$controllers[$absoluteClassName] = $instance->newInstance();
             }
         }
 
-        if (MVC::$models[$absoluteClassName]) {
+        if (MVC::$controllers[$absoluteClassName]) {
             if ($method) {
                 $method = $method = '/' ? 'indexAction' : $method . 'Action';
-                if (method_exists(MVC::$models[$absoluteClassName], $method)) {
-                    return MVC::$models[$absoluteClassName]->$method($value);
+                if (method_exists(MVC::$controllers[$absoluteClassName], $method)) {
+                    return MVC::$controllers[$absoluteClassName]->$method($value);
                 }
             } else {
-                return MVC::$models[$absoluteClassName];
+                return MVC::$controllers[$absoluteClassName];
             }
         }
         return null;
