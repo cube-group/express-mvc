@@ -85,9 +85,9 @@ final class FS
      */
     public static function create($source, $data)
     {
-        if (!is_writable($source)) {
-            return false;
-        }
+//        if (!is_writable($source)) {
+//            return false;
+//        }
         try {
             $file = fopen($source, 'w');
             fwrite($file, $data);
@@ -106,9 +106,9 @@ final class FS
      */
     public static function append($source, $data)
     {
-        if (!is_file($source) || !is_writable($source)) {
-            return false;
-        }
+//        if (!is_writable($source)) {
+//            return false;
+//        }
         try {
             $file = fopen($source, 'a');
             fwrite($file, $data);

@@ -7,13 +7,12 @@
     "mail": "lin2798003@sina.com"
   },
   "log": {
-    "log": "log/log.log",
-    "sql": "log/sql.log"
+    "log": "log.log",
+    "sql": "sql.log"
   },
   "dir": {
     "view": "view",
-    "tmp": "tmp",
-    "router": "router"
+    "tmp": "tmp"
   },
   "core": {
     "facade": "/www.php",
@@ -26,6 +25,7 @@
   "modules": [
     "modules/utils/autoload.php",
     "modules/engine/autoload.php",
+    "modules/query/autoload.php",
     "modules/body/autoload.php",
     "modules/cookie/autoload.php",
     "modules/session/Session.php",
