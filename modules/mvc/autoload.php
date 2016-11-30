@@ -80,7 +80,7 @@ class MVC
 
         if (MVC::$controllers[$absoluteClassName]) {
             if ($method) {
-                $method = $method = '/' ? 'indexAction' : $method . 'Action';
+                $method = $method == '/' ? 'indexAction' : $method . 'Action';
                 if (method_exists(MVC::$controllers[$absoluteClassName], $method)) {
                     return MVC::$controllers[$absoluteClassName]->$method($value);
                 }
@@ -118,7 +118,7 @@ class MVC
 
         if (MVC::$models[$absoluteClassName]) {
             if ($method) {
-                $method = $method = '/' ? 'index' : $method;
+                $method = $method == '/' ? 'index' : $method;
                 if (method_exists(MVC::$models[$absoluteClassName], $method)) {
                     return MVC::$models[$absoluteClassName]->$method($value);
                 }
