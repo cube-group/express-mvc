@@ -445,7 +445,7 @@ class DBModel
             $sql .= ' ORDER BY ' . $this->_group;
         }
         if (!empty($this->_limit)) {
-            $sql .= ' LIMIT ' . $this->_group;
+            $sql .= ' LIMIT ' . $this->_limit;
         }
         $sql .= ';';
         return DB::query($sql, $this->_task);
