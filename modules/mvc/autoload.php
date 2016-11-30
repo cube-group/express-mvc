@@ -118,7 +118,7 @@ class MVC
 
         if (MVC::$models[$absoluteClassName]) {
             if ($method) {
-                $method = $method = '/' ? 'indexProxy' : $method . 'Proxy';
+                $method = $method = '/' ? 'index' : $method;
                 if (method_exists(MVC::$models[$absoluteClassName], $method)) {
                     return MVC::$models[$absoluteClassName]->$method($value);
                 }
