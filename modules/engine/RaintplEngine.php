@@ -7,6 +7,7 @@
  */
 
 namespace engine;
+
 use engine\raintpl\RainTPL;
 
 /**
@@ -22,8 +23,8 @@ class RaintplEngine extends ViewEngine
 
         RainTPL::configure('base_url', null);
         RainTPL::configure("root_dir", constant('BASE_DIR'));
-        RainTPL::configure("tpl_dir", constant('BASE_DIR') . constant('VIEW_DIR') . '/');
-        RainTPL::configure("cache_dir", constant('BASE_DIR') . constant('TMP_DIR') . '/');
+        RainTPL::configure("tpl_dir", $GLOBALS['CONFIG']['dir']['view'] . '/');
+        RainTPL::configure("cache_dir", $GLOBALS['CONFIG']['dir']['tmp'] . '/');
     }
 
     public function render($name, $data = null)

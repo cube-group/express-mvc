@@ -24,6 +24,11 @@ function import($files)
         if (!is_file($file)) {
             continue;
         }
-        isset($GLOBALS['import-require-once-' . $file]) or require $file;
+
+        $key = 'import-require-once-' . $file;
+        if (!isset($GLOBALS[$key])) {
+            $GLOBALS[$key] = 1;
+            require $file;
+        }
     }
 }

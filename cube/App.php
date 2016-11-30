@@ -226,13 +226,13 @@ final class Stack
                     if (is_string($item[1])) {
                         self::$str .= self::$rightStr . '( ' . $item[0] . ' , ' . $item[1] . " )\r\n";
                     } else if (get_class($item[1]) == 'Closure') {
-                        self::$str .= self::$rightStr . '( ' . $item[0] . ' , function($req,$res,$next'.") )\r\n";
+                        self::$str .= self::$rightStr . '( ' . $item[0] . ' , function($req,$res,$next' . ") )\r\n";
                     } else {
-                        self::$str .= self::$rightStr . '( ' . $item[0] . ' , Router , '.$item[2]." )\r\n";
+                        self::$str .= self::$rightStr . '( ' . $item[0] . ' , Router , ' . $item[2] . " )\r\n";
                         self::show($item[1]->stack());
                     }
                 } else {
-                    self::$str .= self::$rightStr . '( function($req,$res,$next'.") )\r\n";
+                    self::$str .= self::$rightStr . '( function($req,$res,$next' . ") )\r\n";
                 }
             }
             self::$rightStr = substr(self::$rightStr, 0, -3);
@@ -315,7 +315,7 @@ final class Config
             define('TMP_DIR', $options['base_dir'] . $json['dir']['tmp'] . '/');
             define('LOG_PATH', $options['base_dir'] . $json['log']['log']);
             define('LOG_SQL_PATH', $options['base_dir'] . $json['log']['sql']);
-            define('CONFIG', $json);
+            $GLOBALS['CONFIG'] = $json;
 
             ini_set('upload_tmp_dir', $options['base_dir'] . $json['dir']['tmp'] . '/');
 

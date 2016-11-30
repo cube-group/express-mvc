@@ -142,7 +142,7 @@ $result = constant('LOG_SQL_PATH');
 //result:  /User/xx/github/php-mvc-express/log/sql.log
 
 //get the application package.json json object.
-$result = constant('CONFIG');
+$result = $GLOBAL['CONFIG'];
 //result: package.json as array
 ```
 
