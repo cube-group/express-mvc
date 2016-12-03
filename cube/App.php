@@ -76,7 +76,7 @@ final class App
         Config::init($options);
 
         //check php version.
-        if (!Utils::is_legal_php_version('5.6.0')) {
+        if (!Utils::is_legal_php_version('5.4.0')) {
             throw new \Exception('PHP VERSION IS LOW!');
         }
 
@@ -265,22 +265,11 @@ final class Stack
 final class Config
 {
     /**
-     * Framework init dependency package1.
-     */
-    const LIBS = [
-        'cube/Request.php',
-        'cube/Response.php',
-        'cube/Router.php',
-    ];
-    /**
      * cube global config object.
      * @var array
      */
-    private static $VALUE = [];
+    private static $VALUE = null;
 
-    private function __construct()
-    {
-    }
 
     /**
      * append the package.json object info.
@@ -299,6 +288,7 @@ final class Config
         if (!$options) {
             $options = [];
         }
+
         $options['base_dir'] = $options['base_dir'] ? ($options['base_dir'] . '/') : (__DIR__ . '/../');
 
         set_time_limit($options['time_limit'] ? $options['time_limit'] : 0);
@@ -319,9 +309,12 @@ final class Config
 
             ini_set('upload_tmp_dir', $options['base_dir'] . $json['dir']['tmp'] . '/');
 
-            import(self::LIBS);
+            import([
+                'cube/Request.php',
+                'cube/Response.php',
+                'cube/Router.php',
+            ]);
             import($json['modules']);
-
         } else {
             throw new \Exception('config is error or null');
         }
@@ -332,20 +325,16 @@ final class Config
      *
      * Config::get('dir','view');
      *
-     * @param $args array
+     * @param $arg1 string
+     * @param string $arg2
      * @return object | null
      */
-    public static function get(...$args)
+    public static function get($arg1, $arg2 = '')
     {
-        switch (count($args)) {
-            case 1:
-                return self::$VALUE[$args[0]];
-                break;
-            case 2:
-                return self::$VALUE[$args[0]][$args[1]];
-                break;
-            default:
-                return null;
+        if ($arg2) {
+            return self::$VALUE[$arg1][$arg2];
+        } else {
+            return self::$VALUE[$arg1];
         }
     }
 }

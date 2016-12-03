@@ -103,7 +103,8 @@ final class DB
             self::$pdo = new \PDO(
                 $options['type'] . ':host=' . $options['host'] . ';port=' . $options['port'] . ';dbname=' . $options['db'],
                 $options['username'],
-                $options['password']
+                $options['password'],
+                [\PDO::MYSQL_ATTR_INIT_COMMAND => "set names utf8"]
             );
         }
 

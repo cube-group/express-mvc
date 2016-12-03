@@ -100,7 +100,7 @@ final class Router
                         return false;
                     }
                 }
-                $req->params = $params;
+                $req->params($params);
                 $req->route = $absoluteFilter;
                 return true;
             }
@@ -177,30 +177,27 @@ final class Router
     /**
      * add middleWare.
      *
+     * support php5.4...
+     *
      * add router middleWare.
-     * $router->on('/filter',function($req,$res,$next){}
+     * $router->on(['/filter',function($req,$res,$next){}
      *
      * add router php fileName.
      * $router->on('/user,'router/user');//then the framework will find the /router/user.php,and load it.
      *
-     * @param $filter
+     * @param $arg1 string|\Closure
+     * @param $arg2 string|\Closure|Router
      * @param $object router ClassName or Instance.
      */
-    public function on(...$args)
+    public function on($arg1, $arg2 = null)
     {
-        switch (count($args)) {
-            case 1:
-                $list = is_array($args[0]) ? $args[0] : [$args[0]];
-                foreach ($list as $m) {
-                    $this->stack->push($m);
-                }
-                break;
-            case 2:
-                $this->stack->push([Utils::pathFilter($args[0]), $args[1]]);
-                break;
-            default:
-                throw new \Exception('middleWare add error');
-                break;
+        if ($arg2) {
+            $this->stack->push([Utils::pathFilter($arg1), $arg2]);
+        } else {
+            $list = is_array($arg1) ? $arg1 : [$arg1];
+            foreach ($list as $m) {
+                $this->stack->push($m);
+            }
         }
     }
 

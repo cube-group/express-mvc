@@ -74,13 +74,13 @@ $app->on('/user/',function($req,$res,$next)){
     $res->send(MVC::c('user','login',$req->body));
 });
 ```
-### ./www.php (the facade file of the Application)
+### ./index.php (the facade file of the Application)
 Once the route configuration is included in the project configuration file,
 it will automatically give priority to the path analysis of the virtual router,
 otherwise the network address is used directly to resolve the path.
 * Virtual router pathinfo
 ```javascript
-./www.php?router=http (Cube Framework Application will find the router config from the package.json)
+./index.php?router=http (Cube Framework Application will find the router config from the package.json)
 
 //application filter the pathinfo.
 $router= App::Router();
@@ -90,7 +90,7 @@ $router.on('/http',function($req,$res,$next){
 }
 ```
 * Standard router pathinfo, change the nginx.conf
-* url will be '/www.php/user/login' or '/www.php/user/login/www.php'
+* url will be '/index.php/user/login' or '/index.php/user/login/index.php'
 ```javascript
 location / {
     if (!-e $request_filename) {
@@ -101,7 +101,7 @@ location / {
 
 location ~ \.php {
     fastcgi_pass 127.0.0.1:9000;
-    fastcgi_index www.php;
+    fastcgi_index index.php;
     include fastcgi_params;
     set $real_script_name $fastcgi_script_name;
     if ($fastcgi_script_name ~ "^(.+?\.php)(/.+)$") {

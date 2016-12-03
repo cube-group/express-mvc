@@ -130,9 +130,13 @@ class DynamicClass
 {
     protected $body;
 
-    public function __construct()
+    public function __construct($value = null)
     {
-        $this->body = array();
+        if($value && is_array($value)){
+            $this->body = $value;
+        }else{
+            $this->body = array();
+        }
     }
 
     public function __get($name)
