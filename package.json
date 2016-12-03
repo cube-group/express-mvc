@@ -15,7 +15,7 @@
     "tmp": "tmp"
   },
   "core": {
-    "facade": "/www.php",
+    "facade": "/index.php",
     "app": "app.php",
     "router_querystring": "router",
     "session_name": "CUBE_SESSID",
