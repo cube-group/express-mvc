@@ -8,7 +8,6 @@
 
 namespace cube;
 
-use cube\engine\EchoEngine;
 use utils\Utils;
 
 /**
@@ -255,7 +254,7 @@ final class Router
                     if ($this->parent) {
                         $this->parent->next();
                     } else { //catch 404.
-                        $this->res->render(new EchoEngine(), '404');
+                        $this->res->render('404');
                     }
                 }
             };
