@@ -8,8 +8,10 @@
 
 namespace cube;
 
-use engine\ViewEngine;
-use fs\FS;
+use cube\engine\AngularEngine;
+use cube\engine\RaintplEngine;
+use cube\engine\ViewEngine;
+use cube\fs\FS;
 use log\Log;
 use utils\Utils;
 
@@ -111,18 +113,38 @@ final class Response
         Log::log('Response jsonp', $this->getTimer());
     }
 
+
+    /**
+     * set the angularJS Object.
+     *
+     * @param $viewName string
+     * @param $value object
+     */
+    public function angular($viewName, $value)
+    {
+        $engine = new AngularEngine();
+        $engine->render($viewName, $value);
+
+        Log::log('Response angular', $this->getTimer());
+    }
+
     /**
      * send the content to the client by the viewEngine.
      *
      * $res->render(new \engine\AngularEngine(),'center',['uid''adsfadsf']);
      *
-     * @param $viewEngine ViewEngine
      * @param viewName string
      * @param $value object
+     * @param $engine ViewEngine
      */
-    public function render($viewEngine, $viewName, $value = null)
+    public function render($viewName, $value = null, $engine = null)
     {
-        $viewEngine->render($viewName, $value);
+        if (!$value) {
+            $engine = new ViewEngine();
+        } else if (!$engine) {
+            $engine = new RaintplEngine();
+        }
+        $engine->render($viewName, $value);
 
         Log::log('Response render ' . $viewName, $this->getTimer());
     }

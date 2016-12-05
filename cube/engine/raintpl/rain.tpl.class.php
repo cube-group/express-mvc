@@ -9,7 +9,7 @@
  *  @version 2.7.2
  */
 
-namespace engine\raintpl;
+namespace cube\engine\raintpl;
 
 class RainTPL{
 

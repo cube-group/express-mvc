@@ -24,12 +24,10 @@
   },
   "modules": [
     "modules/utils/autoload.php",
-    "modules/engine/autoload.php",
     "modules/query/autoload.php",
     "modules/body/autoload.php",
     "modules/cookie/autoload.php",
     "modules/session/Session.php",
-    "modules/fs/autoload.php",
     "modules/http/autoload.php",
     "modules/log/autoload.php",
     "modules/orm/autoload.php",

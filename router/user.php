@@ -17,7 +17,7 @@ $router->on('/', function ($req, $res, $next) {
 
 $router->on('/:id/:name/pwd', function ($req, $res, $next) {
     //$req->route => /user/:id/:name/:pwd
-    $res->json($req->params);
+    $res->json([$req->params->id, $req->params->name]);
 });
 
 $router->on('/http', function ($req, $res, $next) {
@@ -25,7 +25,7 @@ $router->on('/http', function ($req, $res, $next) {
     $res->send(\http\Http::get('https://github.com/cube-group'));
 });
 
-$router->on('/repeat/','router/upload.php');
+$router->on('/repeat/', 'router/upload.php');
 
 $router->on('/db', function ($req, $res, $next) {
     \orm\DB::init([

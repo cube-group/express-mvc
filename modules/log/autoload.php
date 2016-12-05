@@ -8,7 +8,7 @@
 
 namespace log;
 
-use fs\FS;
+use cube\fs\FS;
 
 /**
  * Class Log.

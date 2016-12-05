@@ -39,5 +39,5 @@ $app->on('/redirect', function ($req, $res, $next) {
 
 //add router middleware.
 $app->on('/', function ($req, $res, $next) {
-    $res->render(new \engine\EchoEngine(), 'index');
+    $res->render('index');
 });

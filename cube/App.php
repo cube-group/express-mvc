@@ -8,8 +8,8 @@
 
 namespace cube;
 
-use engine\AngularEngine;
-use engine\ViewEngine;
+use cube\engine\AngularEngine;
+use cube\engine\ViewEngine;
 use log\Log;
 use utils\Utils;
 
@@ -189,13 +189,16 @@ final class App
      * @param $name string
      * @param $value object
      */
-    public static function globalRender($engine, $name, $value = null)
+    public static function globalRender($name, $value = null)
     {
         if (self::$res) {
-            self::$res->render($engine, $name, $value);
+            self::$res->render($name, $value);
         } else {
-            $engine->render('500', $value);
+            $engine = new AngularEngine();
+            $engine->render($name, $value);
         }
+
+        App::gc();
     }
 
     private function __construct()
@@ -310,10 +313,13 @@ final class Config
             ini_set('upload_tmp_dir', $options['base_dir'] . $json['dir']['tmp'] . '/');
 
             import([
+                'cube/fs/autoload.php',
+                'cube/engine/autoload.php',
                 'cube/Request.php',
                 'cube/Response.php',
-                'cube/Router.php',
+                'cube/Router.php'
             ]);
+
             import($json['modules']);
         } else {
             throw new \Exception('config is error or null');
@@ -342,11 +348,8 @@ final class Config
 function onErrorHandler()
 {
     if ($e = error_get_last()) {
-        import([
-            'modules/fs/autoload',
-            'modules/log/autoload.php',
-            'modules/engine/autoload.php'
-        ]);
+        import('modules/log/autoload.php');
+
         switch ($e['type']) {
             case E_ERROR:
             case E_PARSE:
@@ -355,8 +358,7 @@ function onErrorHandler()
             case E_USER_ERROR:
                 Log::log('Error ' . $e['message']);
                 $errors = array('msg' => $e['message'], 'level' => $e['type'], 'line' => $e['line'], 'file' => $e['file']);
-                App::globalRender(new AngularEngine(), '500', $errors);
-                App::gc();
+                App::globalRender('500', $errors);
                 break;
         }
     }
@@ -368,16 +370,11 @@ function onErrorHandler()
  */
 function onExceptionHandler(\Exception $e)
 {
-    import([
-        'modules/fs/autoload',
-        'modules/log/autoload.php',
-        'modules/engine/autoload.php'
-    ]);
+    import('modules/log/autoload.php');
 
     Log::log('Exception ' . $e->getMessage());
     $errors = array('msg' => $e->getMessage(), 'level' => $e->getCode(), 'line' => $e->getLine(), 'file' => $e->getFile());
-    App::globalRender(new AngularEngine(), '500', $errors);
-    App::gc();
+    App::globalRender('500', $errors);
 }
 
 set_error_handler('cube\onErrorHandler');

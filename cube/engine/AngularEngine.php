@@ -4,7 +4,7 @@
  * User: linyang
  * Date: 16/9/27
  */
-namespace engine;
+namespace cube\engine;
 
 /**
  * Class AngualrEngine.

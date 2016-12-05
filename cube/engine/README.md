@@ -1,12 +1,6 @@
 ### ViewEngine For the Response->render($engine,$name,$data);
-* $res->render($engine,$name,$data=null);//$engine is \engine\ViewEngine
-* \engine\EchoEngine implements.
-```javascript
-class EchoEngine extends ViewEngine{
-    public function render($name,$data=null){
-          //echo $name file string.
-    }
-}
+* $res->render($name,$data=null);//$engine is \engine\RaintplEngine
+* $res->angular($string);//use \engine\AngularEngine
 ```
 * \engine\AngularEngine implements.
 ```javascript
@@ -24,3 +18,9 @@ class RaintplEngine extends ViewEngine{
     }
 }
 ```
+* your engine.
+class MyEngine extends ViewEngine{
+    public function render($name,$data=null){
+          //render by yourself
+    }
+}

@@ -8,7 +8,7 @@
 
 namespace cube;
 
-use engine\EchoEngine;
+use cube\engine\EchoEngine;
 use utils\Utils;
 
 /**

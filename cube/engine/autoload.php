@@ -6,17 +6,16 @@
  * Time: 下午2:41
  */
 
-namespace engine;
+namespace cube\engine;
 
-use fs\FS;
+use \cube\fs\FS;
 
-require __DIR__.'/EchoEngine.php';
 require __DIR__.'/AngularEngine.php';
 require __DIR__.'/RaintplEngine.php';
 
 /**
  * Class ViewEngine
- * @package com\cube\view
+ * @package cube\engine
  *
  */
 class ViewEngine
@@ -31,7 +30,7 @@ class ViewEngine
      */
     public function render($name, $data = null)
     {
-        return FS::read($this->getViewPagePath($name));
+        echo FS::read($this->getViewPagePath($name));
     }
 
     /**

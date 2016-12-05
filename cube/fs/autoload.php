@@ -6,7 +6,7 @@
  * Time: 下午10:53
  */
 
-namespace fs;
+namespace cube\fs;
 
 /**
  * Class FS.

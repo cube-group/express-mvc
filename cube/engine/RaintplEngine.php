@@ -6,9 +6,9 @@
  * Time: 下午10:27
  */
 
-namespace engine;
+namespace cube\engine;
 
-use engine\raintpl\RainTPL;
+use cube\engine\raintpl\RainTPL;
 
 /**
  * Class RaintplEngine.
