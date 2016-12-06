@@ -10,8 +10,8 @@ namespace cube\engine;
 
 use \cube\fs\FS;
 
-require __DIR__.'/AngularEngine.php';
-require __DIR__.'/RaintplEngine.php';
+require __DIR__ . '/AngularEngine.php';
+require __DIR__ . '/RaintplEngine.php';
 
 /**
  * Class ViewEngine
@@ -30,7 +30,17 @@ class ViewEngine
      */
     public function render($name, $data = null)
     {
-        echo FS::read($this->getViewPagePath($name));
+        echo $this->getViewContent($name);
+    }
+
+    /**
+     * 获取view page 文件地址.
+     * @param $name
+     * @return string
+     */
+    final protected function getViewContent($name)
+    {
+        return FS::read($this->getViewPagePath($name));
     }
 
     /**

@@ -22,6 +22,7 @@ class RaintplEngine extends ViewEngine
         require __DIR__ . '/raintpl/rain.tpl.class.php';
 
         RainTPL::$path_replace = false;
+        RainTPL::$tpl_ext = 'html';
         RainTPL::configure('base_url', null);
         RainTPL::configure("root_dir", constant('BASE_DIR'));
         RainTPL::configure("tpl_dir", $GLOBALS['CONFIG']['dir']['view'] . '/');

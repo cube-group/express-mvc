@@ -77,9 +77,14 @@ final class Request
     public $query;
     /**
      * /router/:id/:name,$params['id']
-     * @var array
+     * @var DynamicClass
      */
     public $params;
+    /**
+     * $req->assist->key
+     * @var DynamicClass
+     */
+    public $assist;
     /**
      * current router filter string.
      * @var string
@@ -98,6 +103,7 @@ final class Request
     {
         $this->initCoreInfo();
         $this->initPathInfo();
+        $this->assist = new DynamicClass();
 
         //request log.log.
         Log::log($this->baseUrl);

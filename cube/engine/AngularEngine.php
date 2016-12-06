@@ -20,7 +20,7 @@ class AngularEngine extends ViewEngine
     public function render($name, $data = null)
     {
         //remove all comments.
-        $htmlData = preg_replace('#<!--[^\!\[]*?(?<!\/\/)-->#', '', parent::render($name));
+        $htmlData = preg_replace('#<!--[^\!\[]*?(?<!\/\/)-->#', '', parent::getViewContent($name));
 
         if (empty($data)) {
             echo $htmlData;
