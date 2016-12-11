@@ -85,6 +85,24 @@ final class DB
         self::$options = $options;
     }
 
+
+    /**
+     * create database connection.
+     */
+    private static function connect()
+    {
+        if (!self::$options) {
+            throw new \Exception('DB OPTIONS IS NULL');
+        }
+        $options = self::$options;
+        self::$pdo = new \PDO(
+            $options['type'] . ':host=' . $options['host'] . ';port=' . $options['port'] . ';dbname=' . $options['db'],
+            $options['username'],
+            $options['password'],
+            [\PDO::MYSQL_ATTR_INIT_COMMAND => "set names utf8"]
+        );
+    }
+
     /**
      * create orm orm instance.
      * DB::model('list');
@@ -98,17 +116,11 @@ final class DB
             throw new \Exception('No orm options.');
         }
 
-        $options = self::$options;
         if (empty(self::$pdo)) {
-            self::$pdo = new \PDO(
-                $options['type'] . ':host=' . $options['host'] . ';port=' . $options['port'] . ';dbname=' . $options['db'],
-                $options['username'],
-                $options['password'],
-                [\PDO::MYSQL_ATTR_INIT_COMMAND => "set names utf8"]
-            );
+            self::connect();
         }
 
-        return new DBModel(!$options['prefix'] ? $tableName : ($options['prefix'] . $tableName));
+        return new DBModel(!self::$options['prefix'] ? $tableName : (self::$options['prefix'] . $tableName));
     }
 
     /**
@@ -122,23 +134,24 @@ final class DB
      */
     public static function exec($sql, $task = false)
     {
-        if (!empty(self::$pdo)) {
-            try {
-                Log::mysql($sql . ' task: ' . ($task ? 'true' : 'false'));
-                if ($task == true) {
-                    self::$pdo->beginTransaction();
-                }
-                $result = self::$pdo->exec($sql);
-                if ($result !== false) {
-                    if ($task == true) self::$pdo->commit();
-                } else {
-                    if ($task == true) self::$pdo->rollBack();
-                    return -1;
-                }
-                return $result;
-            } catch (\PDOException $e) {
-                Log::mysql('=> Error ' . $e->getTraceAsString());
+        if (empty(self::$pdo)) {
+            self::connect();
+        }
+        try {
+            Log::mysql($sql . ' task: ' . ($task ? 'true' : 'false'));
+            if ($task == true) {
+                self::$pdo->beginTransaction();
             }
+            $result = self::$pdo->exec($sql);
+            if ($result !== false) {
+                if ($task == true) self::$pdo->commit();
+            } else {
+                if ($task == true) self::$pdo->rollBack();
+                return -1;
+            }
+            return $result;
+        } catch (\PDOException $e) {
+            Log::mysql('=> Error ' . $e->getTraceAsString());
         }
         return -1;
     }
@@ -153,26 +166,25 @@ final class DB
      */
     public static function query($sql, $task = false)
     {
-        if (!empty(self::$pdo)) {
-            try {
-                Log::mysql($sql . ' task: ' . ($task ? 'true' : 'false'));
-                if ($task == true) {
-                    self::$pdo->beginTransaction();
-                }
-
-                if ($stat = self::$pdo->query($sql)) {
-                    $result = $stat->fetchAll(\PDO::FETCH_ASSOC);
-                    if ($task == true) self::$pdo->commit();
-                } else {
-                    if ($task == true) self::$pdo->rollBack();
-                }
-
-                return $result;
-            } catch (\PDOException $e) {
-                Log::mysql($sql . ' => Error ' . $e->getTraceAsString());
-            }
+        if (empty(self::$pdo)) {
+            self::connect();
         }
-        return null;
+        try {
+            Log::mysql($sql . ' task: ' . ($task ? 'true' : 'false'));
+            if ($task == true) {
+                self::$pdo->beginTransaction();
+            }
+            if ($stat = self::$pdo->query($sql)) {
+                $result = $stat->fetchAll(\PDO::FETCH_ASSOC);
+                if ($task == true) self::$pdo->commit();
+            } else {
+                if ($task == true) self::$pdo->rollBack();
+            }
+            return $result;
+        } catch (\PDOException $e) {
+            Log::mysql($sql . ' => Error ' . $e->getTraceAsString());
+        }
+        return false;
     }
 
     /**
@@ -443,7 +455,7 @@ class DBModel
             $sql .= ' GROUP BY ' . $this->_group;
         }
         if (!empty($this->_order)) {
-            $sql .= ' ORDER BY ' . $this->_group;
+            $sql .= ' ORDER BY ' . $this->_order;
         }
         if (!empty($this->_limit)) {
             $sql .= ' LIMIT ' . $this->_limit;
